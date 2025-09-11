@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TThe idea is to use this to collect a number of different whereabouts logic
+
+# The idea is to use this to collect a number of different whereabouts logic
 # like self-inspection, and so on.
 description = "🦘 Riccardo Whereabouts logic for Gemini commands"
 

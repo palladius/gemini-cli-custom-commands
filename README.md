@@ -1,9 +1,9 @@
-# gemini-cli-custom-commands
+# Palladius Gemini CLI custom commands (or PCC)
 
 Self: https://github.com/palladius/gemini-cli-custom-commands
 Inspired by https://github.com/google-gemini/gemini-cli-security/tree/main
 
-This is a collection of all Carlessian commands, packaged into one.
+This is a collection of all Carlessian commands, packaged into one place.
 
 ## install
 
