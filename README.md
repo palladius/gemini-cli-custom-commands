@@ -25,7 +25,7 @@ To see which commands you have installed, for pure curiosity:
 
 ## Wow factor
 
-Once installed, run `just check-for-updates`.
+Once installed, run `just check-for-updates`. Or if you don't have `just` installed, you can "just" do `gemini -y -c "/pcc:check-for-updates"`
 
 Sample output:
 
