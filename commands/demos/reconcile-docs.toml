@@ -1,0 +1,33 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# .gemini/commands/demos/reconcile-docs.toml
+
+description = "Reads the code and reconcile it with the docs in READMEs and STATUS.md's."
+prompt = """
+You are an expert-level documentation engineer with good Software Eng skills too.
+
+* Ensure the ./README.md is up-to-date with the code.
+* Ensure the ./demos/**/STATUS.md are all existing and consistent with the code.
+
+**Note** that you should be able to populate all the README/STATUS files with all relevant info
+with the only exception of "is the code working?" and some author info (name, prefs, ..).
+
+Read the GEMINI.md for more details on the docs structure and expected `STATUS.md` structure.
+
+## Additional Context
+
+The demo folder (and/or additional context) are:
+{{args}}
+"""

@@ -1,0 +1,119 @@
+# https://aipositive.substack.com/p/from-tool-to-teammate-crafting-ai
+# TODO check if you can move this to GLOBAL.
+
+description = "[ricc] Checks for license compliance in pragmatic way."
+prompt = """
+You are an expert-level software engineer, and GitHub workflows expert.
+You work for Google and care about open source license compliance.
+
+Your task is to verify the compliance and help the user "actuate" that compliance by triggering the right scripts.
+
+## Compliance as per go/releasing
+
+Internal docs (at go/releasing) say this:
+
+4. For demo projects, ensure this sentence is added VERBATIM to the root README.md:
+`This project is intended for demonstration purposes only. It is not intended for use in a production environment.`
+
+5. Ensure a LICENSE file is present in the root of the repository. This by default should be the "Apache 2 license".
+   If a different one is present, flag it.
+
+6. **Add source code headers**. Every file containing source code must include copyright and license information. This includes:
+   You can use the following command to add a license file:
+   ```
+   Ensure `golang` is installed locally (use brew/apt-get)
+   $ go get -u github.com/google/addlicense
+   $ ~/go/bin/addlicense -c "Google LLC" -l apache .
+   ```
+
+7. **Include a CONTRIBUTING file**. The CONTRIBUTING file can be added to your project either at the top level as CONTRIBUTING.md or as docs/CONTRIBUTING.md.
+
+9. Scrub the comments. Once something is checked into version control, it stays visible in the history—even if you delete it later.
+
+Be sure to remove:
+
+* Names and email addresses of Googlers, unless they give explicit permission
+* Confidential information, including references to code names, internal paths or filenames, and internal hosts or IP addresses
+* Anything that is potentially embarrassing to Google or your peers
+
+## Apache header text (for 2025 - change if year is different)
+
+```
+Copyright 2025 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
+
+## Contributing file (verbatim)
+
+This is the file - VERBATIM
+```markdown
+# How to contribute
+
+We'd love to accept your patches and contributions to this project.
+
+## Before you begin
+
+### Sign our Contributor License Agreement
+
+Contributions to this project must be accompanied by a
+[Contributor License Agreement](https://cla.developers.google.com/about) (CLA).
+You (or your employer) retain the copyright to your contribution; this simply
+gives us permission to use and redistribute your contributions as part of the
+project.
+
+If you or your current employer have already signed the Google CLA (even if it
+was for a different project), you probably don't need to do it again.
+
+Visit <https://cla.developers.google.com/> to see your current agreements or to
+sign a new one.
+
+### Review our community guidelines
+
+This project follows
+[Google's Open Source Community Guidelines](https://opensource.google/conduct/).
+
+## Contribution process
+
+### Code reviews
+
+All submissions, including submissions by project members, require review. We
+use GitHub pull requests for this purpose. Consult
+[GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
+information on using pull requests.
+```
+
+## Generic compliance good-to-have
+
+1. Check for any third-party dependencies in the codebase.
+2. Verify that all dependencies comply with the required open source licenses.
+3. If any non-compliant dependencies are found, work with the team to replace or update them.
+4. Document the compliance status and any actions taken in the project repository.
+5. Check for profanity and verify overall respectful language in the codebase.
+
+## Ensure this logic can be called from JUSTFILE
+
+* Ensure there is a `just  check-google-license` command which invokes Gemini CLI to call this Check Google License.
+  Code should look like this:
+
+```bash
+gemini -y -p '/commsl:check_google_license  Verify all is in place, and if needed apply the addlicense script to the whole git repo.'
+```
+
+## Additional context (optional)
+
+{{args}}
+"""
+
+
+# 7. **Optionally**, you can take it 1 step further with https://github.com/mbrukman/autogen .

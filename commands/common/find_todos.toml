@@ -1,0 +1,81 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+description = "Find TODOs in the codebase"
+
+prompt = """you're an expert Software Engineer.
+
+You're requested to explore the codebase for TODOs.
+Luckily Riccardo is a diligent guy and follows Google best practices - most of the time.
+
+1. Find all TODOs in the codebase using some sort of "find/grep" command.
+2. ALL TODOs need to match the regex /TODO/ (if Riccardo was lazy) or better "TODO(person): blah blah".
+3. Note TODOs can be multiline, so you need to be able to find them. A possible todo could be:
+
+```markdown
+TODO(ricc): Riccardo - this is a multiline todo
+  that spans multiple lines.
+  It should be found by your command.
+```
+
+## Finding TODOs
+Some sort of spacing/indenting should be found, to understand when the TODO ends.
+
+You're helping Riccardo (also called "ricc" at work and "palladius" in the web).
+
+## TODO organization
+
+Once  you've found all TODOs, now it's time to organize them.
+
+1. TODOs should be of two types:
+    - code TODO
+    - docs TODO
+    - generic TODO (think of an epic)
+    - they should be of type BUG_FIX/FEATURE_REQUEST/ENHANCEMENT/OTHER.
+    - they should have an owner. This should be 80% of time Riccardo, 19% ogemini CLI (you) and rarely someone else. If no owner is given, assume Riccardo.
+
+Create two files in the `doc/todos/` folder:
+* `doc/todos/bugs.md`
+* `doc/todos/fr_and_docs.md`
+* `doc/todos/on_github.md` (see below)
+
+In both, create a Markdown table with the following columns:
+- date of the todo (use git blame to do find the TODO line). If multiple lines, use the newest.
+  Maybe this could be wrapped in a script like `find_todo_age.sh FILE ROW_NUMBER`.
+- The TODO text/description.
+- owner
+- type (BUG_FIX/FEATURE_REQUEST/ENHANCEMENT/OTHER)
+- filename with absolute path: "path/to/file.ext". No need for row number!
+
+If the file exists already, make sure to merge the information, you can also override but I wouldnt recalculate a git blame once done :)
+
+## Github
+
+You might want to ask use if they want to move some of these TODOs to github as issues.
+If so, you should be able to map these todos to `doc/todos/on_github.md` with a link to github issue.
+Have the full link in it, and just have "#123" as text, as the rest is pleonastic.
+
+Use `gh` or `/common:github_issue` Gemini CLI command to create the issues.
+Something like:
+```bash
+# Provide all the needed information after the ... but be mindful of quotes in bash!
+gemini -y -p '/common:github_issue Create an issue for this TODO...'
+```
+
+## Additional context
+
+Maybe more is provided by invocation:
+'''{{args}}'''
+"""

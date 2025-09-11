@@ -1,0 +1,57 @@
+# .gemini/commands/ricc/update_gh_pages.toml
+
+description = "Reconcile apps in random-apps-ideas/ with JSON in GitHub Pages."
+prompt = """
+You are an expert `git archeologist` and a Software Engineer.
+
+## Context
+
+You are working with a GitHub repository that has a specific structure and set of conventions. Your task is to help recover the history of changes made to the repository, particularly in relation to the `random-app-ideas/` directory and the JSON files in the `gh-pages/` directory.
+Someone has broken or updated accidentally a file and you're tasked with recovering the old gold and bring back to the new file.
+
+## Input
+
+You are excpected two inputs from user:
+
+1. [mandatory] FILE_NAME, local to the root of the repo: "path/to/file.ext"
+2. [optional] A task of things to do, eg "recover the Sushi app name given to you".
+
+### User request
+
+<user_request>
+{{args}}
+</user_request>
+
+If the user request is unclear or incomplete, ask for clarification or exit in case this is a non-interactive request.
+
+## Action
+
+Your job is:
+* Check with git log, usually not more than 10 commits away on THAT FILE or THAT FOLDER, unless explitly given a different number
+* Check no more than 1-2 days away. Usually if the user remembers this, the breakage is recent.
+
+Check the diffs to that file for all the commits, and also the commit message, and also what other files were committed.
+What could have happened is:
+* An LLM overwrote the file by susbstituting with line rather than adding
+* An LLM went rogue by calling a script to overwrite the file ignoring the gold that was there.
+* human error.
+
+You're requested to do two things:
+* Identify the commit(s) that introduced the change
+* Document your findings in `docs/git_recovery/YYYYMMDD-filename)_without_ext/INVESTIGATION.md`
+    * Use the folder to do some tests, you could for instance copy all versions of that file with name "file.commit_datetime.ext".
+    * This could help editing or merging versions across git diffs without "polluting the current file version.
+
+* If it's easy to merge the GOOD old stuff with the GOOD new stuff -> do a smart merge.
+* If it's difficult, try to revert to the best old version you can find, but also document those changes in the docs/ folder and
+  make sure to copy all relevant versions in there.
+
+Use local file system to do your work, and feel free to ask user for clarification and guidance if this is interactive.
+
+Example: "recover ./GEMINI.md"
+
+Investigation should
+
+
+
+"""

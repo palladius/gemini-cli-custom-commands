@@ -1,0 +1,56 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# https://aipositive.substack.com/p/from-tool-to-teammate-crafting-ai
+# TODO check if you can move this to GLOBAL.
+
+description = "[ricc] Commit and push changes to the current git repo."
+prompt = """
+You are an expert-level software engineer, and GitHub workflows expert.
+
+Your task is to create a Git commit and push the changes to the remote repository. Follow these steps:
+
+1. Stage all  relevant changes for commit. If you find more files, prompt user to stage them as well. If so, use git diff to incorporate their change to a meaningful commit message.
+
+1. increment VERSION and add to CHANGELOG.md what was done. Use emoji in CHANGELOG and use semantic versioning for version bumping.
+   If the code change is dev-related add [dev] to the changelog bullet point. If the code is ops-related (eg change a cloud build), use "[ops]" instead.
+   Use 🔵 for CHANGELOG entries as a nice colorful bullet point. Also user emojis as needed!
+
+1. Create a commit with a meaningful message (do not use double quotes as it doesn't work):
+   ```
+   git commit -m 'Your commit message here... with some `backticks` and "quotes" if needed'
+   ```
+   Should the commit message be very rich, it might make sense to create a tmp/file.md with the commit message and use:
+   `git commit -F tmp/file.md`. Do not use /tmp/ as you have nmo access to it.
+
+1. Remember its a monorepo, so the commits should be per-repo ([apps-portfolio], ..). And the VERSION/CHANGELOG.md should
+   be updated in the repo you are working on. On rare occasions you might want to have multirepo updates. You judge
+   (or ask user) if this should reflect in local version bumping.
+
+1. Push the changes to the remote repository:
+   ```
+   git push origin main
+   ```
+
+1. If a VERSION file exists, with say value "1.2.3", the commit should contain this as initial commit message:
+   ```
+   [v1.2.3] ORIGINAL COMMIT MESSAGE HERE
+
+   ADDITIONAL MULTILINE COMMIT
+   MESSAGE HERE.
+   ```
+
+Additional context (optional):
+{{args}}
+"""

@@ -1,0 +1,40 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# TThe idea is to use this to collect a number of different whereabouts logic
+# like self-inspection, and so on.
+description = "🦘 Riccardo Whereabouts logic for Gemini commands"
+
+prompt = """you're an expert Gemini CLI self-reflective agent.
+
+You will investigate your whereabouts to provide to the user a Magic context JSON.
+
+1. Check in ./gemini/commands/ and build a short list of "commands -> description" pairs.
+2. Check in ./gemini/extensions "ext name" => "what it does" pairs. Keep it short. You can use
+    `gemini --list-extensions` to get a list of extensions.
+3. Check if you are inside a GEMINI SHELL via ENV[GEMINI_CLI] and while you're there do all the `env|^egrep GEMINI_` to
+   see the gemini ENV vars. Skip API KEYS and SENSITIVE data.
+4. Check if there is a version file in the current directory, and if so, read it: !{cat VERSION}
+5. Check if there is a `justfile` directory, I love them. Try to familiarize with theose commands, I use them to give
+    you some "commands on rails": !{just --list}
+
+Return all as a YAML and also as "GIT_REPO/carlessian_context.yaml" , unless additional context
+asks for something different. In that case, try to accommodate context and this info you've just retrieved as it
+makes sense.
+
+## Additional Context
+
+Additional context might be provided by user here:
+'''{{args}}'''
+"""

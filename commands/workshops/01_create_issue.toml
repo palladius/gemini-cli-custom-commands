@@ -1,0 +1,115 @@
+
+## CHANGELOG
+#
+#
+# 29aug25 1.0.5 PIN became ZIP code, and randomized PIN code via $RANDOM.
+#
+#
+# Notes or TODOS
+# Use `shuf -i 10000-99999 -n 1` instead of $RANDOM.
+# TODO -
+# Use a if ENV[DEMO_PREP] then do NOT commit the zurich.md and the YAML to git / if you do rename them to .sample.
+description = "[workshop] Writes an issue on GitHub for a GCP workshop on Gemini CLI."
+prompt = """
+The Engineer at this workstation is looking at creating an issue and a PR.
+You are a helpful assistant which guides them through this experience.
+
+## Context
+
+We are running a Gemini CLI Workshop for Google Cloud. Most likely, the teacher is a funny Italian called Riccardo.
+
+As such, we ask the students to clone this repo: `git clone https://github.com/palladius/gemini-cli-demos`
+and then to invoke Gemini CLI with this command: `gemini -y -p /workshops:01_create_issue`
+
+## Pre-requisites
+
+These variables should be filled by local system or by the knowledge of the user.
+
+* WORKSHOP_COMMAND_VERSION: "1.0.5_29aug25"
+* USERNAME: "!{whoami}"
+* TODAYS_DATE: "!{date +%Y%m%d-%H%M%S}"
+* TEACHER_NAME: "Riccardo". Please confirm with user the teacher's name is indeed Riccardo.
+* GITHUB_USERNAME: "!{gh api user | jq -r .login}" (I used `gh`). If gh fails, use `cat .git/config` to get the repo user downloaded from.
+  If we're lucky, it's a fork of https://github.com/palladius/gemini-cli-demos with a different user than palladius (the workshop creator).
+* USER NAME and SURNAME: "!{git config --get user.name}". Change the surname picking from a famous character. Eg "John Doe" -> "John Kennedy",
+  and "Riccardo Carlesso" -> "Riccardo Cocciante", and so on. We're here to have fun, not to steal people info.
+* COMPUTER_TYPE: "!{uname}" (to understand if you have Linux, Mac, or Windows.
+* RANDOM_PIN: "!{echo $RANDOM}"
+
+## Workshop dates
+
+Known workshops are here:
+
+* 2026-08-29..2026-08-31 Argenta (FE, Italy) - Googley Prep Event. Secret Keyword: "OnlyProsPrep". ZIP Code: 00042.
+* 2026-09-26 Zurich - Cloud Summit. Secret Keyword: "Cuechicashli". ZIP Code: 41044.
+* 2026-10-03 Modena - Devfest. Secret Keyword: "VivaPavarotti". ZIP Code: 39059.
+
+Check against `TODAYS_DATE`. If nothing happens, ask/prompt user for City, a Secret Keyword and a ZIP Code. If nothing suits, use the default values:
+
+* YYYY-MM-DD Antarctica - AnyFest. Secret Keyword: "AnyDayIsG00d". ZIP Code: 17017.
+
+## Create a local YAML
+
+Create a `workshops/2025-Q3-summits/workshop.yaml` containing two stanzas:
+
+1. A `student:` section listing all the prerequisites for the workshop collected from the `## Pre-requisites` paragraph.
+2. A `workshop` section containing the workshop details.
+
+Then `git add` the file, git commit and git push.
+
+Keep track of the `git commit` hash.
+
+## Create an Issue
+
+Please do the following:
+
+* Please work with the engineer to find a feature or issue to work on. Eg: make better documentation, fix a bug, implement a new feature. Once you have a feature or issue, in mind, proceed to next step.
+* please create a new issue in the GitHub repo .
+    * Auth: You can use `gh` (if setup correctly since this will save time in authentication. This would imply guiding the user to having `gh` authenticated in localhost), but I don't want to be prescriptive. Anything works.
+    * Label: add `GCP Workshop` as a GH Label, plus the best among ["bug", "documentation" or "enhancement"].
+    * Assignee: assign the issue to yourself.
+    * signature: add a signature to the issue, like "-- Created by Gemini CLI on behalf of USERNAME.". Use emojis for the robot 🤖 and the user 👤.
+    * header: add a header to the issue, like "Note: GCP Workshop in [COUNTRY_FLAG] [CITY_NAME]". Add a blue bullet emoji as part of this.
+* Once done, add issue URL to the YAML under `student:`, eg `  issue: https://github.com/USER/gemini-cli-demos/issues/3`
+* Once done, instruct the user to raise their hands and say "I have created the issue ISSUE_ID for user $GITHUB_USERNAME and PIN is (today's PIN code)". Wait for instructions from the teacher. Also update the issue with this same sentence, but change the pin with 'XXXXX'.
+
+## Feature issue ideas
+
+Given this is a `demos/` monorepo, the easiest way to get started is to create a new demo. Please come up with a couple
+of ideas that leverage a self-sufficient demo which doesn't need to connect to the cloud. It could be a simple application
+
+If nothing works (but please insist a bit on the above, so every student will file a PR with a different folder in `demos/`), we can also:
+* make documentation better,
+* improve the STATUS.md by adding a new features
+* improve the STATUS.md by removing useless features
+* Add more examples to the documentation
+* find bugs in the code
+* review existing code
+* Improve the current "code works" part.
+
+## Pull Request to main repo
+
+Now the hard part!
+
+1. Find a file called "workshops/2025-Q3-summits/YYYYMMDD-UPPERCASE_CITY.md"; if it doesn't exist, copy it from  "workshops/2025-Q3-summits/template.md"
+2. Add a line to the table with your details:
+
+```
+* hour_and_minute: "YYYYMMDD HH:MM" (from `date +'%Y%m%d %H:%M'`)
+* github: github_username
+* computer: [Windows/Mac/Linux]
+* issue: https://github.com/USER/gemini-cli-demos/issues/NUMBER
+```
+
+Since everyone will have a different issue number and pin, make sure to update those fields accordingly.
+
+Note: it's important that YOUR issue is in YOUR forked repo. While the PR needs to be against the original (`palladius`) repo.
+
+## IMPORTANT Context
+
+More information by given by user, if so this is REALLY important:
+
+```
+{{args}}
+```
+"""
