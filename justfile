@@ -5,3 +5,14 @@ list:
 
 #install:
 #      "name": "palladius-common-commands",
+
+
+
+find-installed-commands:
+    find  ~/.gemini/extensions/palladius-common-commands/commands/ -name \*.toml
+
+
+# works from v0.0.3 hopefully
+check-for-updates:
+    #    gemini -y -c "/pcc/check-for-updates.toml Do not execute commands, just check for status and dump all info in tmp-from-justfile.md"
+    gemini -y -c "/pcc:check-for-updates Do not execute commands, just check for status and dump all info in tmp-from-justfile.md"
