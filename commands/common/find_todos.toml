@@ -25,7 +25,7 @@ Luckily Riccardo is a diligent guy and follows Google best practices - most of t
 3. Note TODOs can be multiline, so you need to be able to find them. A possible todo could be:
 
 ```markdown
-TODO(ricc): Riccardo - this is a multiline todo
+TODO(ricc): NO-CHECK: Riccardo - this is a multiline todo
   that spans multiple lines.
   It should be found by your command.
 ```
@@ -44,7 +44,7 @@ Once  you've found all TODOs, now it's time to organize them.
     - docs TODO
     - generic TODO (think of an epic)
     - they should be of type BUG_FIX/FEATURE_REQUEST/ENHANCEMENT/OTHER.
-    - they should have an owner. This should be 80% of time Riccardo, 19% ogemini CLI (you) and rarely someone else. If no owner is given, assume Riccardo.
+    - they should have an owner. This should be 80% of time the user, 19% Gemini CLI (you) and rarely someone else. If no owner is given, assume the user.
 
 Create two files in the `doc/todos/` folder:
 * `doc/todos/bugs.md`
@@ -59,7 +59,7 @@ In both, create a Markdown table with the following columns:
 - type (BUG_FIX/FEATURE_REQUEST/ENHANCEMENT/OTHER)
 - filename with absolute path: "path/to/file.ext". No need for row number!
 
-If the file exists already, make sure to merge the information, you can also override but I wouldnt recalculate a git blame once done :)
+If the file exists already, make sure to merge the information, you can also override but I wouldn't recalculate a git blame once done :)
 
 ## Github
 

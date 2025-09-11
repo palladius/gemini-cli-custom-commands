@@ -32,6 +32,7 @@ so you need to use the `git commit --author` flag with "Gemini CLI on behalf of 
  * When crafting the comment, ensure it is INCREMENTAL. It needs to only contain the new information or updates, it should NOT repeat something stated before (unless that thing is going to meaningfully change or is strictly needed for something else). Every word counts, so be concise and to the point.
 
 ## Monorepo considerations
+
  * If you feel like this is a monorepo with N repos, make sure the issue contains the repo name in the title in square brackets. For instance,
    if the repo hosts multiple apps by folder, Use `[folder123] ORIGINAL TITLE` if you're working on the `apps-portfolio` in `path/to/folder123`.
    If the last folder doesnt suffice, use your judgement to decide what to put in [] also looking at existing open/closed issues.

@@ -30,6 +30,8 @@ Internal docs (at go/releasing) say this:
 
 9. Scrub the comments. Once something is checked into version control, it stays visible in the history—even if you delete it later.
 
+**IMPORTANT**: When scrubbing comments, find all `TODO(...)` entries. However, you MUST ignore and not modify any `TODO` that contains the keyword `NO-CHECK`. This is used to explicitly mark `TODO`s that are examples in documentation and should be preserved.
+
 Be sure to remove:
 
 * Names and email addresses of Googlers, unless they give explicit permission
