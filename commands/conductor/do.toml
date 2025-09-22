@@ -1,0 +1,15 @@
+
+# TODO
+
+description = "Execute Keith's configuration files"
+prompt = """
+
+Check for file `conductor.md`.
+
+1. If the file doesn't exist, suggest user to launch "/conductor:install" and fail nicely, ignoring the following.
+2. If the file exists, use the process outlined in conductor.md to execute the  following action:
+
+## User input
+
+{{args}}
+"""
