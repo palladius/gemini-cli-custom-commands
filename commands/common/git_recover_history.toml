@@ -32,8 +32,8 @@ Your job is:
 
 Check the diffs to that file for all the commits, and also the commit message, and also what other files were committed.
 What could have happened is:
-* An LLM overwrote the file by susbstituting with line rather than adding
-* An LLM went rogue by calling a script to overwrite the file ignoring the gold that was there.
+* An automated process may have overwritten the file by substituting a line rather than adding to it.
+* An automated process may have overwritten the file, ignoring the existing valuable data.
 * human error.
 
 You're requested to do two things:

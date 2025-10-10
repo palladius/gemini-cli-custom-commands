@@ -38,6 +38,11 @@ This document provides a list of all the custom commands available in this exten
 *   **`/pcc:check-for-updates`**: Do I need an update?
 *   **`/pcc:refresh-user-manual`**: [internal] refresh the User manual of this repo
 
+### Plan Commands (`/plan`)
+
+*   **`/plan:do`**: Plan a new feature or fix a bug
+
+
 ## Wow Factor
 
 Here are a few examples of how you can use these commands in practice:

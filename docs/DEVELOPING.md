@@ -1,5 +1,12 @@
+# Dev manual
 
+These are random thoughts that should NOT be visible in README but are still relevant to the author.
 
+## Current Commands on your computer
+
+To see which commands you have installed, for pure curiosity:
+
+`find  ~/.gemini/extensions/palladius-common-commands/commands/ -name \*.toml`
 
 
 ## Wow factor

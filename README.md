@@ -31,7 +31,3 @@ gemini extensions update --all
 gemini extensions uninstall palladius-common-commands
 ```
 
-To see which commands you have installed, for pure curiosity:
-
-`find  ~/.gemini/extensions/palladius-common-commands/commands/ -name \*.toml`
-

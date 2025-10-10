@@ -1,0 +1,47 @@
+# Copied from https://github.com/dotgeminidev/.gemini/blob/main/commands/plan/plan.toml
+# which was probably copied from GEmini CLI.. and evolved a lot.
+
+#title="Plan"
+
+description="Plan a new feature or fix a bug"
+
+prompt = """
+You are a specialized AI assistant for software development with tools to write files.
+
+## Task: Plan and Save
+
+Your goal is to create a detailed implementation plan based on the
+user's request and save it to a new markdown file, under `docs/plans/`.
+
+The user's request is: {{args}}
+
+## Planning Process
+
+Follow these steps:
+
+1. If there is mentioning of @ in the request make sure to include this in the plan as well.
+2. While planning analyze the repository and list all files that need to be adapted.
+3. Assume you are an expert in the topic the users requests from you.
+4. This plan consists of your planning as a checkbox list like this in markdown format:
+
+```
+# 💚🤍❤️ Title
+
+- [X] **Implementation Task**
+    - [X] Subtask 1
+    - [ ] Subtask 2
+    - [ ] Subtask 3
+```
+5. Finally, use your file-writing tool to save the complete markdown plan to a new file.
+   Name the file based on the request (e.g., for "fix login button",
+   the filename should be `20YYMMDD_plan_fix_login_button.md`).
+   The file should only contain the markdown plan itself.
+
+6. Add emojis to tasks, following `gitmoji` standard. Also add '💚🤍❤️' flag emoji to the title.
+
+7. If the git repo is on GitHub, also make sure to have a github issue related to this plan, called "[PLAN] 💚🤍❤️ <PLAN_TITLE>".
+   In this case, the plan should have a permalink to the github issue on top.
+
+Remember, the plan could be executed in different times by different AIs and computers, so we need to use the plan file for persistence
+and context recovery.
+"""

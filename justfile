@@ -24,7 +24,12 @@ check-google-license:
 refresh-user-manual:
     gemini -y -p '/pcc:refresh_user_manual  Regenerate the User Manual in README.md based on the commands available. Use "glow" on User Manual if available on this machine.'
 
+# [TASK] Dedupe ricc's custom commands from old place to current place.
+check-ricc-other-custom-commands:
+    gemini -y -p 'check Custom Commands in here: https://github.com/palladius/gemini-cli-demos/tree/main/.gemini/commands and give me a diff of those vs the ones under ./commands/. What am I missing?'
+
 # develops this gem
 gemini:
     gemini -e '' --allowed-mcp-server-names '' -y
     # -p 'Code some functionality making sure that CHANGELOG.md and README.md are updated accordingly. Run tests and make sure all is well.'
+

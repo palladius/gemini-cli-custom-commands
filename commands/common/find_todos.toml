@@ -18,10 +18,10 @@ description = "Find TODOs in the codebase"
 prompt = """you're an expert Software Engineer.
 
 You're requested to explore the codebase for TODOs.
-Luckily Riccardo is a diligent guy and follows Google best practices - most of the time.
+Assuming the user is diligent and follows Google best practices - most of the time.
 
 1. Find all TODOs in the codebase using some sort of "find/grep" command.
-2. ALL TODOs need to match the regex /TODO/ (if Riccardo was lazy) or better "TODO(person): blah blah".
+2. ALL TODOs need to match the regex /TODO/ (to catch simple cases) or better "TODO(person): blah blah".
 3. Note TODOs can be multiline, so you need to be able to find them. A possible todo could be:
 
 ```markdown

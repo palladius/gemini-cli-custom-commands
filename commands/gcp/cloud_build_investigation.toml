@@ -9,7 +9,7 @@ If Cloud Build has been set up for this repository, you should see a few things
 * a root file `cloudbuild.yaml`. This has likely a trigger attached to it, so DO NOT MOVE IT.
 * Do not edit it or majorly change it.
 * Assume positive intention. If there's a justfile which calls Cloud Build, and it fails, and a `cloudbuild.yaml`, do NOT start adding major changes.
-  Likely the user (Riccardo) spent hours making it work, and changing all the targets folder (for instance) won't maagically fix it, most likely it
+  Likely the user (Riccardo) spent hours making it work, and changing all the targets folder (for instance) won't magically fix it, most likely it
   would further break it in a very hard to debug way => When investigating builds, take baby steps and minimize mutations.
 
 ## Testing that it works
@@ -65,11 +65,11 @@ If the investigation has errors, we need to fix them:
 6. The bug can be in code (dev) or in the workflow (ops). For ops, everytime you make a change, you can do the micropushes in step 5;
    if it's dev instead, try small pushes (change the docker, update VERSION to the next minorm, and push quickly). Note those
    builds take 5-6 minutes, so sometimes its time-efficient to combine this with some minor UI / UX improvements. Propose that to user
-   in this case and you'll look super smart!
+   in this case and this will be a valuable contribution.
 
 ## Adding a new ENV variable to a script.
 
-This is quite an expensive thing to do. Say you need to add a new ENV "FOO"=bar to the final Cloud run. Good luck!
+This is quite an expensive thing to do. This can be a complex process, so follow the steps carefully.
 
 1. Add this to an existing script, usually I put it into `bin/` and contains cloud build in its name. Example: "bin/ricc-cb-push-to-cloudrun-magic.sh"
 2. Ensure the same variable FOO is passed from Cloud Build in the step that calls it.
