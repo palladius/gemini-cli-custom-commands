@@ -34,7 +34,11 @@ Here's a possible approach:
 2. For each file, run a writing style checker like `proselint`.
 3. Report the findings to the user, suggesting improvements.
 
+## Proselint
+
 You can start by checking if `proselint` is installed and guide the user to install it if it's not.
+Check for https://github.com/amperser/proselint for installation instructions, depending on current system.
+Try avoiding `pip` if possible, as it's very virtualenv-specific. Fedora/Debian/Ubuntu seem more reliable installation sources.
 
 ## References
 

@@ -16,6 +16,10 @@ This document provides a list of all the custom commands available in this exten
 *   **`/conductor:do`**: Execute Keith's configuration files
 *   **`/conductor:install`**: Install Keith's configuration files
 
+### Dev Commands (`/dev`)
+
+*   **`/dev:check-writing-style`**: Check writing style for documentation files.
+
 ### Filesystem Commands (`/fs`)
 
 *   **`/fs:grep-code`**: recursive grepping - from template
@@ -24,7 +28,29 @@ This document provides a list of all the custom commands available in this exten
 
 *   **`/github:implement`**: Writes the minimal code to make a failing test pass.
 
+### GCP Commands (`/gcp`)
+
+*   **`/gcp:cloud_build_investigation`**: 🇫🇷 [ricc-chezmoi] Cloud Build Investigations and Tools
+
+
 ### PCC Commands (`/pcc`)
 
 *   **`/pcc:check-for-updates`**: Do I need an update?
 *   **`/pcc:refresh-user-manual`**: [internal] refresh the User manual of this repo
+
+## Wow Factor
+
+Here are a few examples of how you can use these commands in practice:
+
+*   **Find all the TODOs in your code:**
+    ```bash
+    gemini -p "/common:find_todos"
+    ```
+*   **Check for updates to this extension:**
+    ```bash
+    gemini -c "/pcc:check-for-updates"
+    ```
+*   **Commit and push your changes with a helpful message:**
+    ```bash
+    gemini -p "/common:git_commit_push Add a new feature"
+    ```
