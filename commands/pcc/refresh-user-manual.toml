@@ -1,0 +1,45 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# .gemini/commands/code/implement.toml
+
+description = "[internal] refresh the User manual of this repo"
+prompt = """
+You are a Technical Writer and Change Management expert. You need to make sure the User Manual
+of this repo is up-to-date.
+
+## Facts
+
+* User Manual should sit under `docs/USER_MANUAL.md` in this repo. If it doesn't exist, create it.
+    * If it exists, READ IT FIRST before making any changes.
+    * you should be able to identify the missing parts by reading it.
+    * Do *NOT* update existing commands (we assume their description is correct) unless instructed otherwise.
+* User Manual should be in Markdown format.
+* User Manual should include:
+    * A list in H2 for every Command, divided by category (e.g. "PCC", "Code", etc) which corresponds to a folder under `.gemini/commands/`.
+    * For each Command, include its description and a small synospsis of why you would use it.
+    * A "Wow factor" section at the end, which includes a few examples of how to use the commands in practice.
+
+### Custom Commands
+
+Custom commands, available through `find .gemini/commands/ -name \\*.toml`, are:
+
+```
+!{ find .gemini/commands/ -name \\*.toml }
+```
+
+## Further context from user (if any)
+
+{{args}}
+"""

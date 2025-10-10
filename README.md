@@ -3,9 +3,9 @@
 Self: https://github.com/palladius/gemini-cli-custom-commands
 Inspired by https://github.com/google-gemini/gemini-cli-security/tree/main
 
-This is a collection of all Carlessian commands, packaged into one place.
+This is a collection of all "Carlessian" commands, packaged into one place.
 
-## install
+## INSTALL
 
 **Note** *(requires Gemini CLI v0.4.0 or newer):
 
@@ -23,9 +23,15 @@ To see which commands you have installed, for pure curiosity:
 
 `find  ~/.gemini/extensions/palladius-common-commands/commands/ -name \*.toml`
 
+## User Manual
+
+For an extension User Manual, please
+
 ## Wow factor
 
-Once installed, run `just check-for-updates`. Or if you don't have `just` installed, you can "just" do `gemini -y -c "/pcc:check-for-updates"`
+Once installed, run `just check-for-updates`. Or if you don't have `just` installed, you can "just" do `gemini -y -c "/pcc:check-for-updates"`.
+
+Note this functionality has become useless since `0.4.1`'s `gemini extensions update --all`, but still: it's exciting to try genitive over version numbers!
 
 Sample output:
 
