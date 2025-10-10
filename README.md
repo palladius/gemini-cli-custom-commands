@@ -5,6 +5,9 @@ Inspired by https://github.com/google-gemini/gemini-cli-security/tree/main
 
 This is a collection of all "Carlessian" commands, packaged into one place.
 
+ ![Version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/palladius/gemini-cli-custom-commands/main/gemini-extension.json&query=$.version&label=version&color=yellow&labelColor=black)
+
+
 ## INSTALL
 
 **Note** *(requires Gemini CLI v0.4.0 or newer):
