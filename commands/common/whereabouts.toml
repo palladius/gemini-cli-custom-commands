@@ -12,9 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+###################################################################################
 # The idea is to use this to collect a number of different whereabouts logic
-# like self-inspection, and so on.
+# like self-inspection, and so on. This command is pretty useless except for creating
+# a more or less deterministic context for the Gemini CLI.
+###################################################################################
 description = "🦘 Riccardo Whereabouts logic for Gemini commands"
 
 prompt = """you're an expert Gemini CLI self-reflective agent.
@@ -26,11 +28,11 @@ You will investigate your whereabouts to provide to the user a Magic context JSO
     `gemini --list-extensions` to get a list of extensions.
 3. Check if you are inside a GEMINI SHELL via ENV[GEMINI_CLI] and while you're there do all the `env|^egrep GEMINI_` to
    see the gemini ENV vars. Skip API KEYS and SENSITIVE data.
-4. Check if there is a version file in the current directory, and if so, read it: !{cat VERSION}
+4. Check if there is a version file in the current directory, and if so, read it: `cat VERSION`.
 5. Check if there is a `justfile` directory, I love them. Try to familiarize with theose commands, I use them to give
-    you some "commands on rails": !{just --list}
+    you some "commands on rails": `just --list`.
 
-Return all as a YAML and also as "GIT_REPO/carlessian_context.yaml" , unless additional context
+Return all as a YAML and also as "$GIT_REPO/carlessian_context.yaml" , unless additional context
 asks for something different. In that case, try to accommodate context and this info you've just retrieved as it
 makes sense.
 

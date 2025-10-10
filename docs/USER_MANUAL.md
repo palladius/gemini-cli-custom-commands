@@ -30,7 +30,7 @@ This document provides a list of all the custom commands available in this exten
 
 ### GCP Commands (`/gcp`)
 
-*   **`/gcp:cloud_build_investigation`**: 🇫🇷 [ricc-chezmoi] Cloud Build Investigations and Tools
+*   **`/gcp:cloud_build_investigation`**:  Cloud Build Investigations and Tools
 
 
 ### PCC Commands (`/pcc`)

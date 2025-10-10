@@ -1,11 +1,9 @@
 
+# Install just from https://github.com/casey/just
+
+# Lists targets
 list:
     just -l
-
-
-#install:
-#      "name": "palladius-common-commands",
-
 
 
 find-installed-commands:
