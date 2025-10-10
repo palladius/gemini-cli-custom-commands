@@ -6,6 +6,8 @@ Since it has a certain visibility, we need to ensure that:
 2. VERSION is found in `gemini-extension.json`
 
 
-## BUGS
+## Symlinks
 
-Currently commands are BOTH under `./gemini/commands/` and under `commands/` which is confusing.
+Note: Currently  `./gemini/commands/` is symlinked against `commands/` to provide dogfooding capabilities. Let's make sure new functionality is add ( and `git add`ed) to `commands/`.
+
+When in doubt, check the official vanilla repo: https://github.com/gemini-cli-extensions/security/
