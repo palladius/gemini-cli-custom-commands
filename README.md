@@ -1,11 +1,12 @@
 # Palladius Gemini CLI custom commands (or PCC)
 
 Self: https://github.com/palladius/gemini-cli-custom-commands
-Inspired by https://github.com/google-gemini/gemini-cli-security/tree/main
+
+Inspired by [google-gemini/gemini-cli-security](https://github.com/google-gemini/gemini-cli-security) extension.
 
 This is a collection of all "Carlessian" commands, packaged into one place.
 
- ![Version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/palladius/gemini-cli-custom-commands/main/gemini-extension.json&query=$.version&label=version&color=yellow&labelColor=black) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+ ![Version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/palladius/gemini-cli-custom-commands/main/gemini-extension.json&query=$.version&label=version&color=red&labelColor=blue) [![License](https://img.shields.io/badge/License-Apache%202.0-green?labelColor=yellow)](LICENSE)
 
 
 ## INSTALL
@@ -13,12 +14,12 @@ This is a collection of all "Carlessian" commands, packaged into one place.
 **Note** *(requires Gemini CLI v0.4.0 or newer):
 
 ```bash
-# Install
+# 💛 Install
 gemini extensions install https://github.com/palladius/gemini-cli-custom-commands
-# Update
+# 🔄 Update
 gemini extensions update palladius-common-commands
 gemini extensions update --all
-# Uninstall
+# 🤢 Uninstall
 gemini extensions uninstall palladius-common-commands
 ```
 
