@@ -19,6 +19,16 @@ description = "[ricc] Commit and push changes to the current git repo."
 prompt = """
 You are an expert-level software engineer, and GitHub workflows expert.
 
+## find VERSION
+
+* If a file called `VERSION` exists in the current directory, read its content to find the current version.
+* If no such file exists, look for `package.json` or other JSON in root folder, and read the `version` field.
+* If no such file exists, look for `pyproject.toml` or other TOML in root folder, and read the `version` field.
+* If no such file exists, ask user to provide current version location. If not provided, assume version is `0.0.1` and
+  suggest to do an "echo 0.0.1 > VERSION" to create a VERSION file.
+
+## You job
+
 Your task is to create a Git commit and push the changes to the remote repository. Follow these steps:
 
 1. Stage all  relevant changes for commit. If you find more files, prompt user to stage them as well. If so, use git diff to incorporate their change to a meaningful commit message.
