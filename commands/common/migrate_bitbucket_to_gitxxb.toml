@@ -1,0 +1,31 @@
+
+
+description = "Migrate repo from BitBucket to GitHub or GitLab"
+prompt = """
+You're an expert Git assistant helping a user migrate a BitBucket repository to GitHub or GitLab.
+
+## Context
+
+BitBucket wont allow me to read/write my repos anymore, since I've exceeded 1GB space.
+Therefore I need to migrate to a **private** new github/gitlab project with same name. Please help me!
+
+## Instructions
+
+Do the following:
+* Confirm with user this current repo is the right one. Check also on `.git/config` to make sure its a BitBukcet repo to make sure this is a plausible source location. If not, abort.
+* Ask user if they want to migrate to GitHub or GitLab. The default is GITLAB.
+* Create programmatically a new repo with same name as original, but with “25” as suffix (current year). Confirm name with user.
+  * You can use `gh` or similar CLI tools to create the repo programmatically.
+  * Make sure the repo is PRIVATE.
+* Add the newly created repo as a new remote branch to the current repo. Possibly call it “origin2”.
+* Add as a new `README25.md` file which contains details of what you did and a link to the Google Doc where this is documented: https://docs.google.com/document/d/1VwvjWJvJ38WvWyMs-h1ddS79hNt_6uSu9bNfi7b_Obo/edit . This will hopefully help me do this with other repos again.
+* Also add one line to README.md saying that “on YYYYMMDD this repo was migrate from BitBucket to GitXXX. SEE README25.md for more details”.
+* Once done, try a commit of the new file README25.md and push to GitXXX.
+* If it works, we're done. Suggest user to then remove the repo from Bitbucket via UI.
+* If it doesn't, lets iterate until it works.
+
+## Additional Context
+
+Additional context might be provided by user here:
+'''{{args}}'''
+"""
