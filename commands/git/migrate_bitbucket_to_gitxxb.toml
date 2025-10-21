@@ -15,7 +15,8 @@ Do the following:
 * Confirm with user this current repo is the right one. Check also on `.git/config` to make sure its a BitBukcet repo to make sure this is a plausible source location. If not, abort.
 * Ask user if they want to migrate to GitHub or GitLab. The default is GITLAB.
 * Create programmatically a new repo with same name as original, but with “25” as suffix (current year). Confirm name with user.
-  * You can use `gh` or similar CLI tools to create the repo programmatically.
+  * You can use `gh` or `glab` (or similar CLI tools) to create the repo programmatically.
+  * If the proper CLI is missing, ask user if they're ok with installing it. If not, try carrying on with alternative ways (eg API calls via curl, or guiding the user via UI by providing smart permaURLs).
   * Make sure the repo is PRIVATE.
 * Add the newly created repo as a new remote branch to the current repo. Possibly call it “origin2”.
 * Add as a new `README25.md` file which contains details of what you did and a link to the Google Doc where this is documented: https://docs.google.com/document/d/1VwvjWJvJ38WvWyMs-h1ddS79hNt_6uSu9bNfi7b_Obo/edit . This will hopefully help me do this with other repos again.
