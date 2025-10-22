@@ -12,6 +12,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `commands/git/migrate_bitbucket_to_gitxxb.toml` to improve the migration process.
 - Bumped version to 0.0.12 in `gemini-extension.json`.
 
+## [0.0.11] - 2025-10-21
+
+### Changed
+
+- Moved git commands to `commands/git` directory.
+- Moved github commands to `commands/github` directory.
+
+### Removed
+
+- Removed `commands/github/implement.toml`.
+
+## [0.0.10] - 2025-10-21
+
+### Added
+
+- **Git Commands**:
+  - `migrate_bitbucket_to_gitxxb.toml`: A new command to migrate a BitBucket repository to GitHub or GitLab.
+
+### Changed
+
+- Updated `commands/common/git_commit_push.toml` to add a note about `.gitignore`.
+- Updated `.gitignore` to ignore `carlessian_context.yaml`.
+
 ## [0.0.9] - 2025-10-10
 
 ### Added

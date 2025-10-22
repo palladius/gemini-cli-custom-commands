@@ -32,6 +32,11 @@ Do the following:
 
 * The `glab create REPO --private` command hangs, but it works. Call it with "timeout 10s glab create ..." to avoid hanging forever. And later check if it was created.
 
+## Ricc-only
+
+If the user is Riccardo (username "ricc"), also check for the presence of `~/git/gic/bin/repos-ricc`.
+If this file exists, update it with the NEW repo information.
+
 ## Additional Context
 
 Additional context might be provided by user here:
