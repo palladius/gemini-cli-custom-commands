@@ -12,25 +12,34 @@ Therefore I need to migrate to a **private** new github/gitlab project with same
 ## Instructions
 
 Do the following:
-* Confirm with user this current repo is the right one. Check also on `.git/config` to make sure its a BitBukcet repo to make sure this is a plausible source location. If not, abort.
-* Ask user if they want to migrate to GitHub or GitLab. The default is GITLAB.
-* Create programmatically a new repo with same name as original, but with “25” as suffix (current year). Confirm name with user.
+* Create a `MIGRATION_PLAN25.md` first with the following, so it's easy to iterate in the FS on what happens (things might go south).
+* Migration plan should contain SRC repo, DST repo, steps to do, and a checklist of what was done. You might need some interaction with user to finalize it.
+  * Confirm with user this current repo is the right one. Check also on `.git/config` to make sure its a BitBukcet repo to make sure this is a plausible source location. If not, abort.
+  * Ask user if they want to migrate to GitHub or GitLab. The default is GITLAB.
+  * Confirm with user the name of the new repo to create. Propose a smart append of "25" (current year) to avoid name clashes.
+* now you can proceed with the migration according to the checklist, and mark things done in the MIGRATION_PLAN25.md as you proceed.
+
+Proper migration steps:
+
+* Create programmatically the new repo.
   * You can use `gh` or `glab` (or similar CLI tools) to create the repo programmatically.
   * If the proper CLI is missing, ask user if they're ok with installing it. If not, try carrying on with alternative ways (eg API calls via curl, or guiding the user via UI by providing smart permaURLs).
   * Make sure the repo is PRIVATE.
   * Confirm the username to create the repo under (ask user if needed). Suggest to memorize it for later use (eg "Remember my GitHub username is palladius" / "Remember my GitLab username is palladius" ).
-* Add the newly created repo as a new remote branch to the current repo. Possibly call it “origin2”.
+* Add the newly created repo as a new remote branch to the current repo. Possibly call it “origin25”.
 * Add as a new `README25.md` file which contains details of what you did and a link to the Google Doc where this is documented: https://docs.google.com/document/d/1VwvjWJvJ38WvWyMs-h1ddS79hNt_6uSu9bNfi7b_Obo/edit and a permalink to OLD BB repo. This will hopefully help me do this with other repos again.
 * Also add one line to README.md saying that “on YYYYMMDD this repo was migrate from BitBucket to GitXXX. SEE README25.md for more details”.
 * Once done, try a commit of the new file README25.md and push to GitXXX.
 * If it works, we're done. Suggest user to then remove the repo from Bitbucket via UI.
   * URL will look like https://bitbucket.org/USERNAME/REPONAME/admin
-* Finally swap origin2 to origin (renaming BB to "bitbucket-old-origin"), so that future git push/pull work as expected.
-* If it doesn't, lets iterate until it works.
+* Finally swap origin25 to origin (renaming the old BB origin to "bitbucket-old-origin") in `.git/config`, so that future git push/pull work as expected.
+* If it doesn't work, lets iterate until it works. Test a simple pull/push to the new remote to confirm.
+* Check for CI/CD pipelines in the code, eg `cloudbuild.yaml` files. If you find them, identify the need for a migration of the pipeline to the new repo. Add this as an emoji-ful "## TODO" H2 in the README25.
 
 ## Caveats
 
 * The `glab create REPO --private` command hangs, but it works. Call it with "timeout 10s glab create ..." to avoid hanging forever. And later check if it was created.
+* Some other glab commands hang too. Always prepend a "timeout 10s" to be safe, until we find a permafix.
 
 ## Ricc-only
 
