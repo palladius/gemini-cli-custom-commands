@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.15] - 2025-10-30
+
+### Changed
+
+- Updated `README.md`:
+  - Added 'Available Commands' section with summaries and links to `USER_MANUAL.md`.
+  - Replaced 'PCC' with '🔄' in the main title.
+  - Changed 'PCC' to 'Self-Reflect' with '🔄' emoji in the command list.
+  - Added '🦊 GitLab' command group summary.
+  - Changed '🤖 Conductor' emoji to '🎼 Conductor'.
+- Updated `docs/USER_MANUAL.md`:
+  - Added '### 🦊 GitLab Commands (`/gitlab`)' section.
+  - Added emojis to all command group headings.
+  - Renamed 'PCC Commands' to 'Self-Reflect Commands' with '🔄' emoji.
+  - Changed '🤖 Conductor Commands' emoji to '🎼 Conductor Commands'.
+
 ## [0.0.14] - 2025-10-29
 
 ### Added

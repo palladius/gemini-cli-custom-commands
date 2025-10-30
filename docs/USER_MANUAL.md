@@ -2,7 +2,7 @@
 
 This document provides a list of all the custom commands available in this extension.
 
-### Common Commands (`/common`)
+### 🏃 Common Commands (`/common`)
 
 *   **`/common:check_google_license`**: [ricc] Checks for license compliance in pragmatic way.
 *   **`/common:find_todos`**: Find TODOs in the codebase
@@ -11,34 +11,38 @@ This document provides a list of all the custom commands available in this exten
 *   **`/common:github_issue`**: Interact with GitHub on Issues on a git repo.
 *   **`/common:whereabouts`**: 🦘 Riccardo Whereabouts logic for Gemini commands
 
-### Conductor Commands (`/conductor`)
+### 🎼 Conductor Commands (`/conductor`)
 
 *   **`/conductor:do`**: Execute Keith's configuration files
 *   **`/conductor:install`**: Install Keith's configuration files
 
-### Dev Commands (`/dev`)
+### ✍️ Dev Commands (`/dev`)
 
 *   **`/dev:check-writing-style`**: Check writing style for documentation files.
 
-### Filesystem Commands (`/fs`)
+### 📁 Filesystem Commands (`/fs`)
 
 *   **`/fs:grep-code`**: recursive grepping - from template
 
-### GitHub Commands (`/github`)
+### 🐙 GitHub Commands (`/github`)
 
 *   **`/github:implement`**: Writes the minimal code to make a failing test pass.
 
-### GCP Commands (`/gcp`)
+### 🦊 GitLab Commands (`/gitlab`)
+
+*   **`/gitlab:issue`**: Interact with GitLab on Issues on a git repo.
+
+### ☁️ GCP Commands (`/gcp`)
 
 *   **`/gcp:cloud_build_investigation`**:  Cloud Build Investigations and Tools
 
 
-### PCC Commands (`/pcc`)
+### 🔄 Self-Reflect Commands (`/pcc`)
 
 *   **`/pcc:check-for-updates`**: Do I need an update?
 *   **`/pcc:refresh-user-manual`**: [internal] refresh the User manual of this repo
 
-### Plan Commands (`/plan`)
+### 🗺️ Plan Commands (`/plan`)
 
 *   **`/plan:do`**: Plan a new feature or fix a bug
 
