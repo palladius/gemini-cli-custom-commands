@@ -33,6 +33,7 @@ gemini extensions uninstall palladius-common-commands
 
 Here's a sneak peek of the commands available. For a full list, see the [User Manual](docs/USER_MANUAL.md).
 
+*   **`🎬 AICinema`**: A collection of commands to create audio and video stories using generative AI.
 *   **`🏃 Common`**: A collection of everyday commands to streamline your workflow, from checking licenses to managing TODOs and git commits.
 *   **`🎼 Conductor`**: Manage and execute Keith's configuration files with ease.
 *   **`✍️ Dev`**: Developer-focused commands, starting with a tool to check the writing style of your documentation.

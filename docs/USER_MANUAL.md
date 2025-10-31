@@ -2,6 +2,12 @@
 
 This document provides a list of all the custom commands available in this extension.
 
+### 🎬 AICinema Commands (`/aicinema`)
+
+*   **`/aicinema:audio_story`**: Create an audio story from a script using GMP Assistant.
+*   **`/aicinema:check_install`**: Check if the GoLang installation was done correctly.
+*   **`/aicinema:video_storyboard`**: Create an audio/video story from a script using GenAI.
+
 ### 🏃 Common Commands (`/common`)
 
 *   **`/common:check_google_license`**: [ricc] Checks for license compliance in pragmatic way.

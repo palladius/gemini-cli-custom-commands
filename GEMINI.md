@@ -22,3 +22,9 @@ When working on new features, ensure that you keep:
   * Any new script warrants a minor version bump (0.0.42 -> 0.0.43).
   * A major change/restucturing warrants a mediummiddle version bump (0.0.42 -> 0.1.0).
   * A change in docs, readme, ... whcih does NOT alter the scripts majorly should stay in current version.
+
+## Documentation
+
+* All commands under commands/ should be available in `docs/USER_MANUAL.md`.
+* Whenever a file is added or moved, trigger a comparative search between that file.
+* If you changed `docs/USER_MANUAL.md`, also bring those changes, summarized, under the `README.md`.
