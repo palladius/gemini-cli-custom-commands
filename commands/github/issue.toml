@@ -34,8 +34,8 @@ so you need to use the `git commit --author` flag with "Gemini CLI on behalf of 
 ## Monorepo considerations
 
  * If you feel like this is a monorepo with N repos, make sure the issue contains the repo name in the title in square brackets. For instance,
-   if the repo hosts multiple apps by folder, Use `[folder123] ORIGINAL TITLE` if you're working on the `apps-portfolio` in `path/to/folder123`.
-   If the last folder doesnt suffice, use your judgement to decide what to put in [] also looking at existing open/closed issues.
+   if the repo hosts multiple apps by folder, Use `[folder123] ORIGINAL TITLE` if you're working in `path/to/folder123`.
+   If the last folder doesn't suffice, use your judgement to decide what to put in [] also looking at existing open/closed issues.
 * If its not a monorepo, you can ignore the above.
 * If undecided, prompt user.
 

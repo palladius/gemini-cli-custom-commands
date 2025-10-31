@@ -4,7 +4,7 @@ Self: https://github.com/palladius/gemini-cli-custom-commands
 
 This is a collection of all "Carlessian" commands, packaged into one place.
 
-**TL;DR** `gemini extensions install https://github.com/palladius/gemini-cli-custom-commands`
+**TL;DR** `$ gemini extensions install https://github.com/palladius/gemini-cli-custom-commands`
 
  ![Version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/palladius/gemini-cli-custom-commands/main/gemini-extension.json&query=$.version&label=version&color=red&labelColor=blue) [![License](https://img.shields.io/badge/License-Apache%202.0-green?labelColor=yellow)](LICENSE)
 - 📖 [User Manual](docs/USER_MANUAL.md)

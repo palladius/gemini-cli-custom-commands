@@ -44,10 +44,6 @@ Your task is to create a Git commit and push the changes to the remote repositor
    Should the commit message be very rich, it might make sense to create a tmp/file.md with the commit message and use:
    `git commit -F tmp/file.md`. Do not use /tmp/ as you have nmo access to it. Ensure that `tmp/` is git-ignored.
 
-1. Remember its a monorepo, so the commits should be per-repo ([apps-portfolio], ..). And the VERSION/CHANGELOG.md should
-   be updated in the repo you are working on. On rare occasions you might want to have multirepo updates. You judge
-   (or ask user) if this should reflect in local version bumping.
-
 1. Push the changes to the remote repository:
    ```
    git push origin main
