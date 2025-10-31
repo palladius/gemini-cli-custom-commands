@@ -1,0 +1,40 @@
+
+#############################################################
+# To add to your `justfile`, Add this line on top of it:
+#############################################################
+# import 'justfile.ai_cinema'
+#############################################################
+
+[group: 'aicinema']
+gemini: gemini-geniectl
+
+[group: 'aicinema']
+gemini-geniectl:
+    #!/bin/bash
+    echo '🌱🪄🎦 Setting up MCP Veo/Chirp/Imagen for success... You only need to ensure the gcloud auth works: just gcloud-auth'
+    echo 'If youre not in US, remember to change GOOGLE_CLOUD_REGION and LOCATION to sth appropriate, like europe-west1'
+    export PATH=~/go/bin/:$PATH
+    . .env
+    gemini -c --approval-mode auto_edit
+
+[group: 'aicinema']
+gcloud-auth:
+    #!/bin/bash
+
+    set -euo pipefail
+    . .env
+    echo "Setting up environment variables for authentication..."
+    echo "- GOOGLE_CLOUD_PROJECT: $GOOGLE_CLOUD_PROJECT"
+    echo "- GOOGLE_CLOUD_LOCATION: ${GOOGLE_CLOUD_LOCATION}"
+    gcloud config set project $GOOGLE_CLOUD_PROJECT
+    gcloud config set compute/region $GOOGLE_CLOUD_LOCATION
+    gcloud auth application-default login
+    gcloud auth application-default print-access-token
+
+# Hussain is a rockstar!
+[group: 'aicinema']
+chirp-io-amo-la-pizza:
+    echo '{"jsonrpc":"2.0","method":"tools/call","id":2,"params":{"name":"chirp_tts","arguments":{"voice_name": "it-IT-Chirp3-HD-Zephyr", "text":"io amo la pizza", "output_directory": "."}}}' | mcp-chirp3-go | jq .
+chirp-io-amo-modena:
+    echo '{"jsonrpc":"2.0","method":"tools/call","id":2,"params":{"name":"chirp_tts","arguments":{"voice_name": "it-IT-Chirp3-HD-Zephyr", "text":"io amo Modena!", "output_directory": "."}}}' | mcp-chirp3-go | tee modena.json | jq .
+    cat modena.json | jq -r .result.content[0].text | sed -n 's/.*Audio saved to: \(.*\.wav\).*/\1/p' | xargs open

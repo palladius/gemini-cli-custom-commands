@@ -24,7 +24,26 @@ Allow you to:
 -   `aicinema:check_install`: Check if the GoLang installation was done correctly.
 -   `aicinema:video_storyboard`: Create an audio/video story from a script using GenAI.
 
+## Troubleshooting
 
+* if MCP servers dont start, the most probable cause is gcloud auth: `just gcloud-auth`.
+* If MCP bin cant be found -> check PATH: `export PATH=$PATH:~/go/bin`
+* when everything works, BEFORE testing gemini cli, try this: `just chirp-io-amo-la-pizza`: it runs a chirp model to say a sentence in italian. If it works, it should generate a WAV file and print a JSON like:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 2,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Speech synthesized successfully with voice it-IT-Chirp3-HD-Zephyr. Audio saved to: chirp_audio-it-IT-Chirp3-HD-Zephyr-20251031-163404.wav (111404 bytes)."
+      }
+    ]
+  }
+}
+```
 
 ## Notes
 

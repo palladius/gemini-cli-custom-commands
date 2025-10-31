@@ -1,0 +1,55 @@
+// Sample
+{
+  "general": {
+    "enablePromptCompletion": true
+  } ,
+  "mcpServers": {
+    "veo": {
+      "command": "mcp-veo-go",
+      "env": {
+        "MCP_REQUEST_MAX_TOTAL_TIMEOUT": "240000",
+        "MCP_SERVER_REQUEST_TIMEOUT": "30000",
+        "GENMEDIA_BUCKET": "your-project-id-mcp-genmedia",
+        "LOCATION": "us-central1",
+        "PROJECT_ID": "your-project-id"
+      }
+    },
+    "imagen": {
+      "trust": true,
+      "command": "mcp-imagen-go",
+      "env": {
+        "MCP_SERVER_REQUEST_TIMEOUT": "55000",
+        "GENMEDIA_BUCKET": "your-project-id-mcp-genmedia",
+        "LOCATION": "us-central1",
+        "PROJECT_ID": "your-project-id"
+      }
+    },
+    "chirp3-hd": {
+      "trust": true,
+      "command": "mcp-chirp3-go",
+      "env": {
+        "MCP_SERVER_REQUEST_TIMEOUT": "55000",
+        "GENMEDIA_BUCKET": "your-project-id-mcp-genmedia",
+        "LOCATION": "us-central1",
+        "PROJECT_ID": "your-project-id"
+      }
+    },
+    "lyria": {
+      "command": "mcp-lyria-go",
+      "env": {
+        "GENMEDIA_BUCKET": "your-project-id-mcp-genmedia",
+        "LOCATION": "us-central1",
+        "PROJECT_ID": "your-project-id",
+        "MCP_SERVER_REQUEST_TIMEOUT": "55000"
+      }
+    },
+    "avtool": {
+      "command": "mcp-avtool-go",
+      "env": {
+        "LOCATION": "us-central1",
+        "PROJECT_ID": "your-project-id",
+        "MCP_SERVER_REQUEST_TIMEOUT": "55000"
+      }
+    }
+  }
+}
