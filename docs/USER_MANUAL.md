@@ -8,6 +8,10 @@ This document provides a list of all the custom commands available in this exten
 *   **`/aicinema:check_install`**: Check if the GoLang installation was done correctly.
 *   **`/aicinema:video_storyboard`**: Create an audio/video story from a script using GenAI.
 
+### 💻 Code Commands (`/code`)
+
+*   **`/code:pda`**: Follows the Plan, Define, Act workflow to structure project execution.
+
 ### 🏃 Common Commands (`/common`)
 
 *   **`/common:check_google_license`**: [ricc] Checks for license compliance in pragmatic way.

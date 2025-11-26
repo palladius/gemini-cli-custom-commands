@@ -12,10 +12,15 @@ Note: Currently `./gemini/commands/` is symlinked against `commands/` to provide
 
 When in doubt, check the official vanilla repo: https://github.com/gemini-cli-extensions/security/
 
-A Custom Command from Gemini CLI works like this:
+## About Custyom Commands
+
+A Custom Command from [Gemini CLI](https://github.com/google-gemini/gemini-cli) works like this:
+
 1. It's written as `.gemini/commands/path/to/file.toml`
 2. It's invoked via `/path:to:file some string arguments`
-3. Arguments are passes to the file as `{ { args } }`
+3. Arguments are passes to the file as `{ { args } }` (without spaces).
+
+Public docs on Custom commands is [here](https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/custom-commands.md).
 
 ## Feedback Loop
 
@@ -33,3 +38,4 @@ When working on new features, ensure that you keep:
 * All commands under commands/ should be available in `docs/USER_MANUAL.md`.
 * Whenever a file is added or moved, trigger a comparative search between that file.
 * If you changed `docs/USER_MANUAL.md`, also bring those changes, summarized, under the `README.md`.
+

@@ -34,6 +34,7 @@ gemini extensions uninstall palladius-common-commands
 Here's a sneak peek of the commands available. For a full list, see the [User Manual](docs/USER_MANUAL.md).
 
 *   **`🎬 AICinema`**: A collection of commands to create audio and video stories using generative AI.
+*   **`💻 Code`**: Commands for structuring your coding workflow.
 *   **`🏃 Common`**: A collection of everyday commands to streamline your workflow, from checking licenses to managing TODOs and git commits.
 *   **`🎼 Conductor`**: Manage and execute Keith's configuration files with ease.
 *   **`✍️ Dev`**: Developer-focused commands, starting with a tool to check the writing style of your documentation.
@@ -47,3 +48,8 @@ Here's a sneak peek of the commands available. For a full list, see the [User Ma
 
 **WARNING**: This project is intended for demonstration purposes only. It is not intended for use in a production environment.
 
+
+## Thanks
+
+* Arthur Yau for contributing the code/PDA framework.
+* Keith B. for the concductor framework.
