@@ -8,9 +8,14 @@ Since it has a certain visibility, we need to ensure that:
 
 ## Symlinks
 
-Note: Currently  `./gemini/commands/` is symlinked against `commands/` to provide dogfooding capabilities. Let's make sure new functionality is add ( and `git add`ed) to `commands/`.
+Note: Currently `./gemini/commands/` is symlinked against `commands/` to provide dogfooding capabilities. Let's make sure new functionality is add ( and `git add`ed) to `commands/`.
 
 When in doubt, check the official vanilla repo: https://github.com/gemini-cli-extensions/security/
+
+A Custom Command from Gemini CLI works like this:
+1. It's written as `.gemini/commands/path/to/file.toml`
+2. It's invoked via `/path:to:file some string arguments`
+3. Arguments are passes to the file as `{ { args } }`
 
 ## Feedback Loop
 
