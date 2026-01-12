@@ -4,12 +4,13 @@ ricc-app:
   maturity: functional
   app_name: gemini-cli-custom-commands
   lang: toml
-  app_description: A collection of custom commands for the Gemini CLI to enhance workflow
-    and extend functionality.
+  app_description: A collection of Riccardo's custom commands for the Gemini CLI to enhance workflow
+    and extend functionality, with a focus on  GCP, GitHub, and Ops.
   code_url: git@github.com:palladius/gemini-cli-custom-commands.git
   links:
     user_manual: docs/USER_MANUAL.md
     gemini_cli_extensions: https://geminicli.com/extensions/browse/
+    github_url: https://github.com/palladius/gemini-cli-custom-commands
   stack:
   - toml
   - shell
