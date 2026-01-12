@@ -32,7 +32,7 @@ When working on new features, ensure that you keep:
   * Any new script warrants a minor version bump (0.0.42 -> 0.0.43).
   * A major change/restucturing warrants a mediummiddle version bump (0.0.42 -> 0.1.0).
   * A change in docs, readme, ... whcih does NOT alter the scripts majorly should stay in current version.
-* use `gitmoji` for commits and changelog entries.
+* use `gitmoji` for commits and changelog entries. If you propose a commit change yourself, please add some sort of AI signature, eg ("-- made with AntiGravity" or "-- made with Gemini CLI", .. whichever feels best).
 
 ## Documentation
 

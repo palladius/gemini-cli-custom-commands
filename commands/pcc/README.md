@@ -1,4 +1,8 @@
-This folder contains anything related to this extension itself ("reflection" style).
+This folder contains anything related to this extension itself (Meta/Reflection style).
+
+You're unlikely to need these commands unless you contribute to this repo. But it's still good for learning.
+
+TODO(ricc): find a way to publish these in dev but not in prod.
 
 ## Naming
 

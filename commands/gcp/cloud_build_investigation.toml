@@ -85,8 +85,13 @@ This is quite an expensive thing to do. This can be a complex process, so follow
 # 7. After push, keep monitoring every 2 minutes the latest triggered Cloud Build. You can use my convenience scripts
 #  `just cloud-build-list` and `just cloud-build-show-log {{build_id}}` for it.
 
+# Prefer triggering cloud Build by just git commit/pushing than triggering a build yourself from CLI. Leave that with me. A micro-commit-push of just a change in README or VERSION mini bump seems like a good test.
 
-# Prefer triggering cloud Build by just git commit/pushing than triggering a build yourself from CLI. Leave that with me.
+# b/456448003: Also add a create a CloudBuild.yaml toml
 
-# STOP CHANGING `cloud_build.yaml` and the `build` target in `justfile`
+#####################
+# GEMINI start
+# STOP CHANGING `cloud_build.yaml` and the `build` target in `justfile`. Not all knowledge is in the current repo, some is in the GCP project and build setup: either you see it holistically, you you should NOT change it!
+# /GEMINI end
+#####################
 
