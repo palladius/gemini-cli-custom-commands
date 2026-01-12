@@ -35,15 +35,18 @@ Here's a sneak peek of the commands available. For a full list, see the [User Ma
 
 *   **`🎬 AICinema`**: A collection of commands to create audio and video stories using generative AI.
 *   **`💻 Code`**: Commands for structuring your coding workflow.
-*   **`🏃 Common`**: A collection of everyday commands to streamline your workflow, from checking licenses to managing TODOs and git commits.
+*   **`🏃 Common`**: A collection of everyday commands to streamline your workflow, from managing TODOs to checking whereabouts.
 *   **`🎼 Conductor`**: Manage and execute Keith's configuration files with ease.
 *   **`✍️ Dev`**: Developer-focused commands, starting with a tool to check the writing style of your documentation.
-*   **`📁 Filesystem`**: Handy filesystem operations, like recursively grepping through your code.
-*   **`☁️ GCP`**: Tools for interacting with Google Cloud Platform, starting with Cloud Build investigations.
-*   **`🐙 GitHub`**: All about GitHub, starting with a command to help you implement code to fix failing tests.
+*   **`� DevRel`**: Developer Relations tools, including article feedback and license checking.
+*   **`�📁 Filesystem`**: Handy filesystem operations, like recursively grepping through your code.
+*   **`🔀 Git`**: Git workflow automation, including commit/push, BitBucket migration, and history recovery.
+*   **`🐙 GitHub`**: Interact with GitHub issues and repository management.
 *   **`🦊 GitLab`**: Interact with GitLab on issues and other repository tasks.
+*   **`☁️ GCP`**: Tools for interacting with Google Cloud Platform, starting with Cloud Build investigations.
 *   **`🔄 Self-Reflect`**: Manage this extension itself, with commands to check for updates and refresh the user manual.
 *   **`🗺️ Plan`**: Helps you plan new features or bug fixes.
+*   **`🚨 SRE`**: Site Reliability Engineering tools, including comprehensive postmortem document creation with automated bug filing and timeline management.
 
 
 **WARNING**: This project is intended for demonstration purposes only. It is not intended for use in a production environment.

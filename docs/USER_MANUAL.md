@@ -14,11 +14,7 @@ This document provides a list of all the custom commands available in this exten
 
 ### 🏃 Common Commands (`/common`)
 
-*   **`/common:check_google_license`**: [ricc] Checks for license compliance in pragmatic way.
 *   **`/common:find_todos`**: Find TODOs in the codebase
-*   **`/common:git_commit_push`**: [ricc] Commit and push changes to the current git repo.
-*   **`/common:git_recover_history`**: Reconcile apps in random-apps-ideas/ with JSON in GitHub Pages.
-*   **`/common:github_issue`**: Interact with GitHub on Issues on a git repo.
 *   **`/common:whereabouts`**: 🦘 Riccardo Whereabouts logic for Gemini commands
 
 ### 🎼 Conductor Commands (`/conductor`)
@@ -30,13 +26,24 @@ This document provides a list of all the custom commands available in this exten
 
 *   **`/dev:check-writing-style`**: Check writing style for documentation files.
 
+### 📣 DevRel Commands (`/devrel`)
+
+*   **`/devrel:article-feedback`**: Critiques an article, providing detailed feedback on tone, typos, quality, and broken links. Caches the analysis for 5 days.
+*   **`/devrel:check_google_license`**: [ricc] Checks for license compliance in pragmatic way.
+
 ### 📁 Filesystem Commands (`/fs`)
 
 *   **`/fs:grep-code`**: recursive grepping - from template
 
+### 🔀 Git Commands (`/git`)
+
+*   **`/git:commit_push`**: [ricc] Commit and push changes to the current git repo.
+*   **`/git:migrate_bitbucket_to_gitxxb`**: Migrate repo from BitBucket to GitHub or GitLab
+*   **`/git:recover_history`**: Reconcile apps in random-apps-ideas/ with JSON in GitHub Pages.
+
 ### 🐙 GitHub Commands (`/github`)
 
-*   **`/github:implement`**: Writes the minimal code to make a failing test pass.
+*   **`/github:issue`**: Interact with GitHub on Issues on a git repo.
 
 ### 🦊 GitLab Commands (`/gitlab`)
 
@@ -44,8 +51,7 @@ This document provides a list of all the custom commands available in this exten
 
 ### ☁️ GCP Commands (`/gcp`)
 
-*   **`/gcp:cloud_build_investigation`**:  Cloud Build Investigations and Tools
-
+*   **`/gcp:cloud_build_investigation`**: Cloud Build Investigations and Tools (specialized in pushing to Cloud Run)
 
 ### 🔄 Self-Reflect Commands (`/pcc`)
 
@@ -56,6 +62,9 @@ This document provides a list of all the custom commands available in this exten
 
 *   **`/plan:do`**: Plan a new feature or fix a bug
 
+### 🚨 SRE Commands (`/sre`)
+
+*   **`/sre:postmortem-create`**: Create a PostMortem document and file bugs following SRE best practices, with automated timeline management and bug filing.
 
 ## Wow Factor
 
@@ -71,5 +80,9 @@ Here are a few examples of how you can use these commands in practice:
     ```
 *   **Commit and push your changes with a helpful message:**
     ```bash
-    gemini -p "/common:git_commit_push Add a new feature"
+    gemini -p "/git:commit_push Add a new feature"
+    ```
+*   **Create a postmortem document for an incident:**
+    ```bash
+    gemini -y -p "/sre:postmortem-create incident_id INC123456"
     ```
