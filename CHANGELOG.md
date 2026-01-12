@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.21] - 2026-01-12
+
+### Added
+
+- **SRE Commands**:
+  - `postmortem-create.toml`: Create comprehensive postmortem documents following SRE best practices, with automated bug filing and timeline management.
+
+### Changed
+
+- Updated `commands/gcp/cloud_build_investigation.toml`:
+  - Added guidance on micro-commits for testing.
+  - Enhanced documentation with GEMINI-specific warnings.
+- Updated `commands/pcc/README.md`:
+  - Clarified meta/reflection nature of PCC commands.
+
 ## [0.0.20] - 2026-01-12
 
 ### Changed
