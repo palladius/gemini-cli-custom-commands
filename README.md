@@ -44,9 +44,17 @@ Here's a sneak peek of the commands available. For a full list, see the [User Ma
 *   **`🐙 GitHub`**: Interact with GitHub issues and repository management.
 *   **`🦊 GitLab`**: Interact with GitLab on issues and other repository tasks.
 *   **`☁️ GCP`**: Tools for interacting with Google Cloud Platform, starting with Cloud Build investigations.
-*   **`🔄 Self-Reflect`**: Manage this extension itself, with commands to check for updates and refresh the user manual.
-*   **`🗺️ Plan`**: Helps you plan new features or bug fixes.
+*   **`🔄 Self-Reflect`**: Commands to refresh the user manual and manage the extension.
+*   **`🗺️️ Plan`**: Helps you plan new features or bug fixes.
 *   **`🚨 SRE`**: Site Reliability Engineering tools, including comprehensive postmortem document creation with automated bug filing and timeline management.
+
+## 🧠 Agent Skills
+
+Starting with version `0.0.22`, we are introducing **[Agent Skills](https://geminicli.com/docs/cli/skills/)**! 🚀 These allow Gemini to act more autonomously and precisely.
+
+*   **`check-for-updates`**: Our flagship skill! It replaces the old `/pcc:check-for-updates` command with a robust **Ruby**-based version checker that understands Semantic Versioning. No more "0.0.95 is newer than 0.0.122" confusion!
+
+## Wow Factor
 
 
 **WARNING**: This project is intended for demonstration purposes only. It is not intended for use in a production environment.

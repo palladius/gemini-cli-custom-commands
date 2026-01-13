@@ -55,16 +55,19 @@ This document provides a list of all the custom commands available in this exten
 
 ### 🔄 Self-Reflect Commands (`/pcc`)
 
-*   **`/pcc:check-for-updates`**: Do I need an update?
 *   **`/pcc:refresh-user-manual`**: [internal] refresh the User manual of this repo
 
 ### 🗺️ Plan Commands (`/plan`)
-
-*   **`/plan:do`**: Plan a new feature or fix a bug
-
+...
 ### 🚨 SRE Commands (`/sre`)
 
 *   **`/sre:postmortem-create`**: Create a PostMortem document and file bugs following SRE best practices, with automated timeline management and bug filing.
+
+## 🧠 Agent Skills
+
+This extension also provides **Agent Skills**, which are specialized capabilities that Gemini can use autonomously.
+
+*   **`check-for-updates`**: A robust skill that uses a Ruby script to perform a Semantic Versioning (SemVer) comparison between your local installation and the latest version on GitHub.
 
 ## Wow Factor
 
@@ -74,15 +77,7 @@ Here are a few examples of how you can use these commands in practice:
     ```bash
     gemini -p "/common:find_todos"
     ```
-*   **Check for updates to this extension:**
-    ```bash
-    gemini -c "/pcc:check-for-updates"
-    ```
+*   **Check for updates to this extension (using the new Skill!):**
+    Ask Gemini: "Is my palladius-common-commands extension up to date?"
 *   **Commit and push your changes with a helpful message:**
-    ```bash
-    gemini -p "/git:commit_push Add a new feature"
-    ```
-*   **Create a postmortem document for an incident:**
-    ```bash
-    gemini -y -p "/sre:postmortem-create incident_id INC123456"
-    ```
+

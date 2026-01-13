@@ -12,7 +12,8 @@ find-installed-commands:
 
 # [TASK] Checks for Updates of this beautiful gem
 check-for-updates:
-    gemini -y -c "/pcc:check-for-updates Check for status and dump all info in 'tmp-from-justfile.md'. Make sure to show local and remote version using emojis. If 'glow' is available, glow the file."
+    #gemini -y -c "/pcc:check-for-updates Check for status and dump all info in 'tmp-from-justfile.md'. Make sure to show local and remote version using emojis. If 'glow' is available, glow the file."
+    ./.gemini/skills/check-for-updates/scripts/check_updates.rb
 
 # [TASK] Checks for Google license if missing
 check-google-license:
