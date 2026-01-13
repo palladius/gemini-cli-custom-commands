@@ -14,7 +14,11 @@
 
 # .gemini/commands/code/implement.toml
 
-description = "Do I need an update?"
+# Note: this command is obsolete for two reasons:
+# 1. Use the `gemini extensions update` command instead. This was created before that syntax was actually available.
+# 2. Use the `skill` instead! Has Ruby code to check version.
+
+description = "[OBSOLETE] Do I need an update to the Custom Commands gemini extension?"
 prompt = """
 You are a SWE and Change Management expert. You need to understand if a Gemini Extension
 (just launched with Gemini CLI 0.4!) needs to be updated.

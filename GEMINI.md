@@ -40,6 +40,14 @@ When working on new features, ensure that you keep:
 * Whenever a file is added or moved, trigger a comparative search between that file.
 * If you changed `docs/USER_MANUAL.md`, also bring those changes, summarized, under the `README.md`.
 
+## Skills
+
+* Since 13jan2026 and `v0.0.22`+, skills are supported. Please ensure you understand the Skills standard before adding/modifying a skill.
+* Whenever you add code to `.gemini/skills/`, ensure you add a small code user manual on top of the code file. Also remember to add a self-runnable test code with proper naming, eg:
+    * `.gemini/skills/check-for-updates/scripts/check_updates.rb` => `.gemini/skills/check-for-updates/scripts/check_updates_test.rb`
+    * `.gemini/skills/check-for-updates/scripts/script.py`  => `.gemini/skills/check-for-updates/scripts/script_test.py`
+    * .. and so on.
+
 
 ## DONT's
 
