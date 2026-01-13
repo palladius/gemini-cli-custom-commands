@@ -36,7 +36,6 @@ Here's a sneak peek of the commands available. For a full list, see the [User Ma
 *   **`🎬 AICinema`**: A collection of commands to create audio and video stories using generative AI.
 *   **`💻 Code`**: Commands for structuring your coding workflow.
 *   **`🏃 Common`**: A collection of everyday commands to streamline your workflow, from managing TODOs to checking whereabouts.
-*   **`🎼 Conductor`**: Manage and execute Keith's configuration files with ease.
 *   **`✍️ Dev`**: Developer-focused commands, starting with a tool to check the writing style of your documentation.
 *   **`� DevRel`**: Developer Relations tools, including article feedback and license checking.
 *   **`�📁 Filesystem`**: Handy filesystem operations, like recursively grepping through your code.
@@ -62,5 +61,9 @@ Starting with version `0.0.22`, we are introducing **[Agent Skills](https://gemi
 
 ## Thanks
 
+
+
+
+
 * Arthur Yau for contributing the code/PDA framework.
-* Keith B. for the concductor framework.
+

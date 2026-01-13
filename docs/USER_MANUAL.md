@@ -17,11 +17,6 @@ This document provides a list of all the custom commands available in this exten
 *   **`/common:find_todos`**: Find TODOs in the codebase
 *   **`/common:whereabouts`**: 🦘 Riccardo Whereabouts logic for Gemini commands
 
-### 🎼 Conductor Commands (`/conductor`)
-
-*   **`/conductor:do`**: Execute Keith's configuration files
-*   **`/conductor:install`**: Install Keith's configuration files
-
 ### ✍️ Dev Commands (`/dev`)
 
 *   **`/dev:check-writing-style`**: Check writing style for documentation files.
