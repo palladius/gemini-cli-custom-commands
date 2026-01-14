@@ -63,6 +63,7 @@ This document provides a list of all the custom commands available in this exten
 This extension also provides **Agent Skills**, which are specialized capabilities that Gemini can use autonomously.
 
 *   **`check-for-updates`**: A robust skill that uses a Ruby script to perform a Semantic Versioning (SemVer) comparison between your local installation and the latest version on GitHub.
+*   **`cloud-build-investigation`**: 🚀 Expert-level SRE skill for investigating Google Cloud Build failures and Cloud Run deployment issues. Automatically correlates git commits with build failures, provides systematic debugging workflows, and includes automation scripts for faster root cause analysis. Activate by asking about Cloud Build problems!
 
 ## Wow Factor
 

@@ -3,3 +3,5 @@
 tmp-from-justfile.md
 carlessian_context.yaml
 docs/articles/
+#.gemini/settings.json
+#.gemini/commands

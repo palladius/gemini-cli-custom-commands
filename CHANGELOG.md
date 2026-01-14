@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.24] - 2026-01-14
+
+### Added
+- **Skills**:
+  - 🚀 `cloud-build-investigation`: Expert-level SRE skill for Google Cloud Build and Cloud Run investigations
+    - Automated git/build correlation script (`correlate_builds.rb`)
+    - Comprehensive test suite (4/4 tests passing ✅)
+    - Systematic 4-step investigation workflow
+    - GCP reference documentation with troubleshooting patterns
+    - Best practices for debugging Cloud Build failures
+    - Replaces manual custom command with intelligent automation
+
+### Changed
+- 📁 Refactored skills structure: moved from `.gemini/skills/` to `skills/` (git-tracked) with symlink for dogfooding
+- 📝 Updated `GEMINI.md` to document symlink structure for skills (matching commands pattern)
+
 ## [0.0.23] - 2026-01-13
 
 ### Removed

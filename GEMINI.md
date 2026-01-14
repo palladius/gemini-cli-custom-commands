@@ -48,6 +48,20 @@ When working on new features, ensure that you keep:
     * `.gemini/skills/check-for-updates/scripts/script.py`  => `.gemini/skills/check-for-updates/scripts/script_test.py`
     * .. and so on.
 
+## Local dev: symlinks explained
+
+When I work locally, I link the following:
+
+```bash
+ls -al .gemini/
+[..]
+lrwxrwxrwx 1 ricc primarygroup   12 Sep 11 17:24 commands -> ../commands/
+lrwxrwxrwx 1 ricc primarygroup   10 Jan 14 13:13 skills -> ../skills/
+```
+
+This is to allow dogfooding of my Custom Commands and Skills for this repo. 
+The extension requires me to put commands under `./commands` , but to use them I need them under `.gemini/commands/`.
+This also allows Gemini/Antigravity to work on the code, while `.gemini/` is git-ignored, hence invisible to Gemini.
 
 ## DONT's
 
