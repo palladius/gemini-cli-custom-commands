@@ -4,6 +4,7 @@ description:
   Creates a PostMortem given enough context about an incident/outage. 
   Will guide user to timeline, action items/bugs, and finally draft a Google Doc with the results.
 # 13jan26: copied from Custom Command
+# 26jan26: Reverted Action Items to table format (Timeline remains bullet points).
 # 15jan26: Custom Command updated with:
 #   1. Bullet points instead of tables for Timeline and Action Items
 #   2. Permalink support for commits/bugs (USE PERMALINKS!)
@@ -171,14 +172,15 @@ Use the following template to create a postmortem document for an incident.
 
 ## Action Items
 
-* **[P2]** {short description} - Owner: username@ - Type: {Mitigate|Detect|Prevent} - Bug: [#123](https://github.com/user/repo/issues/123)
-* **[P3]** {short description} - Owner: username@ - Type: {Mitigate|Detect|Prevent} - Bug: [#124](https://github.com/user/repo/issues/124)
+| Action Item | Owner | Priority | Type | Bug_id |
+|-------------|-------|----------|------|--------|
+| {short description} | username@ | **P2** | {Type} | [#123](https://github.com/user/repo/issues/123) |
+| {short description} | username@ | **P3** | {Type} | [#124](https://github.com/user/repo/issues/124) |
 
 <!-- Notes:
 * owner is username@ , removing the domain whereas pleonastic (e.g. "ricc@" for "ricc@google.com")
 * Type is one of: "Mitigate", "Detect", "Prevent". Occasionally you can also use Process, Documentation if nothing else suits
 * Bug Id MUST use full permalinks (e.g., https://github.com/user/repo/issues/123)
-* Priority should be bolded and in brackets at the start of each line
 -->
 
 ## Timeline

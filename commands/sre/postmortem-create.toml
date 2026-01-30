@@ -3,7 +3,7 @@
 #       an incident. In this repo, the Post-Mortem-only functionality can be used to document but NOT to investigate. You need other tools to investigate.
 
 # CHANGELOG
-
+# 2026-01-26 ricc 0.1.1 Reverted Action Items to table format (kept Timeline as bullet points).
 # 2026-01-12 ricc 0.1.0 Ported from Google3 onto GitHub, adapting internal jargon to the real world.
 # 2025-09-30 ricc 0.0.3 Fixed investigation step to use proper ProdAgent MCP tools. Also added test component.
 #                       and better docs :)
@@ -179,14 +179,15 @@ Use the following template to create a postmortem document for an incident.
 
 ## Action Items
 
-* **[P2]** {short description} - Owner: username@ - Type: {Mitigate|Detect|Prevent} - Bug: [#123](https://github.com/user/repo/issues/123)
-* **[P3]** {short description} - Owner: username@ - Type: {Mitigate|Detect|Prevent} - Bug: [#124](https://github.com/user/repo/issues/124)
+| Action Item | Owner | Priority | Type | Bug_id |
+|-------------|-------|----------|------|--------|
+| {short description} | username@ | **P2** | {Type} | [#123](https://github.com/user/repo/issues/123) |
+| {short description} | username@ | **P3** | {Type} | [#124](https://github.com/user/repo/issues/124) |
 
 <!-- Notes:
 * owner is username@ , removing the domain whereas pleonastic (e.g. "ricc@" for "ricc@google.com")
 * Type is one of: "Mitigate", "Detect", "Prevent". Occasionally you can also use Process, Documentation if nothing else suits
 * Bug Id MUST use full permalinks (e.g., https://github.com/user/repo/issues/123)
-* Priority should be bolded and in brackets at the start of each line
 -->
 
 ## Timeline
