@@ -1,6 +1,6 @@
 ---
 name: postmortem-generator
-description: 
+description: 💀 
   Creates a PostMortem given enough context about an incident/outage. 
   Will guide user to timeline, action items/bugs, and finally draft a Google Doc with the results.
 # 13jan26: copied from Custom Command

@@ -1,6 +1,6 @@
 ---
 name: pcc-check-for-updates
-description: 
+description: 🔄 
     Checks for updates to remote GH site for palladius/gemini-cli-custom-commands. 
     Use Ruby code to check for newer/older version.
 ---

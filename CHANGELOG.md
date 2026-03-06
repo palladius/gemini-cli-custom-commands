@@ -1,3 +1,6 @@
+## [0.0.31] - 2026-03-06
+- ✨ Added emojis to skill descriptions (🔄, 🏗️, 💀).
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
