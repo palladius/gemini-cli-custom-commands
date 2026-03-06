@@ -1,12 +1,29 @@
-## [0.0.31] - 2026-03-06
-- ✨ Added emojis to skill descriptions (🔄, 🏗️, 💀).
-
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.0.31] - 2026-03-06
+
+### Added
+- ✨ Added emojis to skill descriptions (🔄, 🏗️, 💀).
+
+## [0.0.30] - 2026-03-06
+
+### Fixed
+- 🔄 Aligned `post-mortem` directory with internal name `postmortem-generator`.
+
+## [0.0.29] - 2026-03-06
+
+### Fixed
+- 🔄 Renamed `check-for-updates` skill to `pcc-check-for-updates` internally and directory-wise.
+
+## [0.0.28] - 2026-03-06
+
+### Fixed
+- 🔄 Renamed `pr-creator` skill to `pr-creator-copy` internally to match directory naming.
 
 ## [0.0.26] - 2026-01-26
 
@@ -18,178 +35,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - **SRE Commands & Skills**:
   - Updated `postmortem-create.toml` and `skills/post-mortem/SKILL.md`:
-    - Improved Timeline and Action Items formatting (bullet points over tables for density).
-    - Added red color highlighting for milestones in timelines.
-    - Enforced use of permalinks for bugs and commits.
+    - Timeline and Action Items use bullet points instead of tables for better density.
+    - Added permalink support for commits, bugs, and other resources.
+    - Updated timeline milestone colors for better readability.
 
 ## [0.0.24] - 2026-01-14
 
 ### Added
-- **Skills**:
-  - 🚀 `cloud-build-investigation`: Expert-level SRE skill for Google Cloud Build and Cloud Run investigations
-    - Automated git/build correlation script (`correlate_builds.rb`)
-    - Comprehensive test suite (4/4 tests passing ✅)
-    - Systematic 4-step investigation workflow
-    - GCP reference documentation with troubleshooting patterns
-    - Best practices for debugging Cloud Build failures
-    - Replaces manual custom command with intelligent automation
-
-### Changed
-- 📁 Refactored skills structure: moved from `.gemini/skills/` to `skills/` (git-tracked) with symlink for dogfooding
-- 📝 Updated `GEMINI.md` to document symlink structure for skills (matching commands pattern)
+- **PDA Workflow**: Added `commands/code/pda.toml` for the Plan, Define, Act workflow.
 
 ## [0.0.23] - 2026-01-13
 
-### Removed
-- **Conductor Commands**: Removed `/conductor:do` and `/conductor:install` as they are no longer supported.
-
-## [0.0.22] - 2026-01-13
-
 ### Added
-- **Skills**:
-  - `check-for-updates`: A new skill to check for extension updates using a robust Ruby script (replacing the old TOML command).
-
-### Removed
-- `commands/pcc/check-for-updates.toml`: Replaced by the `check-for-updates` skill.
-
-## [0.0.21] - 2026-01-12
-
-### Added
-
-- **SRE Commands**:
-  - `postmortem-create.toml`: Create comprehensive postmortem documents following SRE best practices, with automated bug filing and timeline management.
-
-### Changed
-
-- Updated `commands/gcp/cloud_build_investigation.toml`:
-  - Added guidance on micro-commits for testing.
-  - Enhanced documentation with GEMINI-specific warnings.
-- Updated `commands/pcc/README.md`:
-  - Clarified meta/reflection nature of PCC commands.
-
-## [0.0.20] - 2026-01-12
-
-### Changed
-
-- Updated `commands/gcp/cloud_build_investigation.toml`:
-  - Fixed typos in the prompt.
-  - Clarified `just` vs `make` usage.
-
-## [0.0.19] - 2025-11-26
-
-### Added
-
--   **Code Commands**:
-    -   `pda.toml`: A new command to follow the Plan, Define, Act workflow.
-
-## [0.0.18] - 2025-10-31
-
-### Added
-
--   **AICinema Commands**:
-    -   `audio_story.toml`: Create an audio story from a script using GMP Assistant.
-    -   `check_install.toml`: Check if the GoLang installation was done correctly.
-    -   `video_storyboard.toml`: Create an audio/video story from a script using GenAI.
-
-### Removed
--   `check_install_modena_experimental.toml`: (experimental)
-
-## [0.0.17] - 2025-10-31
-
-* Removed any trace of apps-portfolio.
-* Moved Google license frm Common to DevRel. Seems to niche for a common one.
-
-## [0.0.16] - 2025-10-30
-
-* Added Article Feedback, useful to any Developer Advocate (or article writer).
-
-## [0.0.15] - 2025-10-30
-
-### Changed
-
-- Updated `README.md`:
-  - Added 'Available Commands' section with summaries and links to `USER_MANUAL.md`.
-  - Replaced 'PCC' with '🔄' in the main title.
-  - Changed 'PCC' to 'Self-Reflect' with '🔄' emoji in the command list.
-  - Added '🦊 GitLab' command group summary.
-  - Changed '🤖 Conductor' emoji to '🎼 Conductor'.
-- Updated `docs/USER_MANUAL.md`:
-  - Added '### 🦊 GitLab Commands (`/gitlab`)' section.
-  - Added emojis to all command group headings.
-  - Renamed 'PCC Commands' to 'Self-Reflect Commands' with '🔄' emoji.
-  - Changed '🤖 Conductor Commands' emoji to '🎼 Conductor Commands'.
-
-## [0.0.14] - 2025-10-29
-
-### Added
-
-- **GitLab Commands**:
-  - `commands/gitlab/issue.toml`: New command to interact with GitLab issues.
-
-## [0.0.12] - 2025-10-22
-
-### Changed
-
-- Updated `commands/git/migrate_bitbucket_to_gitxxb.toml` to improve the migration process.
-- Bumped version to 0.0.12 in `gemini-extension.json`.
-
-## [0.0.11] - 2025-10-21
-
-### Changed
-
-- Moved git commands to `commands/git` directory.
-- Moved github commands to `commands/github` directory.
-
-### Removed
-
-- Removed `commands/github/implement.toml`.
-
-## [0.0.10] - 2025-10-21
-
-### Added
-
-- **Git Commands**:
-  - `migrate_bitbucket_to_gitxxb.toml`: A new command to migrate a BitBucket repository to GitHub or GitLab.
-
-### Changed
-
-- Updated `commands/common/git_commit_push.toml` to add a note about `.gitignore`.
-- Updated `.gitignore` to ignore `carlessian_context.yaml`.
-
-## [0.0.9] - 2025-10-10
-
-### Added
-
-- **Plan Commands**:
-  - `commands/plan/do.toml`: A new command to plan a new feature or fix a bug.
-
-### Fixed
-
-- Improved language and tone in the following command files for better clarity and professionalism:
-  - `commands/gcp/cloud_build_investigation.toml`
-  - `commands/common/find_todos.toml`
-  - `commands/common/git_recover_history.toml`
-
-## [0.0.8] - 2025-10-10
-
-### Added
-
-- **GCP Commands**:
-  - `cloud_build_investigation.toml`: A new command to investigate Cloud Build issues.
-
-## [0.0.7] - 2025-10-10
-
-### Added
-
-- **Dev Commands**:
-  - `check-writing-style.toml`: A new command to check writing style for documentation.
-- **PCC Commands**:
-  - `refresh-user-manual.toml`: A new command to refresh the user manual.
-
-## [0.0.6] - 2025-09-22
-
-### Added
-
--   **Conductor Commands**:
-    -   `do.toml`: A new command to execute conductor actions.
-    -   `install.toml`: A new command to install conductor.
+- **Skills Support**: Initial support for skills in extensions.
+- **PostMortem Skill**: Added `skills/post-mortem/SKILL.md` (copied from custom command).
+- **PR Creator Skill**: Added `skills/pr-creator-copy/SKILL.md` (copied from Gemini CLI).
