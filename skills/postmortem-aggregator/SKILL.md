@@ -1,8 +1,8 @@
 ---
 
-name: postmortem-aggregator
+name: [SRE] postmortem-aggregator
 description: 💀
-  To be used when you have a folder containing N Post Mortem files.
+  [SRE] To be used when you have a folder containing N Post Mortem files.
   This will help crunch data and maintain/update a POMO_AGGREGATED.md file
 version: 0.0.1
 # CHANGELOG
@@ -20,8 +20,10 @@ version: 0.0.1
 
 # Identify the PoMos
 
-If the pomos are local in a folder, use those.
-If they're external, create a new folder called `YYYYMMDD_POSTMORTEMS/` and copy their MD version there.
+* If the pomos are local in a folder, use those.
+* If they're external, create a new folder called `YYYYMMDD_POSTMORTEMS/` and copy their MD version there. This might lose information, but ensure the relevant info is transported here, locally. You could run the "postmortem generator" skill on a locally curled page.
+* If there is ONE, refuse to run this.
+* If there is 2-3, suggest the user it's worth using a plurality of these.
 
 ## Action
 
@@ -57,3 +59,8 @@ Once you have the CSV with raw data, you can write some simple code which does t
 1. Do a subjective analysis of the detection_rate.
 1. Create breakdown by YEAR and PRODUCT.
 1. Consider using image generation scripts to create simple graphs.
+
+## Lessons learnt
+
+* See recurring patterns and add a H2 paragraph on `## recurring patterns`: Is there anything we can learn from this aggregation? Is this a mistake we keep on doing? Is there a bug which looks like we're not prioritizing? Is there a number of bugs who all look like the same? This is the step where we can actually identify schemas in this plurality.
+* Is there some other lesson we learn from this plurality? Write about it in the `## Conclusions`.
