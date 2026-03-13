@@ -5,3 +5,4 @@ carlessian_context.yaml
 docs/articles/
 #.gemini/settings.json
 #.gemini/commands
+*.skill
