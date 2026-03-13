@@ -27,16 +27,25 @@ if [ -f "$TEMPLATE_PATH" ]; then
 else
   # Fallback if template is missing
   cat <<EOF > "$BASE_DIR/.env"
+# This should be provided by user.
 PROJECT_ID=
+
+# this is very useful for Gemini API invocations. Can also be created with a bunch of gcloud scripts.
 GEMINI_API_KEY=
-REGION=
+
+# This is usually good enough for most people, 
+# but feel free to localize to something close to the user.
+GOOGLE_CLOUD_REGION="us-central1"
+
+# Optional, in case a project is not given a BAID needs to be given
+BILLING_ACCOUNT_ID=
 EOF
 fi
 
 touch "$BASE_DIR/BUGS.md"
 
 cat <<EOF > "$BASE_DIR/.version"
-Created with skill devrel-frictionlog-codelab v0.0.2
+Created with skill devrel-frictionlog-codelab v0.0.3
 Find me in https://github.com/palladius/gemini-cli-custom-commands
 EOF
 

@@ -13,7 +13,6 @@ import sys
 import urllib.request
 import re
 import os
-
 import shutil
 
 def extract_codelab(url, output_dir):
@@ -44,7 +43,10 @@ def extract_codelab(url, output_dir):
                 f.write(f"# {label}\n\n")
                 
                 # Heuristic for code blocks: wrap <pre> content in triple backticks
-                content = re.sub(r'<pre.*?><code>(.*?)</code></pre>', r'\n```\n\1\n```\n', content, flags=re.DOTALL)
+                # Handle cases with optional language class
+                content = re.sub(r'<pre.*?(?:class="lang-([^"]+)")?.*?><code.*?>(.*?)</code></pre>', 
+                                lambda m: f"\n```{' ' + m.group(1) if m.group(1) else ''}\n{m.group(2).strip()}\n```\n", 
+                                content, flags=re.DOTALL)
                 content = re.sub(r'<pre.*?>(.*?)</pre>', r'\n```\n\1\n```\n', content, flags=re.DOTALL)
                 
                 # Heuristic for inline code: wrap <code> content in single backticks
@@ -52,6 +54,9 @@ def extract_codelab(url, output_dir):
 
                 # Heuristic for bold: wrap <b> or <strong> in **
                 content = re.sub(r'<(b|strong).*?>(.*?)</\1>', r'**\2**', content, flags=re.DOTALL)
+
+                # Heuristic for italics: wrap <i> or <em> in *
+                content = re.sub(r'<(i|em).*?>(.*?)</\1>', r'*\2*', content, flags=re.DOTALL)
 
                 # Strip out remaining HTML tags
                 text_content = re.sub(r'<[^>]+>', '', content)
@@ -72,6 +77,7 @@ def extract_codelab(url, output_dir):
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Usage: python3 extract_codelab.py <url> <output_dir>")
+        print("Description: Extracts Google Codelab steps into Markdown files.")
         sys.exit(1)
         
     url = sys.argv[1]

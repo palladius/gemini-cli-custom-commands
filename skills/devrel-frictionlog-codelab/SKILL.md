@@ -1,11 +1,10 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.0.2
+version: 0.0.3
 description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Use when a user provides a codelab URL and wants the agent to systematically reproduce the steps, log friction for each page, optionally create a GCP project, clone external repos to fix bugs, and produce a detailed report of the experience in a README.md and BUGS.md.
 # version: in the bash script.
 ---
-#
----
+
 # DevRel Friction Log Codelab
 
 This skill automates the process of going through a Google Codelab, reproducing its steps, systematically documenting the experience (a "friction log"), identifying bugs in external repositories, and producing actionable reports.
