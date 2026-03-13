@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0] - 2026-03-13
+
+### Added
+- ✨ Added `devrel-frictionlog-codelab` skill v0.1.0: automates the process of executing a Codelab, extracting its content to Markdown, creating a deterministic scaffold, and recording friction logs for DevRel evaluation.
+
 ## [0.0.33] - 2026-03-11
 
 ### Changed

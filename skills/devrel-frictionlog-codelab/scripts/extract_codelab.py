@@ -14,6 +14,8 @@ import urllib.request
 import re
 import os
 
+import shutil
+
 def extract_codelab(url, output_dir):
     print(f"Attempting to extract codelab from {url} to {output_dir}")
     try:
@@ -30,16 +32,38 @@ def extract_codelab(url, output_dir):
             print("AGENT INSTRUCTION: Fall back to your native `web_fetch` tool to read the codelab and create the 01.md, 02.md... files manually.")
             return
 
+        # Determine proposed directory
+        output_dir = os.path.normpath(output_dir)
+        proposed_dir = os.path.join(os.path.dirname(output_dir), "proposed")
+        if not os.path.exists(proposed_dir):
+            os.makedirs(proposed_dir)
+
         for i, (label, content) in enumerate(steps, start=1):
             filename = os.path.join(output_dir, f"{i:02d}.md")
             with open(filename, 'w') as f:
                 f.write(f"# {label}\n\n")
-                # Strip out basic HTML tags for a quick and dirty markdown format
+                
+                # Heuristic for code blocks: wrap <pre> content in triple backticks
+                content = re.sub(r'<pre.*?><code>(.*?)</code></pre>', r'\n```\n\1\n```\n', content, flags=re.DOTALL)
+                content = re.sub(r'<pre.*?>(.*?)</pre>', r'\n```\n\1\n```\n', content, flags=re.DOTALL)
+                
+                # Heuristic for inline code: wrap <code> content in single backticks
+                content = re.sub(r'<code>(.*?)</code>', r'`\1`', content, flags=re.DOTALL)
+
+                # Heuristic for bold: wrap <b> or <strong> in **
+                content = re.sub(r'<(b|strong).*?>(.*?)</\1>', r'**\2**', content, flags=re.DOTALL)
+
+                # Strip out remaining HTML tags
                 text_content = re.sub(r'<[^>]+>', '', content)
+                
                 # Decode basic HTML entities
-                text_content = text_content.replace('&lt;', '<').replace('&gt;', '>').replace('&amp;', '&')
+                text_content = text_content.replace('&lt;', '<').replace('&gt;', '>').replace('&amp;', '&').replace('&quot;', '"').replace('&#39;', "'")
+                
                 f.write(text_content.strip())
-            print(f"✅ Saved step '{label}' to {filename}")
+            
+            # Copy to proposed
+            shutil.copy(filename, os.path.join(proposed_dir, f"{i:02d}.md"))
+            print(f"✅ Saved step '{label}' to {filename} (and copied to proposed/)")
             
     except Exception as e:
         print(f"❌ Error extracting codelab: {e}")

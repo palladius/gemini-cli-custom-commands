@@ -58,3 +58,17 @@ Ensure the scaffold is created, all pages are created (12 and 10 respectively)
 
 Finally wait for skill me to validate a folder once you're happy with it.
 THEN we can ship this skill as version `0.1.0`.
+
+## further testing
+
+1. add a test to ensure that the dockerfile in <https://codelabs.developers.google.com/codelabs/app-mod-workshop#3> is wrapped in some code (<code>) or markdown (```) - your chouice - which contains EXACTLY this:
+
+```Dockerfile
+# Use the official PHP image: https://hub.docker.com/_/php
+FROM php:5.6-apache
+
+[...]
+
+# Expose the port
+EXPOSE 8080
+```
