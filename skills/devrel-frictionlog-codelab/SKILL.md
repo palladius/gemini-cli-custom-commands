@@ -76,6 +76,7 @@ For each page `XX`:
     * Explain *why* the change was needed in the `FRICTION_LOG/XX.md` file.
     * Add a detailed bullet point to `BUGS.md` explaining the issue and linking to the proposed fix or PR.
 6. Continuously update the `.env` file with any new resource coordinates created during the step (e.g., URLs, instances, DB strings).
+7. At the end of the page, write a proof that you executed correctly the steps. Something like a `gcloud` command which proves that a GCE vm has been created, or that 2 tables to a DB were added, .. **DO NOT PROCEED** until all the important steps have been done (or subsequent pages will yield more errors).
 
 ### Step 5: Final Output Synthesis
 
