@@ -1,7 +1,10 @@
 ---
 name: devrel-frictionlog-codelab
+version: 0.0.2
 description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Use when a user provides a codelab URL and wants the agent to systematically reproduce the steps, log friction for each page, optionally create a GCP project, clone external repos to fix bugs, and produce a detailed report of the experience in a README.md and BUGS.md.
 # version: in the bash script.
+---
+#
 ---
 # DevRel Friction Log Codelab
 
@@ -56,11 +59,13 @@ For each page `XX`:
     * If bugs or broken parts are identified, ask the user for permission to start filing Pull Requests to fix those issues.
 4. **Log your experience** by writing to `FRICTION_LOG/XX.md`:
     * Use bullet points for every distinct action or instruction.
+    * **Include a timestamp** at the beginning of each bullet point in the format `` * `HH:MM:SS` `` to track execution time and make the logs easily grep-able.
     * Use `*` for normal, expected steps.
     * Use 🔴 (Red) if the experience was bad, broken, or highly confusing.
     * Use 🟡 (Yellow) if the experience was "meh", suboptimal, or slightly confusing.
     * Use 🟢 (Green) if the experience was particularly good or delightful.
     * Document any inconsistencies between the text instructions, provided screenshots (if you are capable of reviewing them or they are described textually), and the actual behavior you experience.
+    * **Time Analysis:** At the end of each page's log, note the total time it took you (the AI) to complete the page. Compare this with the codelab's estimated time for that page (if provided), and suggest a realistic completion time for a human user based on the complexity of the tasks.
 5. If you encounter errors, typos, or wrong instructions in the codelab text, or broken code in external repos:
     * Patch the markdown file in `codelab/proposed/XX.md` with the proposed solution or fix.
     * Explain *why* the change was needed in the `FRICTION_LOG/XX.md` file.
@@ -69,14 +74,19 @@ For each page `XX`:
 
 ### Step 5: Final Output Synthesis
 
-Once all pages have been completed, create a short `README.md` file in the base directory containing a high-level summary of the entire run.
+Once all pages have been completed, create a short `README.md` file in the base directory containing a high-level summary of the entire run, and a consolidated `FRICTION_LOG.md` file.
 
 The `README.md` must be concise and include:
 
 1. **What you did**: A brief sentence explaining the codelab run.
 2. **What you found**: High-level observations and Completion Status (were you able to run the whole codelab?).
 3. **Big Mistakes**: A summarized list of major inconsistencies or show-stopping bugs.
-4. **Links**: Explicit links to the `BUGS.md` file for the comprehensive list of all bugs and proposed fixes/PRs.
+4. **Links**: Explicit links to the `BUGS.md` file and the consolidated `FRICTION_LOG.md` file.
+
+The `FRICTION_LOG.md` must include:
+
+1. **Changes Needed (Top Section)**: A precise list of the changes that need to be made. Provide visual markdown diffs or patches showing the OLD incorrect text/code and the NEW corrected text/code.
+2. **Consolidated Friction Logs**: A concatenation of all the individual per-page friction logs from the `FRICTION_LOG/` directory. Use an H2 (`##`) for each page so they are easy to isolate.
 
 ## Resumption Logic
 

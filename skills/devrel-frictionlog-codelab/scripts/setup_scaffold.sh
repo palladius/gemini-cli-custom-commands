@@ -36,7 +36,7 @@ fi
 touch "$BASE_DIR/BUGS.md"
 
 cat <<EOF > "$BASE_DIR/.version"
-Created with skill devrel-frictionlog-codelab v0.1.0
+Created with skill devrel-frictionlog-codelab v0.0.2
 Find me in https://github.com/palladius/gemini-cli-custom-commands
 EOF
 
