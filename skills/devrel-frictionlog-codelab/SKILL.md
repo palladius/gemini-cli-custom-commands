@@ -90,8 +90,21 @@ The `README.md` must be concise and include:
 
 The `FRICTION_LOG.md` must include:
 
-1. **Changes Needed (Top Section)**: A precise list of the changes that need to be made. Provide visual markdown diffs or patches showing the OLD incorrect text/code and the NEW corrected text/code.
-2. **Consolidated Friction Logs**: A concatenation of all the individual per-page friction logs from the `FRICTION_LOG/` directory. Use an H2 (`##`) for each page so they are easy to isolate.
+1. **Metadata Table (Top Section)**: A Markdown table containing key-value pairs for the following fields:
+
+    | Field | Value |
+    | :--- | :--- |
+    | **DATETIME** | `YYYY-MM-DD HH:MM:SS` (Local time) |
+    | **CODELAB_URL** | The full URL of the codelab being reproduced |
+    | **IDENTITY** | Your email or identity (if applicable) |
+    | **PROJECT_ID** | The GCP Project ID used for reproduction |
+    | **HOSTNAME** | The full hostname of the machine performing the reproduction |
+    | **PRODUCTS** | Comma-separated list of Google Cloud products used (e.g., Cloud Run, Cloud SQL) |
+    | **LANGUAGES** | Comma-separated list of programming languages used (e.g., Python, Bash) |
+    | **OVERALL_EXPERIENCE** | A concise (Twitter-sized) summary of the experience |
+
+2. **Changes Needed**: A precise list of the changes that need to be made. Provide visual markdown diffs or patches showing the OLD incorrect text/code and the NEW corrected text/code.
+3. **Consolidated Friction Logs**: A concatenation of all the individual per-page friction logs from the `FRICTION_LOG/` directory. Use an H2 (`##`) for each page so they are easy to isolate.
 
 ## Resumption Logic
 

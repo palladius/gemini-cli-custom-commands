@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - 🥑 Enforced strict billing setup and automated YOLO mode suggestions in the `devrel-frictionlog-codelab` skill (v0.0.3).
+- 🥑 Added also a MEtadata table to Friction Log final doc.
 
 ## [0.1.1] - 2026-03-13
 
