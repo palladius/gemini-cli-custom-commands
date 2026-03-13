@@ -39,10 +39,14 @@ When the user provides a Codelab URL, follow these exact steps. Ensure each step
 ### Step 3: GCP Project Setup
 
 1. Ask the user: "Please provide an existing GCP Project ID (with billing enabled) OR a Billing Account ID."
-2. If the user provides an existing `PROJECT_ID`, save it to the `.env` file and proceed to Step 4.
+2. If the user provides an existing `PROJECT_ID`:
+    * Verify that the project exists and has active billing associated (e.g., using `gcloud beta billing projects describe <PROJECT_ID>`).
+    * **DO NOT PROCEED** to Step 4 until you have verified that billing is correctly linked. If billing is missing or disabled, stop and ask the user to fix it.
+    * Save it to the `.env` file and proceed to Step 4.
 3. If the user provides a Billing Account ID without a project, use `gcloud` commands to autonomously:
     * Create a new GCP project (generate a sensible, unique project ID).
-    * Link the newly created project to the provided Billing Account ID.
+    * Link the newly created project to the provided Billing Account ID (`gcloud beta billing projects link <PROJECT_ID> --billing-account <ACCOUNT_ID>`).
+    * Verify that the billing is correctly linked. **DO NOT PROCEED** until billing is active.
     * Save the newly created `PROJECT_ID` to the `.env` file.
 
 ### Step 4: Autonomous Execution, Logging, and Repo Analysis
