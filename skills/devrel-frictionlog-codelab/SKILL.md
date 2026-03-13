@@ -48,6 +48,8 @@ When the user provides a Codelab URL, follow these exact steps. Ensure each step
     * Link the newly created project to the provided Billing Account ID (`gcloud beta billing projects link <PROJECT_ID> --billing-account <ACCOUNT_ID>`).
     * Verify that the billing is correctly linked. **DO NOT PROCEED** until billing is active.
     * Save the newly created `PROJECT_ID` to the `.env` file.
+4. **YOLO Mode Suggestion**: Once billing is successfully verified and enabled, explicitly suggest to the user: "Project and billing are successfully configured. To proceed smoothly through the rest of the Codelab, I recommend enabling **YOLO mode (CTRL + Y)**."
+5. **Automation Mandate**: From this point forward, try to automate as much as you reasonably can. Only stop and ask for human intervention when you encounter a strict blocker that requires a human (e.g., creating a new GitHub user, generating an OAuth consent screen via the UI, forking a repository manually, or browsing an authenticated web resource that the CLI cannot access).
 
 ### Step 4: Autonomous Execution, Logging, and Repo Analysis
 
