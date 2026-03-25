@@ -1,6 +1,7 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.0.3
+version: 0.0.4
+# 2026-03-25 v0.0.4: Added mandatory empirical validation, workbench/ directory for scripts, and structured friction_log/ directory.
 description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Use when a user provides a codelab URL and wants the agent to systematically reproduce the steps, log friction for each page, optionally create a GCP project, clone external repos to fix bugs, and produce a detailed report of the experience in a README.md and BUGS.md.
 # version: in the bash script.
 ---
@@ -22,7 +23,7 @@ When the user provides a Codelab URL, follow these exact steps. Ensure each step
     ./scripts/setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE>
     ```
 
-    This script automatically creates the `codelab/original/`, `codelab/proposed/`, `FRICTION_LOG/`, and `external-repos/` directories. It also initializes the `.env` file, the `BUGS.md` file, the `external-repos/.gitignore`, and writes a `.version` file for tracking the skill version and repository.
+    This script automatically creates the `codelab/original/`, `codelab/proposed/`, `friction_log/by-page/`, `workbench/`, and `external-repos/` directories. It also initializes the `.env` file, the `BUGS.md` file, the `external-repos/.gitignore`, and writes a `.version` file for tracking the skill version and repository.
 
 ### Step 2: Download and Mirror Codelab Content
 
@@ -56,13 +57,13 @@ Begin reproducing the codelab autonomously, going through each page (`01`, `02`,
 
 For each page `XX`:
 
-1. Check if `FRICTION_LOG/XX.md` already exists and is complete. If it is, **skip** to the next page. This allows the workflow to be resumable.
+1. Check if `friction_log/by-page/XX.md` already exists and is complete. If it is, **skip** to the next page. This allows the workflow to be resumable.
 2. Follow the instructions on the codelab page as closely as possible, running commands and performing tasks.
 3. **External Repositories**: If the codelab references an external Git repository:
     * Clone the repository into the `external-repos/` directory.
     * Analyze the repository code for any missing or broken parts mentioned in the codelab instructions.
     * If bugs or broken parts are identified, ask the user for permission to start filing Pull Requests to fix those issues.
-4. **Log your experience** by writing to `FRICTION_LOG/XX.md`:
+4. **Log your experience** by writing to `friction_log/by-page/XX.md` (RoR-style organization):
     * Use bullet points for every distinct action or instruction.
     * **Include a timestamp** at the beginning of each bullet point in the format `` * `HH:MM:SS` `` to track execution time and make the logs easily grep-able.
     * Use `*` for normal, expected steps.
@@ -73,23 +74,28 @@ For each page `XX`:
     * **Time Analysis:** At the end of each page's log, note the total time it took you (the AI) to complete the page. Compare this with the codelab's estimated time for that page (if provided), and suggest a realistic completion time for a human user based on the complexity of the tasks.
 5. If you encounter errors, typos, or wrong instructions in the codelab text, or broken code in external repos:
     * Patch the markdown file in `codelab/proposed/XX.md` with the proposed solution or fix.
-    * Explain *why* the change was needed in the `FRICTION_LOG/XX.md` file.
+    * Explain *why* the change was needed in the `friction_log/by-page/XX.md` file.
     * Add a detailed bullet point to `BUGS.md` explaining the issue and linking to the proposed fix or PR.
 6. Continuously update the `.env` file with any new resource coordinates created during the step (e.g., URLs, instances, DB strings).
-7. At the end of the page, write a proof that you executed correctly the steps. Something like a `gcloud` command which proves that a GCE vm has been created, or that 2 tables to a DB were added, .. **DO NOT PROCEED** until all the important steps have been done (or subsequent pages will yield more errors).
+7. **MANDATORY EMPIRICAL VALIDATION (Hard Stop):** At the end of every page, or when declaring a step "complete", you MUST provide empirical proof of actual functionality. **DO NOT** accept a successful deployment log (e.g., `gcloud run deploy SUCCESS`) as proof of completion. You must actively test the deployed resource (e.g., `curl` the live endpoint, query the modified database with a `SELECT`, trigger the event and check the specific logs). **IF THIS PROOF FAILS, STOP IMMEDIATELY.** Do not proceed to the next page.
+8. **STRUCTURED WORKSPACE (The `workbench/` Directory):** Do not clutter the root directory. All agent-authored execution code, exploratory scripts (e.g., `test_vertex.py`), database patches (`alter_db.sql`), and utility scripts must be placed inside the `workbench/` directory.
+9. **CONTEXT AWARENESS & PATH RECONCILIATION:** Strictly reconcile data structures between legacy systems (e.g., local `uploads/` directories) and modern cloud equivalents (e.g., flat GCS buckets). Cross-check UI template paths and DB queries against actual data locations. Do not hardcode brittle assumptions (e.g., filtering only for `.png` if the user might test `.jpg`).
+10. **GCP LATENCY & RETRY LOGIC:** GCP APIs (Vertex AI, Eventarc) often require 2-5 minutes for service agents to provision after enablement. If you receive a `400 Service agents are being provisioned` error, log it as a friction point, wait, and retry instead of assuming failure.
+11. **VERTEX AI MODEL RESILIENCE:** If a model returns a `404 Publisher Model... not found` (common on trial accounts for older models like 1.5-pro), attempt to use the latest model family (e.g., `gemini-2.5-flash`). **ALWAYS preserve Vertex AI and IAM architecture**; do not pivot to consumer AI Studio API keys.
+12. **DATA SEED VERIFICATION & CLEANUP:** Verify that imported DB seeds (`.sql`) correspond to actual cloud assets. If there is a mismatch (e.g., orphaned rows causing broken UI links), autonomously execute cleanup queries (`DELETE`) and document this as a codelab fix.
 
 ### Step 5: Final Output Synthesis
 
-Once all pages have been completed, create a short `README.md` file in the base directory containing a high-level summary of the entire run, and a consolidated `FRICTION_LOG.md` file.
+Once all pages have been completed, create a short `README.md` file in the base directory containing a high-level summary of the entire run, and a consolidated `friction_log/README.md` file.
 
 The `README.md` must be concise and include:
 
 1. **What you did**: A brief sentence explaining the codelab run.
 2. **What you found**: High-level observations and Completion Status (were you able to run the whole codelab?).
-3. **Big Mistakes**: A summarized list of major inconsistencies or show-stopping bugs.
-4. **Links**: Explicit links to the `BUGS.md` file and the consolidated `FRICTION_LOG.md` file.
+3. **Big Mistakes & Meta Learnings**: A summarized list of major inconsistencies or show-stopping bugs.
+4. **Links**: Explicit links to the `BUGS.md` file and the consolidated `friction_log/README.md` file.
 
-The `FRICTION_LOG.md` must include:
+The `friction_log/README.md` must include:
 
 1. **Metadata Table (Top Section)**: A Markdown table containing key-value pairs for the following fields:
 
@@ -105,8 +111,9 @@ The `FRICTION_LOG.md` must include:
     | **OVERALL_EXPERIENCE** | A concise (Twitter-sized) summary of the experience |
 
 2. **Changes Needed**: A precise list of the changes that need to be made. Provide visual markdown diffs or patches showing the OLD incorrect text/code and the NEW corrected text/code.
-3. **Consolidated Friction Logs**: A concatenation of all the individual per-page friction logs from the `FRICTION_LOG/` directory. Use an H2 (`##`) for each page so they are easy to isolate.
+3. **Proposed Next Steps:** Proactively suggest a "Bonus" or "Next Steps" section (e.g., providing a bash script using `gcloud storage objects rewrite` to backfill historical data for event-driven functions).
+4. **Consolidated Friction Logs**: A concatenation of all the individual per-page friction logs from the `friction_log/by-page/` directory. Use an H2 (`##`) for each page so they are easy to isolate.
 
 ## Resumption Logic
 
-Always check the base directory and `FRICTION_LOG/` contents before starting work. If a folder for the codelab already exists, identify the last completed step by finding the highest numbered `FRICTION_LOG/XX.md` file, and resume execution from the next step (`XX+1`). Do not repeat completed work unless explicitly requested.
+Always check the base directory and `friction_log/by-page/` contents before starting work. If a folder for the codelab already exists, identify the last completed step by finding the highest numbered `friction_log/by-page/XX.md` file, and resume execution from the next step (`XX+1`). Do not repeat completed work unless explicitly requested.
