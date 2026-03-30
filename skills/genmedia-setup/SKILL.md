@@ -65,7 +65,7 @@ python3 scripts/inject_settings.py --project <YOUR_PROJECT_ID> --bucket <YOUR_BU
 
 Let's start with something cheap and fast:
 
-* "Use chirp3-hd MCP server to list voices".
+* **Prompt**: Use chirp3-hd MCP server to list voices in "en-US" language.
 
 Note this should use the MCP server defined in your settings.json, pointing to the script  `PROJECT_ID=XXXXX ~/.local/bin/mcp-chirp3-go`. Ensure ~/.local/bin/ is added to your PATH before running Gemini CLI again.
 

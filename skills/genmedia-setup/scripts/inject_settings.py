@@ -37,6 +37,11 @@ def main():
     else:
         print(f"Bucket gs://{bucket_name} already exists.")
 
+    print(f"Enabling necessary APIs (Vertex AI) on project {args.project}...")
+    api_res = subprocess.run(["gcloud", "services", "enable", "aiplatform.googleapis.com", "--project", args.project])
+    if api_res.returncode != 0:
+        print("Warning: Failed to enable Vertex AI APIs. Please ensure you have sufficient permissions.", file=sys.stderr)
+
     if args.local:
         settings_file = os.path.join(os.getcwd(), ".gemini", "settings.json")
     else:
