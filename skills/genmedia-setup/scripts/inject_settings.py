@@ -17,6 +17,7 @@ def main():
     parser.add_argument("--bucket", help="Your Google Cloud Storage bucket for GenMedia assets. Defaults to <project>-mediagen-files")
     parser.add_argument("--region", default="us-central1", help="Google Cloud Region (default: us-central1)")
     parser.add_argument("--local", action="store_true", help="Update the local .gemini/settings.json file instead of the global one.")
+    parser.add_argument("--path-to-scripts", default="~/.local/bin", help="Path where MCP binaries are installed (default: ~/.local/bin)")
     
     args = parser.parse_args()
 
@@ -41,7 +42,7 @@ def main():
     else:
         settings_file = os.path.expanduser("~/.gemini/settings.json")
 
-    bin_dir = os.path.expanduser("~/.local/bin")
+    bin_dir = os.path.expanduser(args.path_to_scripts)
 
     genmedia_servers = {
         "veo": {
