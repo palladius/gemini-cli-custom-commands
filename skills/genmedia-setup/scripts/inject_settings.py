@@ -41,9 +41,11 @@ def main():
     else:
         settings_file = os.path.expanduser("~/.gemini/settings.json")
 
+    bin_dir = os.path.expanduser("~/.local/bin")
+
     genmedia_servers = {
         "veo": {
-            "command": "mcp-veo-go",
+            "command": os.path.join(bin_dir, "mcp-veo-go"),
             "env": {
                 "MCP_REQUEST_MAX_TOTAL_TIMEOUT": "240000",
                 "MCP_SERVER_REQUEST_TIMEOUT": "30000",
@@ -53,7 +55,7 @@ def main():
             }
         },
         "imagen": {
-            "command": "mcp-imagen-go",
+            "command": os.path.join(bin_dir, "mcp-imagen-go"),
             "env": {
                 "MCP_SERVER_REQUEST_TIMEOUT": "55000",
                 "GENMEDIA_BUCKET": bucket_name,
@@ -62,7 +64,7 @@ def main():
             }
         },
         "chirp3-hd": {
-            "command": "mcp-chirp3-go",
+            "command": os.path.join(bin_dir, "mcp-chirp3-go"),
             "env": {
                 "MCP_SERVER_REQUEST_TIMEOUT": "55000",
                 "GENMEDIA_BUCKET": bucket_name,
@@ -71,7 +73,7 @@ def main():
             }
         },
         "lyria": {
-            "command": "mcp-lyria-go",
+            "command": os.path.join(bin_dir, "mcp-lyria-go"),
             "env": {
                 "GENMEDIA_BUCKET": bucket_name,
                 "PROJECT_ID": args.project,
@@ -80,7 +82,7 @@ def main():
             }
         },
         "avtool": {
-            "command": "mcp-avtool-go",
+            "command": os.path.join(bin_dir, "mcp-avtool-go"),
             "env": {
                 "PROJECT_ID": args.project,
                 "LOCATION": args.region,
