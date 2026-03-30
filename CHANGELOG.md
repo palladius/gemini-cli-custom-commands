@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.6] - 2026-03-30
+
+### Changed
+- 🔄 `genmedia-setup` script now automatically enables Vertex AI, Text-to-Speech, and Storage APIs.
+- 📝 Added mandatory prerequisites (`ffmpeg`, `ADC login`, IAM bindings) to `genmedia-setup` SKILL.md.
+
 ## [0.1.5] - 2026-03-30
 
 ### Added
