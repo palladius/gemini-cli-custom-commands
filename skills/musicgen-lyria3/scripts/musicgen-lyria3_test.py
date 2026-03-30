@@ -27,12 +27,11 @@ def get_audio_duration(file_path):
         print(f"❌ Error reading MP3 metadata using ffprobe: {e}")
         return None
 
-def run_test(script_name, output_base, expected_min_duration, expected_max_duration):
+def run_test(script_name, output_base, expected_min_duration, expected_max_duration, test_prompt, expected_keywords=None, no_cleanup=False):
     script_dir = os.path.dirname(os.path.abspath(__file__))
     script_path = os.path.join(script_dir, script_name)
     test_mp3 = os.path.join(script_dir, f".test.{output_base}.mp3")
     test_txt = os.path.join(script_dir, f".test.{output_base}.txt")
-    test_prompt = f"A simple acoustic guitar melody for testing {script_name}"
 
     print(f"\n=============================================")
     print(f"🎸 Testing Script: {script_name}")
@@ -83,12 +82,33 @@ def run_test(script_name, output_base, expected_min_duration, expected_max_durat
     else:
         print("⚠️ Could not verify duration (is ffprobe installed?). Skipping duration check.")
 
+    # 3. Check lyrics file and keywords
+    if expected_keywords:
+        print(f"📝 Checking lyrics file for keywords: {expected_keywords}")
+        if not os.path.exists(test_txt):
+            print(f"❌ Error: Expected lyrics file '{test_txt}' was not created.")
+            return False
+        
+        with open(test_txt, 'r', encoding='utf-8') as f:
+            lyrics = f.read().lower()
+        
+        missing_keywords = [kw for kw in expected_keywords if kw.lower() not in lyrics]
+        if missing_keywords:
+            print(f"❌ Error: Could not find keywords {missing_keywords} in the lyrics.")
+            print(f"   Lyrics generated:\n---\n{lyrics}\n---")
+            return False
+        else:
+            print(f"✅ Found all expected keywords in lyrics!")
+
     # Cleanup
-    print("🧹 Cleaning up test files...")
-    for f in [test_mp3, test_txt]:
-        if os.path.exists(f):
-            os.remove(f)
-            print(f"   Deleted {f}")
+    if no_cleanup:
+        print(f"💾 --no-cleanup set: Preserving {test_mp3} and {test_txt} for manual inspection.")
+    else:
+        print("🧹 Cleaning up test files...")
+        for f in [test_mp3, test_txt]:
+            if os.path.exists(f):
+                os.remove(f)
+                print(f"   Deleted {f}")
             
     return True
 
@@ -96,12 +116,17 @@ def run_test(script_name, output_base, expected_min_duration, expected_max_durat
 def main():
     parser = argparse.ArgumentParser(
         description="Test script for Lyria3 music generator (tests both 30sec and 2min generators).",
-        epilog="Ensures the scripts produce valid MP3 files of expected durations."
+        epilog="Ensures the scripts produce valid MP3 files of expected durations and verifies lyrics generation."
     )
     parser.add_argument(
         "--no-dryrun", 
         action="store_true", 
         help="Execute the real API calls (costs money/tokens)."
+    )
+    parser.add_argument(
+        "--no-cleanup", 
+        action="store_true", 
+        help="Do NOT delete the generated .test.* files after testing (useful for manual inspection)."
     )
     args = parser.parse_args()
 
@@ -115,12 +140,19 @@ def main():
 
     print("🔥 Running REAL tests (Calling Lyria 3 API for both scripts)...")
     
-    success_30s = run_test("musicgen-lyria3-30sec.py", "lyria3-30s", 20, 40)
-    success_2m = run_test("musicgen-lyria3-2min.py", "lyria3-2m", 100, 140)
+    prompt_30s = "A simple 30 second acoustic guitar melody with an Italian tenore singing: Unit tests are the best - otherwise in italian"
+    keywords_30s = ['unit', 'test']
+    success_30s = run_test("musicgen-lyria3-30sec.py", "lyria3-30s", 20, 40, prompt_30s, keywords_30s, args.no_cleanup)
+    
+    prompt_2m = "A 2 minute acoustic guitar melody with an Italian tenore singing: Long unit tests are even better - otherwise in italian"
+    keywords_2m = ['unit', 'test']
+    success_2m = run_test("musicgen-lyria3-2min.py", "lyria3-2m", 100, 140, prompt_2m, keywords_2m, args.no_cleanup)
 
     print("\n=============================================")
     if success_30s and success_2m:
         print("🎉 All real tests passed successfully!")
+        if args.no_cleanup:
+            print("📁 Reminder: Generated test files were NOT deleted and are ready for you to check!")
         sys.exit(0)
     else:
         print("❌ One or more tests failed!")
