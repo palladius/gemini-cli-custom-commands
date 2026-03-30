@@ -66,6 +66,7 @@ This extension also provides **Agent Skills**, which are specialized capabilitie
 
 *   **`cloud-build-investigation`**: 🏗️ Expert-level SRE skill for Google Cloud Build (GCB) and Cloud Run investigations. Activate when user mentions Cloud Build failures, deployment issues to Cloud Run.
 *   **`devrel-frictionlog-codelab`**: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL.
+*   **`musicgen-lyria3`**: 🎵 Generates 30-second clips or 2-minute songs using Lyria 3.
 *   **`pcc-check-for-updates`**: 🔄 Checks for updates to remote GH site for palladius/gemini-cli-custom-commands.
 *   **`postmortem-aggregator`**: 💀 [SRE] To be used when you have a folder containing N Post Mortem files.
 *   **`postmortem-generator`**: 💀 [SRE] Creates a PostMortem given enough context about an incident/outage.
