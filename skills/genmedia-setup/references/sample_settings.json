@@ -1,0 +1,44 @@
+{
+  "mcpServers": {
+    "veo": {
+      "command": "~/.local/bin/mcp-veo-go",
+      "env": {
+        "MCP_REQUEST_MAX_TOTAL_TIMEOUT": "240000",
+        "MCP_SERVER_REQUEST_TIMEOUT": "30000",
+        "GENMEDIA_BUCKET": "YOUR_GOOGLE_CLOUD_STORGE_BUCKET",
+        "PROJECT_ID": "YOUR_GOOGLE_CLOUD_PROJECT_ID"
+      }
+    },
+    "imagen": {
+      "command": "~/.local/bin/mcp-imagen-go",
+      "env": {
+        "MCP_SERVER_REQUEST_TIMEOUT": "55000",
+        "GENMEDIA_BUCKET": "YOUR_GOOGLE_CLOUD_STORGE_BUCKET",
+        "PROJECT_ID": "YOUR_GOOGLE_CLOUD_PROJECT_ID"
+      }
+    },
+    "chirp3-hd": {
+      "command": "~/.local/bin/mcp-chirp3-go",
+      "env": {
+        "MCP_SERVER_REQUEST_TIMEOUT": "55000",
+        "GENMEDIA_BUCKET": "YOUR_GOOGLE_CLOUD_STORGE_BUCKET",
+        "PROJECT_ID": "YOUR_GOOGLE_CLOUD_PROJECT_ID"
+      }
+    },
+    "lyria": {
+      "command": "~/.local/bin/mcp-lyria-go",
+      "env": {
+        "GENMEDIA_BUCKET": "YOUR_GOOGLE_CLOUD_STORGE_BUCKET",
+        "PROJECT_ID": "YOUR_GOOGLE_CLOUD_PROJECT_ID",
+        "MCP_SERVER_REQUEST_TIMEOUT": "55000"
+      }
+    },
+    "avtool": {
+      "command": "~/.local/bin/mcp-avtool-go",
+      "env": {
+        "PROJECT_ID": "YOUR_GOOGLE_CLOUD_PROJECT_ID",
+        "MCP_SERVER_REQUEST_TIMEOUT": "55000"
+      }
+    }
+  }
+}
