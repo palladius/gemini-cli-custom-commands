@@ -42,7 +42,9 @@ gemini skills install https://github.com/GoogleCloudPlatform/vertex-ai-creative-
 gemini skills install https://github.com/GoogleCloudPlatform/vertex-ai-creative-studio.git --path experiments/mcp-genmedia/skills/genmedia-producer
 ```
 
-## Step 3: Configure MCP Settings (JSON Injector)
+### Configuration and Model References
+
+For a full list of recommended models for each service, refer to [which_models.md](./references/which_models.md).
 
 To automatically inject the required `mcpServers` into your `~/.gemini/settings.json`, run the injection script.
 
@@ -68,6 +70,12 @@ gcloud storage buckets add-iam-policy-binding gs://<YOUR_BUCKET_NAME> \
   --member=user:<YOUR_EMAIL> \
   --role=roles/storage.objectUser
 ```
+
+## Testing
+
+* **Prompt**: Use chirp3 MCP server to list available voices. If this works, then generate a short audio clip with "it works!".
+* **Prompt**: Use veo MCP server to generate a short video clip with a flying donkey singing: "it works!".
+* **Prompt**: Show me the content of the GENMEDIA_BUCKET.
 
 ## Credits
 

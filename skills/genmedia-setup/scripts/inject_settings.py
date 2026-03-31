@@ -65,7 +65,7 @@ def main():
             }
         },
         "imagen": {
-            "command": os.path.join(bin_dir, "mcp-imagen-go"),
+            "command": os.path.join(bin_dir, "mcp-nanobanana-go"),
             "env": {
                 "MCP_SERVER_REQUEST_TIMEOUT": "55000",
                 "GENMEDIA_BUCKET": bucket_name,
