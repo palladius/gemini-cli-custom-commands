@@ -23,4 +23,4 @@ The following models are recommended for various media generation tasks within t
 ## Chirp - Speech-to-Text & Speech Generation
 
 *   **`chirp-2`**: Highly recommended for most use cases as it supports the standard Google Cloud regions.
-*   **`chirp-3`**: The latest speech model, but currently only available in `us-central1` and `europe-west4`. Use this if you are operating in these specific regions and need the latest features.
+*   **`chirp-3`**: The latest speech model, generally available (GA) in both `us` and `eu` multi-regions. Use this for the latest speech features in these regions.
