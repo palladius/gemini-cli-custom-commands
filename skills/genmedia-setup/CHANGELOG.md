@@ -1,5 +1,12 @@
 # GenMedia Setup Skill Changelog
 
+## [0.1.0] - 2026-03-30
+### Added
+- 🎬 Integrated "Four-Act Structure" storyboarding logic from `aicinema` commands.
+- 📦 Restructured skill: Extracted installation steps into `references/install.md`.
+- 🔄 Renamed skill to "GenMedia Setup & Usage" for better scope.
+- 📝 Added guidelines for characters, style continuity, and voiceover sanitization.
+
 ## [0.0.3] - 2026-03-30
 ### Changed
 - 📝 Added versioning to the skill.

@@ -1,83 +1,62 @@
 ---
 name: genmedia-setup
-description: Install and setup GenMedia (MCP) tools and related Gemini skills. Use when you need to install the GenMedia Go binary, inject MCP configurations, or install the specialized Gemini skills (Producer, etc.) from the Vertex AI Creative Studio.
-version: 0.0.3
+description: Install, setup and use GenMedia (MCP) tools and related Gemini skills.
+version: 0.1.0
 ---
 
-# GenMedia Setup
+# GenMedia Setup & Usage
 
-This skill provides a three-step process for setting up the GenMedia environment, including configuring the MCP servers into your Gemini CLI.
+This skill guides you through setting up and using the GenMedia environment for AI-powered media production.
 
-## Prerequisites (MANDATORY)
+## 🛠️ Installation & Configuration
 
-Before running the setup, ensure you have the following requirements:
+For initial setup, follow the [GenMedia Installation Guide](./references/install.md).
 
-1. **FFmpeg & FFprobe**: Required for media manipulation (e.g. `mcp-avtool-go`).
-   ```bash
-   sudo apt update && sudo apt install -y ffmpeg
-   ```
-2. **Application Default Credentials (ADC)**: The MCP servers use ADC for authentication.
-   ```bash
-   gcloud auth application-default login
-   ```
+### Quick Reference
+- **Inject Settings**: `python3 scripts/inject_settings.py --project <PROJECT_ID>`
+- **Models**: See [Recommended Models](./references/which_models.md) for a list of supported models and regions.
 
-## Step 1: Install the GenMedia Binary
+---
 
-Install the precompiled Go binaries for the GenMedia toolset:
+## 🎬 Storyboarding & Production
 
-```bash
-bash scripts/install-genmedia.sh
-```
+Use the following guidelines to create high-quality, consistent media stories.
 
-## Step 2: Install Gemini Skills
+### 1. The Four-Act Structure
 
-Once the binary is installed, you can install the associated Gemini skills.
+When creating a storyboard, follow this structure to ensure a compelling narrative:
 
-### Option A: Install All Skills
-```bash
-gemini skills install https://github.com/GoogleCloudPlatform/vertex-ai-creative-studio.git --path experiments/mcp-genmedia/skills
-```
+*   **Act I: The Setup (30-45s)**: Introduce characters and the world. Establish the conflict.
+*   **Act II: Rising Action (1-2m)**: The characters face obstacles. The stakes increase.
+*   **Act III: The Climax (30-45s)**: The highest point of tension. The conflict is resolved.
+*   **Act IV: Resolution (30s)**: Show the aftermath and the new status quo.
 
-### Option B: Install a Specific Skill
-```bash
-gemini skills install https://github.com/GoogleCloudPlatform/vertex-ai-creative-studio.git --path experiments/mcp-genmedia/skills/genmedia-producer
-```
+### 2. Characters & Style Continuity
 
-### Configuration and Model References
+- **Style**: Define a consistent visual and narrative style (e.g., "Pixar-style animation", "Noir cinematography"). Retain this style across all scenes.
+- **Characters**: Describe characters vividly. Use reference images and consistent prompts to maintain character continuity across scenes.
 
-For a full list of recommended models for each service, refer to [which_models.md](./references/which_models.md).
+### 3. Scene Generation (3-5 Scenes per Act)
 
-To automatically inject the required `mcpServers` into your `~/.gemini/settings.json`, run the injection script.
+For each act, generate detailed scene descriptions:
+- **Visuals**: Use Imagen (Imagen 3 or 4) for high-quality scene visuals.
+- **Music**: Use Lyria (002 or 3) to generate a matching soundtrack for each scene.
+- **Video**: Use Veo to animate scenes, typically in 5-8 second clips.
 
-The script will automatically:
-- Enable required Google Cloud APIs (`Vertex AI`, `Text-to-Speech`, `Storage`).
-- Create a GCS bucket if it doesn't exist.
-- Inject server configurations with absolute binary paths.
+### 4. Audio & Voiceover
 
-Run the injector script (only `PROJECT_ID` is mandatory):
+- **Speech**: Use Chirp (2 or 3) for multi-lingual narration or character voices.
+- **Sanitization**: Remove markdown characters (`#`, `*`) from text before speech generation to ensure natural delivery.
 
-```bash
-# Minimal required execution (defaults apply)
-python3 scripts/inject_settings.py --project <YOUR_PROJECT_ID>
+---
 
-# Specify custom bucket, region, and bin path
-python3 scripts/inject_settings.py --project <YOUR_PROJECT_ID> --bucket <YOUR_BUCKET_NAME> --region us-central1 --path-to-scripts ~/.local/bin
-```
-
-### Important: Storage Permissions
-Ensure your account has permissions to use the bucket:
-```bash
-gcloud storage buckets add-iam-policy-binding gs://<YOUR_BUCKET_NAME> \
-  --member=user:<YOUR_EMAIL> \
-  --role=roles/storage.objectUser
-```
-
-## Testing
+## 🧪 Testing Your Setup
 
 * **Prompt**: Use chirp3 MCP server to list available voices. If this works, then generate a short audio clip with "it works!".
 * **Prompt**: Use veo MCP server to generate a short video clip with a flying donkey singing: "it works!".
 * **Prompt**: Show me the content of the GENMEDIA_BUCKET.
 
-## Credits
+## 📜 History & Credits
 
-- Hussain Chinoy for the [mcp-genmedia-go](https://github.com/GoogleCloudPlatform/vertex-ai-creative-studio/tree/main/experiments/mcp-genmedia/mcp-genmedia-go) project.
+- See [Skill Changelog](./CHANGELOG.md) for version history.
+- Credits: Hussain Chinoy for the GenMedia toolset.
