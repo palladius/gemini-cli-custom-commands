@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.12] - 2026-03-30
+
+### Changed
+- 🔄 `genmedia-setup` skill now defaults to `mcp-nanobanana-go` for the `imagen` command.
+- 📝 Consolidated model recommendations for Imagen, Veo, Lyria (with lyric support), and Chirp in `which_models.md`.
+- 🎤 Documented specific GA regions for Chirp 2 (`us-central1`, `europe-west4`, `asia-southeast1`) and Chirp 3 (`us`, `eu`).
+- 🚀 Bumped extension version to 0.1.12.
+
 ## [0.1.11] - 2026-03-30
 
 ### Fixed
