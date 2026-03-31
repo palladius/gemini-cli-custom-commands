@@ -1,7 +1,7 @@
 ---
 name: genmedia-setup
 description: Install, setup and use GenMedia (MCP) tools and related Gemini skills.
-version: 0.1.0
+version: 0.1.1
 ---
 
 # GenMedia Setup & Usage

@@ -1,5 +1,9 @@
 # GenMedia Setup Skill Changelog
 
+## [0.1.1] - 2026-03-30
+### Added
+- 🍌 Added new Nano Banana models: `gemini-2.5-flash-image`, `gemini-3-pro-image-preview`, and `gemini-3.1-flash-image-preview`.
+
 ## [0.1.0] - 2026-03-30
 ### Added
 - 🎬 Integrated "Four-Act Structure" storyboarding logic from `aicinema` commands.
