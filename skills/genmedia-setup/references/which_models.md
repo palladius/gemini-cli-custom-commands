@@ -19,3 +19,8 @@ The following models are recommended for various media generation tasks within t
 *   **`lyria-002`**: The standard model for music generation.
 *   **`lyria-3-clip-preview`**: Lyria 3 model for generating short music clips with lyric support.
 *   **`lyria-3-pro-preview`**: Lyria 3 model for generating high-quality music with lyric support.
+
+## Chirp - Speech-to-Text & Speech Generation
+
+*   **`chirp-2`**: Highly recommended for most use cases as it supports the standard Google Cloud regions.
+*   **`chirp-3`**: The latest speech model, but currently only available in `us-central1` and `europe-west4`. Use this if you are operating in these specific regions and need the latest features.
