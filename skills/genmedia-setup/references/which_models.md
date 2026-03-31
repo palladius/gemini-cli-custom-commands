@@ -17,3 +17,5 @@ The following models are recommended for various media generation tasks within t
 ## Lyria - Music Generation
 
 *   **`lyria-002`**: The standard model for music generation.
+*   **`lyria-3-clip-preview`**: Lyria 3 model for generating short music clips with lyric support.
+*   **`lyria-3-pro-preview`**: Lyria 3 model for generating high-quality music with lyric support.
