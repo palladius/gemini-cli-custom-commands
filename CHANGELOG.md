@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.13] - 2026-03-30
+
+### Changed
+- 📝 Added versioning to the `genmedia-setup` skill (bumped to 0.0.3).
+- 📜 Added skill-specific `CHANGELOG.md` for `genmedia-setup`.
+- 📝 Expanded model descriptions in `which_models.md` with official documentation links.
+- 🚀 Bumped extension version to 0.1.13.
+
 ## [0.1.12] - 2026-03-30
 
 ### Changed

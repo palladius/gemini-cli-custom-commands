@@ -1,6 +1,7 @@
 ---
 name: genmedia-setup
 description: Install and setup GenMedia (MCP) tools and related Gemini skills. Use when you need to install the GenMedia Go binary, inject MCP configurations, or install the specialized Gemini skills (Producer, etc.) from the Vertex AI Creative Studio.
+version: 0.0.3
 ---
 
 # GenMedia Setup

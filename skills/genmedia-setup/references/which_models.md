@@ -17,10 +17,12 @@ The following models are recommended for various media generation tasks within t
 ## Lyria - Music Generation
 
 *   **`lyria-002`**: The standard model for music generation.
-*   **`lyria-3-clip-preview`**: Lyria 3 model for generating short music clips with lyric support.
-*   **`lyria-3-pro-preview`**: Lyria 3 model for generating high-quality music with lyric support.
+*   **`lyria-3-clip-preview`**: Lyria 3 model for generating short music clips with lyric support: ~30sec
+*   **`lyria-3-pro-preview`**: Lyria 3 model for generating high-quality music with lyric support: ~2min
+
+Docs for lyria3: https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models/lyria/lyria-3
 
 ## Chirp - Speech-to-Text & Speech Generation
 
-*   **`chirp_2`**: Highly recommended for most use cases; generally available (GA) in `us-central1`, `europe-west4`, and `asia-southeast1`.
-*   **`chirp-3`**: The latest speech model, generally available (GA) in both `us` and `eu` multi-regions. Use this for the latest speech features in these regions.
+*   **`chirp_2`**: Highly recommended for most use cases; generally available (GA) in `us-central1`, `europe-west4`, and `asia-southeast1`. Docs: https://docs.cloud.google.com/speech-to-text/docs/models/chirp-2
+*   **`chirp_3`**: The latest speech model, generally available (GA) in both `us` and `eu` multi-regions. Use this for the latest speech features in these regions. Docs: https://docs.cloud.google.com/speech-to-text/docs/models/chirp-3
