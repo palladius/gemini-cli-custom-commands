@@ -1,5 +1,14 @@
 # GenMedia Setup Skill Changelog
 
+## [0.1.2] - 2026-03-30
+### Added
+- 📦 Ported "quality" production logic from `aicinema` commands:
+  - Added `PLAN.md` and `README.md` project organization guidelines.
+  - Added multi-lingual naming conventions (`_it`, `_en`, etc.).
+  - Added persona integration from `doc/personas/*.md`.
+  - Added specific guidance for Pixar-style child character cover images.
+  - Added trailer production and error tracking instructions.
+
 ## [0.1.1] - 2026-03-30
 ### Added
 - 🍌 Added new Nano Banana models: `gemini-2.5-flash-image`, `gemini-3-pro-image-preview`, and `gemini-3.1-flash-image-preview`.

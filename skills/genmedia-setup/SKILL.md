@@ -1,7 +1,7 @@
 ---
 name: genmedia-setup
 description: Install, setup and use GenMedia (MCP) tools and related Gemini skills.
-version: 0.1.1
+version: 0.1.2
 ---
 
 # GenMedia Setup & Usage
@@ -22,31 +22,34 @@ For initial setup, follow the [GenMedia Installation Guide](./references/install
 
 Use the following guidelines to create high-quality, consistent media stories.
 
-### 1. The Four-Act Structure
+### 1. Project Organization (The Workflow)
 
-When creating a storyboard, follow this structure to ensure a compelling narrative:
+Always organize your project into a dedicated folder: `stories/YYYYMMDD_HHMM_(title)/`.
+- **PLAN.md**: Before generating assets, create a `PLAN.md` with checkboxes describing acts, scenes, and music. Check them off as you complete tasks.
+- **README.md**: When finished, create a `README.md` that lists all generated assets, prompts used (for reproducibility), and any choices or errors encountered.
+- **Error Tracking**: If you encounter persistent errors, log them in `doc/GENMEDIA_ERRORS.md`.
 
+### 2. The Four-Act Structure
+
+When creating a storyboard, follow this structure:
 *   **Act I: The Setup (30-45s)**: Introduce characters and the world. Establish the conflict.
 *   **Act II: Rising Action (1-2m)**: The characters face obstacles. The stakes increase.
 *   **Act III: The Climax (30-45s)**: The highest point of tension. The conflict is resolved.
 *   **Act IV: Resolution (30s)**: Show the aftermath and the new status quo.
+*   **Trailer**: Finally, create an 8-second trailer with a dramatic "movie announcer" voice using Chirp and Veo.
 
-### 2. Characters & Style Continuity
+### 3. Characters, Style & Personas
 
-- **Style**: Define a consistent visual and narrative style (e.g., "Pixar-style animation", "Noir cinematography"). Retain this style across all scenes.
-- **Characters**: Describe characters vividly. Use reference images and consistent prompts to maintain character continuity across scenes.
+- **Style**: Define a consistent visual style (e.g., "Pixar-style animation", "Noir cinematography").
+- **Personas**: If a character name matches a file in `doc/personas/*.md`, use that file's contents to inform the character's description and consistency.
+- **Cover Image**: Generate a single `cover.png` for the story. If depicting children, use "Pixar style, 5-7 years old, blonde/blue eyes" (avoid "boy" if API filters trigger).
 
-### 3. Scene Generation (3-5 Scenes per Act)
+### 4. Scene Generation & Audio
 
-For each act, generate detailed scene descriptions:
-- **Visuals**: Use Imagen (Imagen 3 or 4) for high-quality scene visuals.
-- **Music**: Use Lyria (002 or 3) to generate a matching soundtrack for each scene.
-- **Video**: Use Veo to animate scenes, typically in 5-8 second clips.
-
-### 4. Audio & Voiceover
-
-- **Speech**: Use Chirp (2 or 3) for multi-lingual narration or character voices.
-- **Sanitization**: Remove markdown characters (`#`, `*`) from text before speech generation to ensure natural delivery.
+- **Visuals/Music**: Generate 3-5 scenes per act with matching Imagen visuals and Lyria soundtracks.
+- **Multi-lingual Support**: Use suffixes like `_en`, `_it`, `_de` for files (e.g., `story_it.txt`, `story_it.wav`, `story_it.md`).
+- **Speech Sanitization**: **CRITICAL:** Remove markdown characters (`#`, `*`) from text before speech generation to ensure natural delivery.
+- **File Naming**: Rename MCP-generated files (like `sample_0.mp4` or `chirp_audio_...wav`) to contextually relevant names to avoid overwrites.
 
 ---
 
