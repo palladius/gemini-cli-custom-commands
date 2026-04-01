@@ -11,6 +11,7 @@ The following models are available via the `mcp-nanobanana-go` server:
 *   **`gemini-3.1-flash-image-preview`**: Nano Banana 2.
 
 Other legacy Imagen models:
+
 *   **`imagen-3.0-fast-generate-001`**: The fastest Imagen 3 model, also known as Imagen Fast.
 *   **`imagen-3.0-generate-002`**: The default Imagen 3 model.
 *   **`imagen-4.0-generate-preview-05-20`**: The default Imagen 4 model.
