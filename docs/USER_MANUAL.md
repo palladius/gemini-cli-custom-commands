@@ -2,12 +2,6 @@
 
 This document provides a list of all the custom commands available in this extension.
 
-## 🎬 AICinema Commands (`/aicinema`)
-
-*   **`/aicinema:audio_story`**: Create an audio story from a script using GMP Assistant
-*   **`/aicinema:check_install`**: [AICinema] Check if GoLang installation was done correctly.
-*   **`/aicinema:video_storyboard`**: Create an audio/video story from a script using GenAI and.
-
 ## 💻 Code Commands (`/code`)
 
 *   **`/code:pda`**: Follows the Plan, Define, Act workflow to structure project execution.
@@ -66,7 +60,7 @@ This extension also provides **Agent Skills**, which are specialized capabilitie
 
 *   **`cloud-build-investigation`**: 🏗️ Expert-level SRE skill for Google Cloud Build (GCB) and Cloud Run investigations. Activate when user mentions Cloud Build failures, deployment issues to Cloud Run.
 *   **`devrel-frictionlog-codelab`**: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL.
-*   **`genmedia-setup`**: 🎨 Setup GenMedia MCP tools (Veo, Imagen, Chirp3, Lyria) and inject Gemini configurations.
+*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria). *This skill now includes all former `aicinema` custom command functionality.*
 *   **`musicgen-lyria3`**: 🎵 Generates 30-second clips or 2-minute songs using Lyria 3.
 *   **`pcc-check-for-updates`**: 🔄 Checks for updates to remote GH site for palladius/gemini-cli-custom-commands.
 *   **`postmortem-aggregator`**: 💀 [SRE] To be used when you have a folder containing N Post Mortem files.

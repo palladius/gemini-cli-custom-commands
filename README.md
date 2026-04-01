@@ -33,7 +33,6 @@ gemini extensions uninstall palladius-common-commands
 
 Here's a sneak peek of the commands available. For a full list, see the [User Manual](docs/USER_MANUAL.md).
 
-*   **`🎬 AICinema`**: A collection of commands to create audio and video stories using generative AI.
 *   **`💻 Code`**: Commands for structuring your coding workflow.
 *   **`🏃 Common`**: A collection of everyday commands to streamline your workflow, from managing TODOs to checking whereabouts.
 *   **`✍️ Dev`**: Developer-focused commands, starting with a tool to check the writing style of your documentation.
@@ -53,7 +52,7 @@ Starting with version `0.0.22`, we are introducing **[Agent Skills](https://gemi
 
 *   **`cloud-build-investigation`**: Expert-level SRE skill for Google Cloud Build and Cloud Run investigations.
 *   **`devrel-frictionlog-codelab`**: Automates friction logging for a given Google Codelab URL.
-*   **`genmedia-setup`**: 🎨 Setup GenMedia MCP tools (Veo, Imagen, Chirp3, Lyria) and inject Gemini configurations.
+*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria). *This skill now includes all former `aicinema` custom command functionality.*
 *   **`musicgen-lyria3`**: 🎵 Generate 30-second music clips or 2-3 minute full songs with the Lyria 3 model.
 *   **`pcc-check-for-updates`**: Our flagship skill! A robust **Ruby**-based version checker that understands Semantic Versioning.
 *   **`postmortem-aggregator`**: [SRE] For when you have a folder containing N Post Mortem files.
