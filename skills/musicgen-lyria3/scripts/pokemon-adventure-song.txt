@@ -1,0 +1,62 @@
+[[A0]]
+[[B1]]
+[12.0:] The world is glowing in a neon green,
+[:] Ale and Sebi, the best you've ever seen!
+[:] With a pocket full of dreams and a camera on the go,
+[:] Papino's filming everything he needs to show!
+[:] Step by step through the tall grass we stride,
+[:] With a world of new friends right by our side!
+[[C2]]
+[44.0:] We’re on a Pokémon quest, north to south, east to west!
+[:] In the tall green grass, we’re putting time to the test!
+[:] With a Pikachu spark and an Eevee light!
+[:] We’re gonna find the magic, we’re gonna hold it tight!
+[:] (Hold it tight!)
+[[B3]]
+[68.0:] Look at Pikachu glowing, electric and bright,
+[:] While Eevee is dancing in the morning light!
+[:] Wait, stop right there, there’s a giant in our way,
+[:] Oh, it’s just Snorlax sleeping all through the day!
+[:] Ale and Sebi, don't make a sound,
+[:] There’s magic and mystery all around the town!
+[[C4]]
+[100.0:] We’re on a Pokémon quest, north to south, east to west!
+[:] In the tall green grass, we’re putting time to the test!
+[:] With a Pikachu spark and an Eevee light!
+[:] We’re gonna find the magic, we’re gonna hold it tight!
+[:] (Hold it tight!)
+[[D5]]
+[124.0:] The clouds are parting, the sky turns gold,
+[:] A story that the ancients have always told!
+[:] Look up high, through the mist and haze,
+[:] Arceus is here in a blinding blaze!
+[[C6]]
+[140.0:] We’re on a Pokémon quest, north to south, east to west!
+[:] In the tall green grass, we’re putting time to the test!
+[:] With a Pikachu spark and an Eevee light!
+[:] We’re gonna find the magic, we’re gonna hold it tight!
+[:] We’re gonna hold it tight!
+[[E7]]
+[164.0:] Go, my child Alessandro. The journey is yours.
+[:] Papino, are you still filming? The battery is low!
+[:] Best day ever!
+mosic: 4.5
+bpm: 120.0
+duration_secs: 184.0
+good_crop: 1.0
+[[A0]]
+[0.0:] A bright and energetic Adventure Pop intro defined by a sense of starting a grand journey. The segment is anchored by a driving four-on-the-floor kick drum and a snappy snare. The rhythm is fast-paced and optimistic. The instrumentation features rapid, high-pitched synthesizer arpeggios that twinkle like stars, layered with a clean, strummed acoustic guitar. A playful electric bass follows the root notes with a bouncy, melodic feel. The melodic structure introduces a catchy four-bar heroic theme. The interaction between the digital synth textures and the organic guitar creates a bridge between the real world and the Pokémon universe. The atmosphere is expectant and sunny, evocative of the first day of summer vacation.
+[[B1]]
+[12.0:] An upbeat and conversational Adventure Pop verse defined by rhythmic storytelling. The segment is anchored by a bubbly synthesizer bass line that creates a playful groove. The rhythm features steady handclaps on the backbeats and a dry, driving drum kit. The instrumentation includes staccato electric guitar mutes and the occasional sound of a 'GoPro' camera click. The vocal performance features a youthful male tenor with a bright and clear timbre, singing with an enthusiastic and narrative delivery. The melodic structure is simple and repetitive, allowing the lyrics about Ale, Sebi, and Papino to shine. The interaction between the vocals and the rhythmic guitar creates a 'walking' sensation. The atmosphere is domestic yet adventurous, suggesting a family starting their travels with a camera in hand.
+[[C2]]
+[44.0:] A massive, anthemic Adventure Pop chorus defined by an explosion of sound and energy. The segment is anchored by a powerful, thumping electronic drum beat and a saturated synth-brass melody. The rhythm is driving and high-frequency, with shimmering tambourine hits on every beat. The instrumentation features thick, layered synthesizer pads and a bright, reverberant electric guitar playing power chords. The vocal performance features a youthful male tenor with a bright and powerful timbre, singing a soaring, heroic melody with absolute joy. The melodic structure is soaring and high-pitched, designed to be an earworm. The interaction between the lead vocals and the wide synthesizer soundscape creates a feeling of overwhelming discovery. The atmosphere is triumphant and exciting, evocative of a journey through the wild world of Pokémon.
+[[B3]]
+[68.0:] An upbeat and conversational Adventure Pop verse defined by the introduction of specific characters. The segment is anchored by a bubbly synthesizer bass line and a steady, dry drum kit. The rhythm is driving and tight, with extra rhythmic flourishes from a shaker and a cowbell. The instrumentation includes a twangy electric guitar and high-pitched synth bells that mimic the sound of electric sparks. The vocal performance features a youthful male tenor with a bright and clear timbre, delivering the lyrics about meeting Pikachu, Eevee, and Snorlax with a playful, expressive tone. The melodic structure is bouncy and jaunty. The interaction between the voice and the percussive synth bells creates a vivid, 'animated' sound. The atmosphere is whimsical and fun, like encountering creatures in a sunny forest.
+[[C4]]
+[100.0:] A massive, anthemic Adventure Pop chorus defined by an explosion of sound and energy. The segment is anchored by a powerful, thumping electronic drum beat and a saturated synth-brass melody. The rhythm is driving and high-frequency, with shimmering tambourine hits on every beat. The instrumentation features thick, layered synthesizer pads and a bright, reverberant electric guitar playing power chords. The vocal performance features a youthful male tenor with a bright and powerful timbre, singing a soaring, heroic melody with absolute joy. The melodic structure is soaring and high-pitched, designed to be an earworm. The interaction between the lead vocals and the wide synthesizer soundscape creates a feeling of overwhelming discovery. The atmosphere is triumphant and exciting, evocative of a journey through the wild world of Pokémon.
+[[D5]]
+[124.0:] A grand, cinematic Adventure Pop bridge defined by a dramatic increase in scale and tension. The segment is anchored by a majestic orchestral string section playing ascending scales. The rhythm transitions from a pop beat to a cinematic percussion style with deep timpani hits and rising cymbal swells. The instrumentation features high-pitched choral synthesizer pads and a shimmering harp, creating a 'heavenly' texture. The vocal performance features a youthful male tenor singing with a breathless, awestruck intensity. The melodic structure is slow and building, ending on a high, sustained note. The interaction of the strings and the cinematic drums creates a sense of imminent arrival. The atmosphere is awe-inspiring and majestic, signaling an encounter with something truly legendary.
+[[C6]]
+[140.0:] A massive, anthemic Adventure Pop chorus defined by an explosion of sound and energy. The segment is anchored by a powerful, thumping electronic drum beat and a saturated synth-brass melody. The rhythm is driving and high-frequency, with shimmering tambourine hits on every beat. The instrumentation features thick, layered synthesizer pads and a bright, reverberant electric guitar playing power chords. The vocal performance features a youthful male tenor with a bright and powerful timbre, singing a soaring, heroic melody with absolute joy. The melodic structure is soaring and high-pitched, designed to be an earworm. The interaction between the lead vocals and the wide synthesizer soundscape creates a feeling of overwhelming discovery. The atmosphere is triumphant and exciting, evocative of a journey through the wild world of Pokémon.
+[[E7]]
+[164.0:] A majestic and resolving Adventure Pop outro defined by a sense of divine peace and a final moment of fun. The segment is anchored by soft, sustaining synthesizer pads and the lingering echo of a heroic trumpet call. The rhythm slows to a gentle, steady pulse before fading away. The instrumentation features twinkling glockenspiel notes and a final, warm acoustic guitar strum. The vocal performance begins with a deep, resonant, and calm bass-baritone voice speaking a friendly line to Alessandro, followed by a playful sign-off from the youthful male tenor. The melodic structure resolves into a deep, final major chord. The interaction between the divine voice and the playful brothers creates a heartwarming conclusion. The atmosphere is peaceful and magical, ending with the sound of a camera turning off.

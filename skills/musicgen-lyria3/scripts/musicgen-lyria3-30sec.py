@@ -11,7 +11,7 @@ import argparse
 from google import genai
 from google.genai import types
 
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 '''
 Lyria 3 Music Generation Script
@@ -19,6 +19,7 @@ Lyria 3 Music Generation Script
 This script generates 30-second music clips using Google's Lyria 3 model.
 
 Changelog:
+- 0.0.6: Added safety filter handling with descriptive errors for LLM prompt redesign.
 - 0.0.5: Added 2-minute full-song generator support using lyria-3-pro-preview and renamed script to musicgen-lyria3-30sec.py.
 - 0.0.4: Added colorful emojis directly to STDOUT reporting for a cleaner UI output.
 - 0.0.3: Requires prompt, prints suggestions if empty, and saves generated lyrics/metadata to a matching .txt file.
@@ -73,10 +74,24 @@ def main():
             ),
         )
 
+        # Handle safety filters / blocked content
+        if response.prompt_feedback and response.prompt_feedback.block_reason:
+            print(f"❌ Error: The request was blocked by the safety filter. Reason: {response.prompt_feedback.block_reason}")
+            print("💡 HINT for AI Agent: This prompt triggers a safety filter (likely due to names of people or protected terms).")
+            print("💡 ACTION: Please redesign the prompt using more generic terms (e.g., 'a hero' instead of a name) and try again.")
+            if response.prompt_feedback.block_reason_message:
+                print(f"   Message: {response.prompt_feedback.block_reason_message}")
+            return
+
         # Parse the response
         text_content = ""
         found_audio = False
-        for part in response.parts:
+        
+        if not response.candidates or not response.candidates[0].content.parts:
+            print("⚠️ No content was returned in the response candidates.")
+            return
+
+        for part in response.candidates[0].content.parts:
             if part.text is not None:
                 text_content += part.text + "\n"
             elif part.inline_data is not None:
