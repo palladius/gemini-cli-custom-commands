@@ -1,0 +1,11 @@
+[0.0:3.7] Vai Ale, campione di matematica!
+[3.8:7.4] Oggi hai il compito, che giornata epica!
+[7.5:11.2] Otto anni appena e sei già un portento,
+[11.2:14.9] Con le tabelline, che talento!
+[15.0:18.7] Undici, dodici, tredici per te,
+[18.8:22.4] Sono un gioco da ragazzi, olè!
+[22.5:26.2] Allora in bocca al lupo, piccolo genio,
+[26.2:30.0] Quanto fa dodici per sette? Dimmelo, Ale, almeno! Forza campione!
+Caption: This track is a bright, upbeat slice of modern Pop, tailored as a motivational anthem for a young listener. The entire piece is built on a vibrant and polished production. The rhythmic foundation is a driving four-on-the-floor beat from a punchy electronic drum kit, featuring a clean kick, a crisp snare with a touch of digital reverb on beats 2 and 4, and energetic 16th-note closed hi-hats. A clean, round synth bass provides the low-end groove, playing a bouncy eighth-note pattern that locks perfectly with the kick drum. The harmonic core is provided by bright, layered synth pads playing a triumphant major-key chord progression. To add sparkle and capture attention, a plucky, arpeggiated synth melody dances in the upper register. A clean-toned electric guitar strums open chords, double-tracked and panned wide to create a massive wall of sound. The vocals are delivered by a friendly male singer with a warm and encouraging tone. His performance is enthusiastic and joyful, supported in the background by layered gang vocals that shout 'Forza campione!' at the very end. The entire mix is polished with light compression to ensure a high-energy, radio-ready feel, designed to be instantly catchy and uplifting.
+Mosic: 4.5
+BPM: 128.0

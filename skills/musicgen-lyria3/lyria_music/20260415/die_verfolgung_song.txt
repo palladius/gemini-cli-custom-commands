@@ -1,0 +1,11 @@
+[0.0:] C'è un ladro, si chiama Jumie, che corre via!
+[3.4:] Ha rubato i giornali, è una gran follia!
+[6.9:] Lo prendo e in prigione lo metto, sì!
+[10.3:] Ma lui scappa, e lo riprendo in un lampo, così!
+[13.7:] È una caccia, una pazza avventura,
+[17.1:] Che emozione, che grande paura!
+[20.6:] La Verfolgung!
+[24.0:27.4] La Verfolgung!
+Caption: This is an upbeat, adventurous piece of Kids' Pop, heavily influenced by the exciting, dramatic flair of a spy movie theme. The track is built on a high-energy rhythmic foundation driven by a punchy, tight pop drum kit with a prominent kick drum and a crisp snare hitting on beats 2 and 4. A funky, nimble electric bass guitar plays a syncopated, melodic line that provides the core harmonic momentum. Layered on top, a powerful brass section featuring trumpets and trombones plays sharp, staccato, fanfare-like stabs that punctuate the main melody and create a heroic, cinematic atmosphere. Adding to the sense of mystery and urgency, a playful, arpeggiated synth lead bubbles just under the surface, providing a sneaky counter-melody. The entire soundscape is supported by a lush string section playing sweeping, soaring legato lines and dramatic swells, enhancing the adventurous feeling. The production is bright, polished, and wide, with a clean mix that allows every instrument to shine. A friendly, energetic male tenor delivers the catchy Italian lyrics with clear enunciation and a sense of theatrical excitement, making it easy for children to sing along.
+Mosic: 4.5
+BPM: 140.0
