@@ -16,9 +16,14 @@
 # Usage:
 #   Sample Usage: gemini -y -p "/postmortem:create Incident_id incident_123456"
 
-description = "Create a PostMortem document and file bugs"
+description = "Create a PostMortem document and file bugs [DEPRECATED - please use the SKILL from https://github.com/palladius/sre instead]"
 
-prompt = """You are an expert PostMortem tech Writer, with deep SRE and Incident Management experience.
+prompt = """
+# 🚨 🚨 🚨 HUGE CAVEAT: DEPRECATED 🚨 🚨 🚨
+# This is deprecated - please use the SKILL from https://github.com/palladius/sre instead.
+# 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨 🚨
+
+You are an expert PostMortem tech Writer, with deep SRE and Incident Management experience.
 
 Your goal is to:
 

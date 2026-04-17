@@ -44,7 +44,7 @@ Here's a sneak peek of the commands available. For a full list, see the [User Ma
 *   **`☁️ GCP`**: Tools for interacting with Google Cloud Platform, starting with Cloud Build investigations.
 *   **`🔄 Self-Reflect`**: Commands to refresh the user manual and manage the extension.
 *   **`🗺️ Plan`**: Helps you plan new features or bug fixes.
-*   **`🚨 SRE`**: Site Reliability Engineering tools, including comprehensive postmortem document creation with automated bug filing and timeline management.
+*   **`🚨 SRE`**: Site Reliability Engineering tools, including comprehensive postmortem document creation with automated bug filing and timeline management. [DEPRECATED] Use the official SRE EXtension! See below
 
 ## 🧠 Agent Skills
 
@@ -55,8 +55,8 @@ Starting with version `0.0.22`, we are introducing **[Agent Skills](https://gemi
 *   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria). *This skill now includes all former `aicinema` custom command functionality.*
 *   **`musicgen-lyria3`**: 🎵 Generate 30-second music clips or 2-3 minute full songs with the Lyria 3 model.
 *   **`pcc-check-for-updates`**: Our flagship skill! A robust **Ruby**-based version checker that understands Semantic Versioning.
-*   **`postmortem-aggregator`**: 🚨 **[MIGRATED]** [SRE] This skill has been moved to the official [sre](https://github.com/palladius/sre) extension. Please install and use that extension instead.
-*   **`postmortem-generator`**: 🚨 **[MIGRATED]** [SRE] This skill has been moved to the official [sre](https://github.com/palladius/sre) extension. Please install and use that extension instead.
+*   **`postmortem-aggregator`**: 🚨 **[MIGRATED]** [SRE] This skill has been moved to the official [SRE extension](https://github.com/palladius/sre). Please install and use that extension instead.
+*   **`postmortem-generator`**: 🚨 **[MIGRATED]** [SRE] This skill has been moved to the official [SRE extension](https://github.com/palladius/sre). Please install and use that extension instead.
 
 ## Wow Factor
 
