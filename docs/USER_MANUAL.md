@@ -63,8 +63,8 @@ This extension also provides **Agent Skills**, which are specialized capabilitie
 *   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria). *This skill now includes all former `aicinema` custom command functionality.*
 *   **`musicgen-lyria3`**: 🎵 Generates 30-second clips or 2-minute songs using Lyria 3.
 *   **`pcc-check-for-updates`**: 🔄 Checks for updates to remote GH site for palladius/gemini-cli-custom-commands.
-*   **`postmortem-aggregator`**: 💀 [SRE] To be used when you have a folder containing N Post Mortem files.
-*   **`postmortem-generator`**: 💀 [SRE] Creates a PostMortem given enough context about an incident/outage.
+*   **`postmortem-aggregator`**: 💀 **[MIGRATED]** [SRE] This skill has been moved to the official [sre](https://github.com/palladius/sre) extension. Please install and use that extension instead.
+*   **`postmortem-generator`**: 💀 **[MIGRATED]** [SRE] This skill has been moved to the official [sre](https://github.com/palladius/sre) extension. Please install and use that extension instead.
 
 ## Wow Factor
 

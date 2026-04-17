@@ -55,8 +55,8 @@ Starting with version `0.0.22`, we are introducing **[Agent Skills](https://gemi
 *   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria). *This skill now includes all former `aicinema` custom command functionality.*
 *   **`musicgen-lyria3`**: 🎵 Generate 30-second music clips or 2-3 minute full songs with the Lyria 3 model.
 *   **`pcc-check-for-updates`**: Our flagship skill! A robust **Ruby**-based version checker that understands Semantic Versioning.
-*   **`postmortem-aggregator`**: [SRE] For when you have a folder containing N Post Mortem files.
-*   **`postmortem-generator`**: [SRE] Creates a PostMortem given enough context about an incident/outage.
+*   **`postmortem-aggregator`**: 🚨 **[MIGRATED]** [SRE] This skill has been moved to the official [sre](https://github.com/palladius/sre) extension. Please install and use that extension instead.
+*   **`postmortem-generator`**: 🚨 **[MIGRATED]** [SRE] This skill has been moved to the official [sre](https://github.com/palladius/sre) extension. Please install and use that extension instead.
 
 ## Wow Factor
 
