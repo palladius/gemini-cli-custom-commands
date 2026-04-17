@@ -52,7 +52,7 @@ This document provides a list of all the custom commands available in this exten
 
 ## 🚨 SRE Commands (`/sre`)
 
-*   **`/sre:postmortem-create`**: Create a PostMortem document and file bugs
+*   **`/sre:postmortem-create`**: Create a PostMortem document and file bugs [DEPRECATED - please use the SKILL from https://github.com/palladius/sre instead]
 
 ## 🧠 Agent Skills
 
