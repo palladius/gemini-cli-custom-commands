@@ -31,20 +31,20 @@ gemini extensions uninstall palladius-common-commands
 
 ## Available Commands
 
-Here's a sneak peek of the commands available. For a full list, see the [User Manual](docs/USER_MANUAL.md).
+Here's the full list of commands available in this extension. For more details, see the [User Manual](docs/USER_MANUAL.md).
 
-*   **`💻 Code`**: Commands for structuring your coding workflow.
-*   **`🏃 Common`**: A collection of everyday commands to streamline your workflow, from managing TODOs to checking whereabouts.
-*   **`✍️ Dev`**: Developer-focused commands, starting with a tool to check the writing style of your documentation.
-*   **`📣 DevRel`**: Developer Relations tools, including article feedback and license checking.
-*   **`📁 Filesystem`**: Handy filesystem operations, like recursively grepping through your code.
-*   **`🔀 Git`**: Git workflow automation, including commit/push, BitBucket migration, and history recovery.
-*   **`🐙 GitHub`**: Interact with GitHub issues and repository management.
-*   **`🦊 GitLab`**: Interact with GitLab on issues and other repository tasks.
-*   **`☁️ GCP`**: Tools for interacting with Google Cloud Platform, starting with Cloud Build investigations.
-*   **`🔄 Self-Reflect`**: Commands to refresh the user manual and manage the extension.
-*   **`🗺️ Plan`**: Helps you plan new features or bug fixes.
-*   **`🚨 SRE`**: Site Reliability Engineering tools, including comprehensive postmortem document creation with automated bug filing and timeline management. [DEPRECATED] Use the official SRE EXtension! See below
+*   **`💻 Code`**: `/code:pda` - Follows the Plan, Define, Act workflow.
+*   **`🏃 Common`**: `/common:find_todos` - Find TODOs; `/common:whereabouts` - Riccardo's presence logic.
+*   **`✍️ Dev`**: `/dev:check-writing-style` - Check documentation writing style.
+*   **`📣 DevRel`**: `/devrel:article-feedback` - Article critique; `/devrel:check_google_license` - License compliance.
+*   **`📁 Filesystem`**: `/fs:grep-code` - Recursive grepping.
+*   **`🔀 Git`**: `/git:commit_push` - Commit/push automation; `/git:migrate_bitbucket_to_gitxxb` - Repo migration; `/git:recover_history` - History recovery.
+*   **`🐙 GitHub`**: `/github:issue` - Manage GitHub issues.
+*   **`🦊 GitLab`**: `/gitlab:issue` - Manage GitLab issues.
+*   **`☁️ GCP`**: `/gcp:cloud_build_investigation` - Cloud Build/Run debugging.
+*   **`🔄 Self-Reflect`**: `/pcc:refresh-user-manual` - Refresh documentation.
+*   **`🗺️ Plan`**: `/plan:do` - Plan new features or fixes.
+*   **`🚨 SRE`**: `/sre:postmortem-create` - **[DEPRECATED]** Create postmortems (use the `sre` extension skills instead).
 
 ## 🧠 Agent Skills
 
@@ -52,11 +52,11 @@ Starting with version `0.0.22`, we are introducing **[Agent Skills](https://gemi
 
 *   **`cloud-build-investigation`**: Expert-level SRE skill for Google Cloud Build and Cloud Run investigations.
 *   **`devrel-frictionlog-codelab`**: Automates friction logging for a given Google Codelab URL.
-*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria). *This skill now includes all former `aicinema` custom command functionality.*
+*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria).
 *   **`musicgen-lyria3`**: 🎵 Generate 30-second music clips or 2-3 minute full songs with the Lyria 3 model.
-*   **`pcc-check-for-updates`**: Our flagship skill! A robust **Ruby**-based version checker that understands Semantic Versioning.
-*   **`postmortem-aggregator`**: 🚨 **[MIGRATED]** [SRE] This skill has been moved to the official [SRE extension](https://github.com/palladius/sre). Please install and use that extension instead.
-*   **`postmortem-generator`**: 🚨 **[MIGRATED]** [SRE] This skill has been moved to the official [SRE extension](https://github.com/palladius/sre). Please install and use that extension instead.
+*   **`pcc-check-for-updates`**: Our flagship skill! A robust **Ruby**-based version checker.
+*   **`postmortem-aggregator`**: 🚨 **[MIGRATED]** [SRE] Moved to the official [sre extension](https://github.com/palladius/sre).
+*   **`postmortem-generator`**: 🚨 **[MIGRATED]** [SRE] Moved to the official [sre extension](https://github.com/palladius/sre).
 
 ## Wow Factor
 
