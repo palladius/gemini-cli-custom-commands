@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.7] - 2026-04-21
+- Improved API key handling by checking `GOOGLE_GENAI_API_KEY` and `GEMINI_API_KEY` environment variables.
+
+## [0.0.6] - 2026-04-15
+- Added safety filter handling with descriptive errors for LLM prompt redesign.
+
 ## [0.0.5] - 2026-03-29
 - Added 2-minute full-song generator support using `lyria-3-pro-preview` model.
 - Renamed default 30-sec script to `musicgen-lyria3-30sec.py`.

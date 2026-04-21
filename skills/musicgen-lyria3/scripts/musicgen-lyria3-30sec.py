@@ -6,12 +6,13 @@
 # ]
 # ///
 
+import os
 import sys
 import argparse
 from google import genai
 from google.genai import types
 
-__version__ = "0.0.6"
+__version__ = "0.0.7"
 
 '''
 Lyria 3 Music Generation Script
@@ -19,6 +20,7 @@ Lyria 3 Music Generation Script
 This script generates 30-second music clips using Google's Lyria 3 model.
 
 Changelog:
+- 0.0.7: Improved API key handling by checking GOOGLE_GENAI_API_KEY and GEMINI_API_KEY environment variables.
 - 0.0.6: Added safety filter handling with descriptive errors for LLM prompt redesign.
 - 0.0.5: Added 2-minute full-song generator support using lyria-3-pro-preview and renamed script to musicgen-lyria3-30sec.py.
 - 0.0.4: Added colorful emojis directly to STDOUT reporting for a cleaner UI output.
@@ -62,7 +64,8 @@ def main():
     if not output_filename.endswith(".mp3"):
         output_filename += ".mp3"
 
-    client = genai.Client()
+    api_key = os.environ.get('GOOGLE_GENAI_API_KEY') or os.environ.get('GEMINI_API_KEY')
+    client = genai.Client(api_key=api_key)
 
     print(f"🎸 Generating music for prompt: \033[36m'{args.prompt}'\033[0m...")
     try:
