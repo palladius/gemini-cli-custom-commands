@@ -1,6 +1,6 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.0.4
+version: 0.1.1
 # 2026-03-25 v0.0.4: Added mandatory empirical validation, workbench/ directory for scripts, and structured friction_log/ directory.
 description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Use when a user provides a codelab URL and wants the agent to systematically reproduce the steps, log friction for each page, optionally create a GCP project, clone external repos to fix bugs, and produce a detailed report of the experience in a README.md and BUGS.md.
 # version: in the bash script.
