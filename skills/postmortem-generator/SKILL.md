@@ -1,9 +1,11 @@
 ---
-name: [SRE] postmortem-generator
-version: 0.1.0
+name: "[SRE] postmortem-generator"
 description: 💀 
   [SRE] Creates a PostMortem given enough context about an incident/outage. 
   Will guide user to timeline, action items/bugs, and finally draft a Google Doc with the results.
+metadata:
+  version: 0.1.0
+compatibility: Gemini CLI
 # version: 0.0.4
 # 10mar26: Added version
 # 26jan26: Reverted Action Items to table format (Timeline remains bullet points).

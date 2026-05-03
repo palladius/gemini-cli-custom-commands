@@ -1,22 +1,9 @@
 ---
-
----
 name: postmortem-aggregator
-version: 0.1.0
 description: 💀 [SRE] To be used when you have a folder containing N Post Mortem files. This will help crunch data and maintain/update a POMO_AGGREGATED.md file
----
-version: 0.0.1
-# CHANGELOG
-#   10mar26 v0.0.1 Initial idea dump
-# /CHANGELOG
-
-# TODO -> refine this base idea
-# The base idea is to do what I've done with numerous customers
-# 1. Enforce a JSON/FrontMatter schema for the PostMortem, with at least date started, date ended, datetime detected, product area, and
-# 2. This skill must have in input a folder with 3+ PoMos
-# 3. => Crates a small graph / statistics of "How many bad minutes you had this year" and create a few graphs, and tables and document in a `pomo-statistics.md`
-# TODO(ricc): ensure to patch the PoMo creator to also add a FrontMatter to make life easier here. Also add a PoMoGenerator version like 1.1 to be used later on. Damn I didn't envision cross-markdown-version-dependencies until today! :)
-# TODO(ricc/Gemini): add scripts to create the CSV here, and also to create graphs with the numbers given. Script should be able to work on test data.
+metadata:
+  version: 0.1.0
+compatibility: Gemini CLI
 ---
 
 # Identify the PoMos
