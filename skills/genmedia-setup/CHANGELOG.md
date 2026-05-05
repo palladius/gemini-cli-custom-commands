@@ -1,3 +1,5 @@
+## 0.3.10 - 2026-05-05
+- 📝 Anonymize project ID in sample settings. -- made with gc-skillume-bot-v0_2
 # GenMedia Setup Skill Changelog
 
 ## [0.1.2] - 2026-03-30
