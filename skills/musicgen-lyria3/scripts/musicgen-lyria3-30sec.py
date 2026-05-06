@@ -12,7 +12,7 @@ import argparse
 from google import genai
 from google.genai import types
 
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 
 '''
 Lyria 3 Music Generation Script
@@ -20,6 +20,7 @@ Lyria 3 Music Generation Script
 This script generates 30-second music clips using Google's Lyria 3 model.
 
 Changelog:
+- 0.0.8: Fixed silent failure bug: script now exits with 1 if destination directory is missing or on any generation error.
 - 0.0.7: Improved API key handling by checking GOOGLE_GENAI_API_KEY and GEMINI_API_KEY environment variables.
 - 0.0.6: Added safety filter handling with descriptive errors for LLM prompt redesign.
 - 0.0.5: Added 2-minute full-song generator support using lyria-3-pro-preview and renamed script to musicgen-lyria3-30sec.py.
@@ -64,6 +65,13 @@ def main():
     if not output_filename.endswith(".mp3"):
         output_filename += ".mp3"
 
+    # Check if parent directory exists
+    parent_dir = os.path.dirname(output_filename)
+    if parent_dir and not os.path.exists(parent_dir):
+        print(f"❌ Error: Destination directory '{parent_dir}' does not exist.")
+        print("💡 HINT: Please create the directory before running this script.")
+        sys.exit(1)
+
     api_key = os.environ.get('GOOGLE_GENAI_API_KEY') or os.environ.get('GEMINI_API_KEY')
     client = genai.Client(api_key=api_key)
 
@@ -84,7 +92,7 @@ def main():
             print("💡 ACTION: Please redesign the prompt using more generic terms (e.g., 'a hero' instead of a name) and try again.")
             if response.prompt_feedback.block_reason_message:
                 print(f"   Message: {response.prompt_feedback.block_reason_message}")
-            return
+            sys.exit(1)
 
         # Parse the response
         text_content = ""
@@ -92,7 +100,7 @@ def main():
         
         if not response.candidates or not response.candidates[0].content.parts:
             print("⚠️ No content was returned in the response candidates.")
-            return
+            sys.exit(1)
 
         for part in response.candidates[0].content.parts:
             if part.text is not None:
@@ -111,9 +119,12 @@ def main():
         
         if not found_audio:
             print("⚠️ No audio was generated in the response.")
+            sys.exit(1)
 
     except Exception as e:
         print(f"❌ Error generating music: {str(e)}")
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
