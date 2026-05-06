@@ -1,3 +1,5 @@
+## 0.3.10 - 2026-05-05
+- 📝 Anonymize project ID in genmedia-setup sample settings. -- made with gc-skillume-bot-v0_2
 # Changelog
 
 All notable changes to this project will be documented in this file.
