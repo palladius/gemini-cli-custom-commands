@@ -12,7 +12,7 @@ Note: Currently `./gemini/commands/` is symlinked against `commands/` to provide
 
 When in doubt, check the official vanilla repo: https://github.com/gemini-cli-extensions/security/
 
-## About Custyom Commands
+## About Custom Commands
 
 A Custom Command from [Gemini CLI](https://github.com/google-gemini/gemini-cli) works like this:
 
