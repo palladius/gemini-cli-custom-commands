@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.12] - 2026-05-19
+### Added
+- ✨ [musicgen-lyria3] Committing untracked generated music and text files (sebi-lido-estensi, sebi-hot-wheels). (-- made with Gemini CLI by gc-skillume-bot-v0_2)
+
 ## [0.3.11] - 2026-05-07
 - 🤖 Maintenance run by `gc-skillume-bot-v0_2`: Fixed typo in `GEMINI.md` and standardized CHANGELOG format.
 

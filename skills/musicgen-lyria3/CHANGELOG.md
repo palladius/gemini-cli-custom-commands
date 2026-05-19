@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.0.8] - 2026-05-19
+- ✨ Added generated music and text files for Sebi (lido estensi, hot wheels). (-- made with Gemini CLI by gc-skillume-bot-v0_2)
+
 ## [0.0.7] - 2026-04-21
 - Improved API key handling by checking `GOOGLE_GENAI_API_KEY` and `GEMINI_API_KEY` environment variables.
 

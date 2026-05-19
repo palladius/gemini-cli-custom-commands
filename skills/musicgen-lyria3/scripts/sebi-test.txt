@@ -1,0 +1,6 @@
+[0.0:3.8] Vroom vroom, here come the cars!
+[4.0:7.8] Racing all around the stars.
+[8.0:11.8] My little red car is so fast,
+[12.0:15.8] My yellow truck is built to last!
+[16.0:19.8] Making traffic on the rug,
+[20.0:23.8] With a happy little hug!
