@@ -50,10 +50,6 @@ This document provides a list of all the custom commands available in this exten
 
 *   **`/plan:do`**: Plan a new feature or fix a bug. Helps structure the initial phase of development.
 
-## 🚨 SRE Commands (`/sre`)
-
-*   **`/sre:postmortem-create`**: **[DEPRECATED]** Create a PostMortem document and file bugs. *Please use the SKILL from [palladius/sre](https://github.com/palladius/sre) instead for full functionality.*
-
 ## 🧠 Agent Skills
 
 This extension also provides **Agent Skills**, which are specialized capabilities that Gemini can use autonomously.
@@ -63,8 +59,6 @@ This extension also provides **Agent Skills**, which are specialized capabilitie
 *   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria). *This skill now includes all former `aicinema` custom command functionality.*
 *   **`musicgen-lyria3`**: 🎵 Generates 30-second clips or 2-minute songs using Lyria 3. Supports custom prompts and lyrics.
 *   **`pcc-check-for-updates`**: 🔄 Checks for updates to remote GH site for palladius/gemini-cli-custom-commands. Robust version checker using Ruby.
-*   **`postmortem-aggregator`**: 💀 **[MIGRATED]** [SRE] This skill has been moved to the official [sre](https://github.com/palladius/sre) extension.
-*   **`postmortem-generator`**: 💀 **[MIGRATED]** [SRE] This skill has been moved to the official [sre](https://github.com/palladius/sre) extension.
 
 ## Wow Factor
 

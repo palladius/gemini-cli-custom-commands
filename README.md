@@ -44,7 +44,6 @@ Here's the full list of commands available in this extension. For more details, 
 *   **`☁️ GCP`**: `/gcp:cloud_build_investigation` - Cloud Build/Run debugging.
 *   **`🔄 Self-Reflect`**: `/pcc:refresh-user-manual` - Refresh documentation.
 *   **`🗺️ Plan`**: `/plan:do` - Plan new features or fixes.
-*   **`🚨 SRE`**: `/sre:postmortem-create` - **[DEPRECATED]** Create postmortems (use the `sre` extension skills instead).
 
 ## 🧠 Agent Skills
 
@@ -55,8 +54,6 @@ Starting with version `0.0.22`, we are introducing **[Agent Skills](https://gemi
 *   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria).
 *   **`musicgen-lyria3`**: 🎵 Generate 30-second music clips or 2-3 minute full songs with the Lyria 3 model.
 *   **`pcc-check-for-updates`**: Our flagship skill! A robust **Ruby**-based version checker.
-*   **`postmortem-aggregator`**: 🚨 **[MIGRATED]** [SRE] Moved to the official [sre extension](https://github.com/palladius/sre).
-*   **`postmortem-generator`**: 🚨 **[MIGRATED]** [SRE] Moved to the official [sre extension](https://github.com/palladius/sre).
 
 ## Wow Factor
 
