@@ -42,6 +42,10 @@ This document provides a list of all the custom commands available in this exten
 
 *   **`/gitlab:issue`**: Interact with GitLab Issues on a git repo. Similar to the GitHub tool but for GitLab environments.
 
+## 🛠️ SRE Commands (`/sre`)
+
+*   **`/sre:postmortem-create`**: [DEPRECATED] Create a PostMortem document and file bugs. *Note: Please use the specialized SKILL instead.*
+
 ## 🔄 Self-Reflect Commands (`/pcc`)
 
 *   **`/pcc:refresh-user-manual`**: [internal] Refresh the User manual of this repo. Keeps the documentation in sync with the available commands.

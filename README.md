@@ -41,6 +41,7 @@ Here's the full list of commands available in this extension. For more details, 
 *   **`🔀 Git`**: `/git:commit_push` - Commit/push automation; `/git:migrate_bitbucket_to_gitxxb` - Repo migration; `/git:recover_history` - History recovery.
 *   **`🐙 GitHub`**: `/github:issue` - Manage GitHub issues.
 *   **`🦊 GitLab`**: `/gitlab:issue` - Manage GitLab issues.
+*   **`🛠️ SRE`**: `/sre:postmortem-create` - [DEPRECATED] Post-Mortem automation.
 *   **`☁️ GCP`**: `/gcp:cloud_build_investigation` - Cloud Build/Run debugging.
 *   **`🔄 Self-Reflect`**: `/pcc:refresh-user-manual` - Refresh documentation.
 *   **`🗺️ Plan`**: `/plan:do` - Plan new features or fixes.
