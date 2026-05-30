@@ -2,7 +2,7 @@
 name: musicgen-lyria3
 description: Generate 30-second music clips (default) or 2-3 minute full songs with the Lyria 3 model from Google GenAI. Supports creating music with lyrics, vocals, and specific genres from text prompts. Now includes metadata/lyrics saving and custom output filenames.
 metadata:
-  version: 0.0.5
+  version: 0.0.9
 compatibility: Gemini CLI
 ---
 

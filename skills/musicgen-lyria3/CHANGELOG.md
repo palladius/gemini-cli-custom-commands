@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.0.9] - 2026-05-30
+- ✨ Added generated music and text files for Seby 6 anni. (-- made with Gemini CLI by gc-skillume-bot-v0_2)
+
 ## [0.0.8] - 2026-05-19
 - ✨ Added generated music and text files for Sebi (lido estensi, hot wheels). (-- made with Gemini CLI by gc-skillume-bot-v0_2)
 
