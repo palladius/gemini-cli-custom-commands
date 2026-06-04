@@ -60,7 +60,7 @@ This extension also provides **Agent Skills**, which are specialized capabilitie
 
 *   **`cloud-build-investigation`**: 🏗️ Expert-level SRE skill for Google Cloud Build (GCB) and Cloud Run investigations. Correlates git commits with build failures and analyzes logs.
 *   **`devrel-frictionlog-codelab`**: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Reproduces steps and logs friction points.
-*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria). *This skill now includes all former `aicinema` custom command functionality.*
+*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia (MCP) tools and related Gemini skills (Veo, Imagen, Chirp, Lyria). *This skill now includes all former `aicinema` custom command functionality.*
 *   **`musicgen-lyria3`**: 🎵 Generates 30-second clips or 2-minute songs using Lyria 3. Supports custom prompts and lyrics.
 *   **`pcc-check-for-updates`**: 🔄 Checks for updates to remote GH site for palladius/gemini-cli-custom-commands. Robust version checker using Ruby.
 

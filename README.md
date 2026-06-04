@@ -52,7 +52,7 @@ Starting with version `0.0.22`, we are introducing **[Agent Skills](https://gemi
 
 *   **`cloud-build-investigation`**: Expert-level SRE skill for Google Cloud Build and Cloud Run investigations.
 *   **`devrel-frictionlog-codelab`**: Automates friction logging for a given Google Codelab URL.
-*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria).
+*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia (MCP) tools and related Gemini skills (Veo, Imagen, Chirp, Lyria).
 *   **`musicgen-lyria3`**: 🎵 Generate 30-second music clips or 2-3 minute full songs with the Lyria 3 model.
 *   **`pcc-check-for-updates`**: Our flagship skill! A robust **Ruby**-based version checker.
 
