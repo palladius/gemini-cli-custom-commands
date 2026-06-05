@@ -39,7 +39,8 @@ When the user provides a Codelab URL, follow these exact steps. Ensure each step
 
 ### Step 3: GCP Project Setup
 
-1. Ask the user: "Please provide an existing GCP Project ID (with billing enabled) OR a Billing Account ID."
+1. Ask the user: "Please provide a fresh/virgin GCP Project ID (with billing enabled) to avoid resource conflicts, OR a Billing Account ID."
+    * **Virgin Project Preference**: Emphasize to the user that using a brand new, empty ("virgin") project is strongly recommended to prevent overlapping terraform states, GKE clusters, or IAM conflicts.
 2. If the user provides an existing `PROJECT_ID`:
     * Verify that the project exists and has active billing associated (e.g., using `gcloud beta billing projects describe <PROJECT_ID>`).
     * **DO NOT PROCEED** to Step 4 until you have verified that billing is correctly linked. If billing is missing or disabled, stop and ask the user to fix it.
