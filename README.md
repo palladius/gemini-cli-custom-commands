@@ -58,6 +58,18 @@ Starting with version `0.0.22`, we are introducing **[Agent Skills](https://gemi
 
 ## Wow Factor
 
+Here are a few examples of how you can use these commands in practice:
+
+*   **Find all the TODOs in your code:**
+    ```bash
+    gemini -p "/common:find_todos"
+    ```
+*   **Check for updates to this extension:**
+    Ask Gemini: "Is my palladius-common-commands extension up to date?"
+*   **Commit and push your changes with a helpful message:**
+    ```bash
+    gemini -p "/git:commit_push"
+    ```
 
 **WARNING**: This project is intended for demonstration purposes only. It is not intended for use in a production environment.
 

@@ -17,7 +17,7 @@ This document provides a list of all the custom commands available in this exten
 
 ## 📣 DevRel Commands (`/devrel`)
 
-*   **`/devrel:article-feedback`**: Critiques an article, providing detailed feedback on tone, typos, quality, and broken links.
+*   **`/devrel:article-feedback`**: Critiques an article, providing detailed feedback on tone, typos, quality, and broken links. Caches the analysis for 5 days.
 *   **`/devrel:check_google_license`**: [ricc] Checks for license compliance in a pragmatic way, ensuring source files have the correct headers.
 
 ## 📁 Filesystem Commands (`/fs`)
