@@ -50,11 +50,11 @@ Here's the full list of commands available in this extension. For more details, 
 
 Starting with version `0.0.22`, we are introducing **[Agent Skills](https://geminicli.com/docs/cli/skills/)**! 🚀 These allow Gemini to act more autonomously and precisely.
 
-*   **`cloud-build-investigation`**: Expert-level SRE skill for Google Cloud Build and Cloud Run investigations.
-*   **`devrel-frictionlog-codelab`**: Automates friction logging for a given Google Codelab URL.
-*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia (MCP) tools and related Gemini skills (Veo, Imagen, Chirp, Lyria).
+*   **`cloud-build-investigation`**: 🏗️ Expert-level SRE skill for Google Cloud Build and Cloud Run investigations.
+*   **`devrel-frictionlog-codelab`**: 🥑 Automates friction logging for a given Google Codelab URL.
+*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia (MCP) tools and related Gemini skills.
 *   **`musicgen-lyria3`**: 🎵 Generate 30-second music clips or 2-3 minute full songs with the Lyria 3 model.
-*   **`pcc-check-for-updates`**: Our flagship skill! A robust **Ruby**-based version checker.
+*   **`pcc-check-for-updates`**: 🔄 Our flagship skill! A robust **Ruby**-based version checker.
 
 ## Wow Factor
 
@@ -69,6 +69,10 @@ Here are a few examples of how you can use these commands in practice:
 *   **Commit and push your changes with a helpful message:**
     ```bash
     gemini -p "/git:commit_push"
+    ```
+*   **Plan a new feature:**
+    ```bash
+    gemini -p "/plan:do add a search bar to the website"
     ```
 
 **WARNING**: This project is intended for demonstration purposes only. It is not intended for use in a production environment.
