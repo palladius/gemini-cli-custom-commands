@@ -2,9 +2,9 @@
 name: devrel-frictionlog-codelab
 description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Use when a user provides a codelab URL and wants the agent to systematically reproduce the steps, log friction for each page, optionally create a GCP project, clone external repos to fix bugs, and produce a detailed report of the experience in a README.md and BUGS.md.
 metadata:
-  version: 0.1.1
+  version: 0.2.0
 compatibility: Gemini CLI
-# 2026-03-25 v0.0.4: Added mandatory empirical validation, workbench/ directory for scripts, and structured friction_log/ directory.
+# 2026-06-08 v0.2.0: Introduced key-value metadata store friction_log.yaml with k8s-like resource specs.
 ---
 
 # DevRel Friction Log Codelab
@@ -18,13 +18,13 @@ When the user provides a Codelab URL, follow these exact steps. Ensure each step
 ### Step 1: Preparation
 
 1. Determine the base directory for the execution named `YYYYMMDD-frictionlog-<CODELAB_TITLE>`. (e.g., `20260313-frictionlog-app-mod-workshop`).
-2. Run the included `scripts/setup_scaffold.sh` script to deterministically create the scaffolding:
+2. Run the included `scripts/setup_scaffold.sh` script to deterministically create the scaffolding, passing the optional Codelab URL and TF Bug ID if known:
 
     ```bash
-    ./scripts/setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE>
+    ./scripts/setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID]
     ```
 
-    This script automatically creates the `codelab/original/`, `codelab/proposed/`, `friction_log/by-page/`, `workbench/`, and `external-repos/` directories. It also initializes the `.env` file, the `BUGS.md` file, the `external-repos/.gitignore`, and writes a `.version` file for tracking the skill version and repository.
+    This script automatically creates the `codelab/original/`, `codelab/proposed/`, `friction_log/by-page/`, `workbench/`, and `external-repos/` directories. It also initializes the `.env` file, the `BUGS.md` file, the `external-repos/.gitignore`, a `.version` file, and a Kubernetes-like key-value metadata store called `friction_log.yaml`.
 
 ### Step 2: Download and Mirror Codelab Content
 
@@ -44,12 +44,12 @@ When the user provides a Codelab URL, follow these exact steps. Ensure each step
 2. If the user provides an existing `PROJECT_ID`:
     * Verify that the project exists and has active billing associated (e.g., using `gcloud beta billing projects describe <PROJECT_ID>`).
     * **DO NOT PROCEED** to Step 4 until you have verified that billing is correctly linked. If billing is missing or disabled, stop and ask the user to fix it.
-    * Save it to the `.env` file and proceed to Step 4.
+    * Save it to the `.env` file, update the `projectId` and `identity` fields inside `friction_log.yaml` if not already set, and proceed to Step 4.
 3. If the user provides a Billing Account ID without a project, use `gcloud` commands to autonomously:
     * Create a new GCP project (generate a sensible, unique project ID).
     * Link the newly created project to the provided Billing Account ID (`gcloud beta billing projects link <PROJECT_ID> --billing-account <ACCOUNT_ID>`).
     * Verify that the billing is correctly linked. **DO NOT PROCEED** until billing is active.
-    * Save the newly created `PROJECT_ID` to the `.env` file.
+    * Save the newly created `PROJECT_ID` to the `.env` file and update the `projectId` and `identity` fields inside `friction_log.yaml`.
 4. **YOLO Mode Suggestion**: Once billing is successfully verified and enabled, explicitly suggest to the user: "Project and billing are successfully configured. To proceed smoothly through the rest of the Codelab, I recommend enabling **YOLO mode (CTRL + Y)**."
 5. **Automation Mandate**: From this point forward, try to automate as much as you reasonably can. Only stop and ask for human intervention when you encounter a strict blocker that requires a human (e.g., creating a new GitHub user, generating an OAuth consent screen via the UI, forking a repository manually, or browsing an authenticated web resource that the CLI cannot access).
 

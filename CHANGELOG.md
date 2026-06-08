@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.25] - 2026-06-08
+### Added
+- 🥑 **Friction Log Skill**: Added `friction_log.yaml` as a Kubernetes-like key-value metadata store to keep track of execution parameters (project ID, identity, codelab URL, TF bug).
+- 🛠️ **Scaffolding Setup**: Updated `setup_scaffold.sh` to accept optional `[CODELAB_URL]` and `[BUG_ID]` arguments, auto-detect GCP project ID and identity, and write `friction_log.yaml` automatically. Added full unit tests.
+
 ## [0.3.24] - 2026-06-08
 ### Changed
 - 🥑 **Friction Log Skill**: Updated the `devrel-frictionlog-codelab` skill to strongly recommend using a fresh/virgin GCP project ID to avoid resource conflicts.
