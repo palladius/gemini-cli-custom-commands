@@ -17,7 +17,7 @@ This document provides a list of all the custom commands available in this exten
 
 ## 📣 DevRel Commands (`/devrel`)
 
-*   **`/devrel:article-feedback`**: Critiques an article, providing detailed feedback on tone, typos, quality, and broken links.
+*   **`/devrel:article-feedback`**: Critiques an article, providing detailed feedback on tone, typos, quality, and broken links. Caches the analysis for 5 days.
 *   **`/devrel:check_google_license`**: [ricc] Checks for license compliance in a pragmatic way, ensuring source files have the correct headers.
 
 ## 📁 Filesystem Commands (`/fs`)
@@ -52,7 +52,7 @@ This document provides a list of all the custom commands available in this exten
 
 ## 🗺️ Plan Commands (`/plan`)
 
-*   **`/plan:do`**: Plan a new feature or fix a bug. Helps structure the initial phase of development.
+*   **`/plan:do`**: Plan a new feature or fix a bug. Helps structure the initial phase of development and saves it to a file.
 
 ## 🧠 Agent Skills
 
@@ -60,7 +60,7 @@ This extension also provides **Agent Skills**, which are specialized capabilitie
 
 *   **`cloud-build-investigation`**: 🏗️ Expert-level SRE skill for Google Cloud Build (GCB) and Cloud Run investigations. Correlates git commits with build failures and analyzes logs.
 *   **`devrel-frictionlog-codelab`**: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Reproduces steps and logs friction points.
-*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia MCP tools (Veo, Imagen, Chirp, Lyria). *This skill now includes all former `aicinema` custom command functionality.*
+*   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia (MCP) tools and related Gemini skills (Veo, Imagen, Chirp, Lyria).
 *   **`musicgen-lyria3`**: 🎵 Generates 30-second clips or 2-minute songs using Lyria 3. Supports custom prompts and lyrics.
 *   **`pcc-check-for-updates`**: 🔄 Checks for updates to remote GH site for palladius/gemini-cli-custom-commands. Robust version checker using Ruby.
 
@@ -77,4 +77,8 @@ Here are a few examples of how you can use these commands in practice:
 *   **Commit and push your changes with a helpful message:**
     ```bash
     gemini -p "/git:commit_push"
+    ```
+*   **Plan a new feature:**
+    ```bash
+    gemini -p "/plan:do add a search bar to the website"
     ```

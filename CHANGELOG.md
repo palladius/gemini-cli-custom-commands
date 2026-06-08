@@ -5,9 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.3.21] - 2026-06-05
+## [0.3.24] - 2026-06-08
 ### Changed
 - 🥑 **Friction Log Skill**: Updated the `devrel-frictionlog-codelab` skill to strongly recommend using a fresh/virgin GCP project ID to avoid resource conflicts.
+
+## [0.3.23] - 2026-06-06
+### Changed
+- 📝 Refreshed User Manual in `README.md` and `docs/USER_MANUAL.md` to ensure all current commands and skills are documented.
+- 🚀 Bumped version to 0.3.23.
+- 🤖 Maintenance run by gc-skillume-bot-v0_2.
+
+## [0.3.22] - 2026-06-05
+### Changed
+- 📝 Refreshed User Manual in `README.md` and `docs/USER_MANUAL.md` with more detailed descriptions and "Wow Factor" examples.
+- 🚀 Bumped version to 0.3.22.
+- 🤖 Maintenance run by `gc-skillume-bot-v0_2`.
+
+## [0.3.21] - 2026-06-04
+### Changed
+- 📝 Refreshed User Manual in `README.md` and `docs/USER_MANUAL.md`.
+- 🤖 Maintenance run by `gc-skillume-bot-v0_2`.
 
 ## [0.3.20] - 2026-05-30
 ### Added
