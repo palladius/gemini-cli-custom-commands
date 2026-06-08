@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.27] - 2026-06-08
+### Added
+- 🥑 **Friction Log Skill**: Added the `outputGdocUrl` field to the [references/friction_log.yaml](file:///usr/local/google/home/ricc/git/gemini-cli-custom-commands/skills/devrel-frictionlog-codelab/references/friction_log.yaml) template.
+- 🛠️ **Scaffolding Setup**: Updated [setup_scaffold.sh](file:///usr/local/google/home/ricc/git/gemini-cli-custom-commands/skills/devrel-frictionlog-codelab/scripts/setup_scaffold.sh) to accept the 5th optional argument `[OUTPUT_GDOC_URL]` and replace it in the generated `friction_log.yaml`. Updated documentation and unit tests.
+
 ## [0.3.26] - 2026-06-08
 ### Added
 - 🥑 **Friction Log Skill**: Created a template file `references/friction_log.yaml` containing the Kubernetes-like schema with version (`codelabVersion`) and start date (`startedAt`) fields.

@@ -1,9 +1,9 @@
 #!/bin/bash
 # setup_scaffold.sh
-# Usage: ./setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID] [CODELAB_VERSION]
+# Usage: ./setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID] [CODELAB_VERSION] [OUTPUT_GDOC_URL]
 
 if [ -z "$1" ]; then
-  echo "Usage: $0 <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID] [CODELAB_VERSION]"
+  echo "Usage: $0 <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID] [CODELAB_VERSION] [OUTPUT_GDOC_URL]"
   exit 1
 fi
 
@@ -12,6 +12,7 @@ BASE_DIR_NAME=$(basename "$BASE_DIR")
 CODELAB_URL="${2:-}"
 BUG_ID="${3:-}"
 CODELAB_VERSION="${4:-v1}"
+OUTPUT_GDOC_URL="${5:-}"
 STARTED_AT=$(date -Iseconds 2>/dev/null || date +'%Y-%m-%dT%H:%M:%S%z')
 
 # Auto-detect GCP project ID if available
@@ -72,6 +73,7 @@ if [ -f "$YAML_TEMPLATE" ]; then
       -e "s|{{PROJECT_ID}}|$PROJECT_ID|g" \
       -e "s|{{IDENTITY}}|$IDENTITY|g" \
       -e "s|{{STARTED_AT}}|$STARTED_AT|g" \
+      -e "s|{{OUTPUT_GDOC_URL}}|$OUTPUT_GDOC_URL|g" \
       "$YAML_TEMPLATE" > "$BASE_DIR/friction_log.yaml"
 else
   # Fallback key-value metadata store
@@ -87,6 +89,7 @@ spec:
   projectId: "$PROJECT_ID"
   identity: "$IDENTITY"
   startedAt: "$STARTED_AT"
+  outputGdocUrl: "$OUTPUT_GDOC_URL"
 EOF
 fi
 

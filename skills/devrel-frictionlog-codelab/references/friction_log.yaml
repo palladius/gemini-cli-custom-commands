@@ -15,3 +15,5 @@ spec:
   identity: "{{IDENTITY}}"
   # The ISO-8601 date-time when the friction log reproduction started
   startedAt: "{{STARTED_AT}}"
+  # The link to the final Google Doc containing this friction log
+  outputGdocUrl: "{{OUTPUT_GDOC_URL}}"
