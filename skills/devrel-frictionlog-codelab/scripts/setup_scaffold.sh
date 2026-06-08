@@ -1,9 +1,9 @@
 #!/bin/bash
 # setup_scaffold.sh
-# Usage: ./setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE>
+# Usage: ./setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID] [CODELAB_VERSION]
 
 if [ -z "$1" ]; then
-  echo "Usage: $0 <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID]"
+  echo "Usage: $0 <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID] [CODELAB_VERSION]"
   exit 1
 fi
 
@@ -11,6 +11,8 @@ BASE_DIR="$1"
 BASE_DIR_NAME=$(basename "$BASE_DIR")
 CODELAB_URL="${2:-}"
 BUG_ID="${3:-}"
+CODELAB_VERSION="${4:-v1}"
+STARTED_AT=$(date -Iseconds 2>/dev/null || date +'%Y-%m-%dT%H:%M:%S%z')
 
 # Auto-detect GCP project ID if available
 AUTO_PROJECT_ID=$(gcloud config get-value project 2>/dev/null || echo "")
@@ -60,18 +62,33 @@ fi
 
 touch "$BASE_DIR/BUGS.md"
 
-# Create friction_log.yaml key-value metadata store
-cat <<EOF > "$BASE_DIR/friction_log.yaml"
+# Load and populate friction_log.yaml from template if exists
+YAML_TEMPLATE="$SCRIPT_DIR/../references/friction_log.yaml"
+if [ -f "$YAML_TEMPLATE" ]; then
+  sed -e "s|{{NAME}}|$BASE_DIR_NAME|g" \
+      -e "s|{{CODELAB_URL}}|$CODELAB_URL|g" \
+      -e "s|{{CODELAB_VERSION}}|$CODELAB_VERSION|g" \
+      -e "s|{{BUG_ID}}|$BUG_ID|g" \
+      -e "s|{{PROJECT_ID}}|$PROJECT_ID|g" \
+      -e "s|{{IDENTITY}}|$IDENTITY|g" \
+      -e "s|{{STARTED_AT}}|$STARTED_AT|g" \
+      "$YAML_TEMPLATE" > "$BASE_DIR/friction_log.yaml"
+else
+  # Fallback key-value metadata store
+  cat <<EOF > "$BASE_DIR/friction_log.yaml"
 apiVersion: devrel.google.com/v1alpha1
 kind: FrictionLog
 metadata:
   name: $BASE_DIR_NAME
 spec:
   codelabUrl: "$CODELAB_URL"
+  codelabVersion: "$CODELAB_VERSION"
+  bugId: "$BUG_ID"
   projectId: "$PROJECT_ID"
   identity: "$IDENTITY"
-  bugId: "$BUG_ID"
+  startedAt: "$STARTED_AT"
 EOF
+fi
 
 cat <<EOF > "$BASE_DIR/.version"
 Created with skill devrel-frictionlog-codelab v0.0.3

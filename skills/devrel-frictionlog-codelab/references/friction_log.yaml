@@ -1,0 +1,17 @@
+apiVersion: devrel.google.com/v1alpha1
+kind: FrictionLog
+metadata:
+  name: {{NAME}}
+spec:
+  # The link to the codelab used (Gdoc, or public URL, ...)
+  codelabUrl: "{{CODELAB_URL}}"
+  # The version, tag, or commit hash of the codelab/source repository being friction logged (e.g. "v1.0.0", "main", or a git commit SHA)
+  codelabVersion: "{{CODELAB_VERSION}}"
+  # The TF bug (Taskflow / Buganizer ID) associated with this friction log
+  bugId: "{{BUG_ID}}"
+  # The GCP Project ID used for reproduction
+  projectId: "{{PROJECT_ID}}"
+  # The Google Identity (email) of the user performing the reproduction
+  identity: "{{IDENTITY}}"
+  # The ISO-8601 date-time when the friction log reproduction started
+  startedAt: "{{STARTED_AT}}"

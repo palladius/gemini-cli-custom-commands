@@ -8,9 +8,10 @@ cd "$SCRIPT_DIR"
 TEST_DIR="TEST_SCAFFOLD_DIR_$$"
 TEST_URL="https://example.com/codelab"
 TEST_BUG="b/12345"
+TEST_VER="v1.2.3"
 
 echo "Running test for setup_scaffold.sh..."
-./setup_scaffold.sh "$TEST_DIR" "$TEST_URL" "$TEST_BUG"
+./setup_scaffold.sh "$TEST_DIR" "$TEST_URL" "$TEST_BUG" "$TEST_VER"
 
 if [ $? -ne 0 ]; then
   echo "❌ setup_scaffold.sh exited with an error."
@@ -50,7 +51,9 @@ if ! grep -q "apiVersion: devrel.google.com/v1alpha1" "$TEST_DIR/friction_log.ya
    ! grep -q "kind: FrictionLog" "$TEST_DIR/friction_log.yaml" || \
    ! grep -q "name: $TEST_DIR" "$TEST_DIR/friction_log.yaml" || \
    ! grep -q "codelabUrl: \"$TEST_URL\"" "$TEST_DIR/friction_log.yaml" || \
-   ! grep -q "bugId: \"$TEST_BUG\"" "$TEST_DIR/friction_log.yaml"; then
+   ! grep -q "codelabVersion: \"$TEST_VER\"" "$TEST_DIR/friction_log.yaml" || \
+   ! grep -q "bugId: \"$TEST_BUG\"" "$TEST_DIR/friction_log.yaml" || \
+   ! grep -q "startedAt:" "$TEST_DIR/friction_log.yaml"; then
   echo "❌ friction_log.yaml does not contain expected k8s-like metadata and spec."
   cat "$TEST_DIR/friction_log.yaml"
   exit 1

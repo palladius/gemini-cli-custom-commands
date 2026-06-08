@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.26] - 2026-06-08
+### Added
+- 🥑 **Friction Log Skill**: Created a template file `references/friction_log.yaml` containing the Kubernetes-like schema with version (`codelabVersion`) and start date (`startedAt`) fields.
+- 🛠️ **Scaffolding Setup**: Updated `setup_scaffold.sh` to read `references/friction_log.yaml`, replace placeholders, and generate the concrete `friction_log.yaml` file. Added the 4th command-line argument `[CODELAB_VERSION]` and automatic ISO-8601 timestamp generation.
+
 ## [0.3.25] - 2026-06-08
 ### Added
 - 🥑 **Friction Log Skill**: Added `friction_log.yaml` as a Kubernetes-like key-value metadata store to keep track of execution parameters (project ID, identity, codelab URL, TF bug).

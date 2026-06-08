@@ -2,9 +2,9 @@
 name: devrel-frictionlog-codelab
 description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Use when a user provides a codelab URL and wants the agent to systematically reproduce the steps, log friction for each page, optionally create a GCP project, clone external repos to fix bugs, and produce a detailed report of the experience in a README.md and BUGS.md.
 metadata:
-  version: 0.2.0
+  version: 0.2.1
 compatibility: Gemini CLI
-# 2026-06-08 v0.2.0: Introduced key-value metadata store friction_log.yaml with k8s-like resource specs.
+# 2026-06-08 v0.2.1: Added references/friction_log.yaml template and populated codelabVersion and startedAt.
 ---
 
 # DevRel Friction Log Codelab
@@ -18,13 +18,13 @@ When the user provides a Codelab URL, follow these exact steps. Ensure each step
 ### Step 1: Preparation
 
 1. Determine the base directory for the execution named `YYYYMMDD-frictionlog-<CODELAB_TITLE>`. (e.g., `20260313-frictionlog-app-mod-workshop`).
-2. Run the included `scripts/setup_scaffold.sh` script to deterministically create the scaffolding, passing the optional Codelab URL and TF Bug ID if known:
+2. Run the included `scripts/setup_scaffold.sh` script to deterministically create the scaffolding, passing the optional Codelab URL, TF Bug ID, and Codelab Version/Commit Hash if known:
 
     ```bash
-    ./scripts/setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID]
+    ./scripts/setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID] [CODELAB_VERSION]
     ```
 
-    This script automatically creates the `codelab/original/`, `codelab/proposed/`, `friction_log/by-page/`, `workbench/`, and `external-repos/` directories. It also initializes the `.env` file, the `BUGS.md` file, the `external-repos/.gitignore`, a `.version` file, and a Kubernetes-like key-value metadata store called `friction_log.yaml`.
+    This script automatically creates the `codelab/original/`, `codelab/proposed/`, `friction_log/by-page/`, `workbench/`, and `external-repos/` directories. It also initializes the `.env` file, the `BUGS.md` file, the `external-repos/.gitignore`, a `.version` file, and a Kubernetes-like key-value metadata store `friction_log.yaml` populated from the template found in `references/friction_log.yaml` (including fields like `startedAt` and `codelabVersion`).
 
 ### Step 2: Download and Mirror Codelab Content
 
