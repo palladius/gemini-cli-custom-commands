@@ -100,7 +100,8 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         print_bold(f"\n🛣️  Tracks Registry ({'all' if show_all else 'open'} tracks):", BOLD)
         print("=" * 60)
     
-    for track_id in sorted(track_dirs):
+    track_details = []
+    for track_id in track_dirs:
         track_path = os.path.join(tracks_dir, track_id)
         metadata_path = os.path.join(track_path, "metadata.json")
         plan_path = os.path.join(track_path, "plan.md")
@@ -130,10 +131,6 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             except Exception as e:
                 status = f"METADATA_ERROR ({str(e)})"
                 
-        # Filter completed if we only want open tracks
-        if not show_all and status in ("COMPLETED", "RESOLVED", "CLOSED"):
-            continue
-
         # Parse plan: first try JSON tasks list (Conductor++), then fall back to plan.md
         plan_stats = None
         if os.path.exists(metadata_path):
@@ -157,6 +154,48 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
 
         if not plan_stats:
             plan_stats = parse_plan_tasks(plan_path)
+            
+        track_details.append({
+            "track_id": track_id,
+            "status": status,
+            "description": description,
+            "active_questions": active_questions,
+            "worktree_branch": worktree_branch,
+            "worktree_dir": worktree_dir,
+            "github_issue_num": github_issue_num,
+            "plan_stats": plan_stats
+        })
+
+    # Filter completed if we only want open tracks
+    if not show_all:
+        track_details = [t for t in track_details if t["status"] not in ("COMPLETED", "RESOLVED", "CLOSED")]
+
+    # Sort tracks: NEW first, active/pending next, completed last, alphabetically within each group
+    def get_status_order(track):
+        status_val = track["status"].upper()
+        if status_val == "NEW":
+            order = 0
+        elif status_val in ("IN_PROGRESS", "ACTIVE"):
+            order = 1
+        elif status_val == "PENDING":
+            order = 2
+        elif status_val in ("COMPLETED", "RESOLVED", "CLOSED"):
+            order = 4
+        else:
+            order = 3
+        return (order, track["track_id"])
+
+    track_details.sort(key=get_status_order)
+
+    for track in track_details:
+        track_id = track["track_id"]
+        status = track["status"]
+        description = track["description"]
+        active_questions = track["active_questions"]
+        worktree_branch = track["worktree_branch"]
+        worktree_dir = track["worktree_dir"]
+        github_issue_num = track["github_issue_num"]
+        plan_stats = track["plan_stats"]
         
         # Format Status with color
         status_color = RESET
