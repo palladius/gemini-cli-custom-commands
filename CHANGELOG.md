@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.47] - 2026-07-16
+### Changed
+- 🎨 **Pink Agent Names**: Colorized agent names in pink (magenta) in both short-mode and normal-mode outputs.
+
 ## [0.3.46] - 2026-07-07
 ### Added
 - ✨ **Lyria3 Model Discovery**: New `musicgen-lyria3-list.py` script to query available music/audio models via GenAI SDK. Bumped skill to v0.0.10.

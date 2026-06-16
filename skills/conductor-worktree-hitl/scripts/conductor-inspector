@@ -45,6 +45,7 @@ GREEN = "\033[32m"
 YELLOW = "\033[33m"
 RED = "\033[31m"
 CYAN = "\033[36m"
+PINK = "\033[35m"
 RESET = "\033[0m"
 
 def print_bold(text, color=""):
@@ -442,16 +443,18 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             agent_str = track.get("agent") or ""
             if len(agent_str) > 11:
                 agent_str = agent_str[:11]
+            agent_padded = f"{agent_str:^11}"
+            agent_colored = f"{PINK}{agent_padded}{RESET}" if agent_str else agent_padded
             display_time_str = track.get("display_time") or "-"
             tree_str = "🌳" if track.get("has_worktree") else ""
-            print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {agent_str:^11} | {display_time_str:<11} | {track_id:<50} | {tree_str:^3}")
+            print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {agent_colored} | {display_time_str:<11} | {track_id:<50} | {tree_str:^3}")
             continue
             
         wt_suffix = " [🌳]" if track.get("has_worktree") else ""
         print(f"🔸 Track: {BOLD}{track_id}{RESET}{wt_suffix}")
         print(f"   Status: {BOLD}{status_color}{status}{RESET}")
         if track.get("agent"):
-            print(f"   Agent: {BOLD}{track.get('agent')}{RESET}")
+            print(f"   Agent: {BOLD}{PINK}{track.get('agent')}{RESET}")
         display_time = track.get("display_time")
         if display_time and display_time != "-":
             print(f"   Last Changed: {display_time}")
