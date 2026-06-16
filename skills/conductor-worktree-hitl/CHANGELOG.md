@@ -6,7 +6,6 @@ This changelog is contextually bound to the Condutree skill itself. Version numb
 
 ---
 
-<<<<<<< HEAD
 ## [2.1.0] - 2026-07-08
 ### Added
 - 📊 **Reference Justfile Recipes**: Added `conductor-status` (`--open --short`) and `conductor-status-all` (`--all --short`) recipes to `references/justfile` so new projects get them out of the box.
@@ -59,6 +58,8 @@ This changelog is contextually bound to the Condutree skill itself. Version numb
 - 🤖 **Agent & Worktree Tracking**: Re-implemented `AGENT` column and `🌳` (worktree emoji) detection columns in `conductor-inspector` script, which scans `.worktrees/` directory and parses track metadata files.
 ### Changed
 - 📊 **Agent Column Width & Truncation**: Increased the `AGENT` column width by 1 (to 11 characters) in the short-mode table. Implemented automatic truncation of agent names longer than 11 characters to fit perfectly.
+- 📊 **CHANGED Column Left-Alignment & Compact Units**: Left-aligned the `CHANGED` column header and values to keep emojis on the left. Shortened duration formatting units: `m` (minutes), `s` (seconds), `d` (days).
+
 
 ---
 

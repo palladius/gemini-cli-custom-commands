@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.45] - 2026-07-03
 ### Added
 - 🔌 **Antigravity & Claude Code Support**: Adapted README.md and added `plugin.json` manifests for Antigravity, Claude Code, and Codex.
+### Changed
+- 📊 **CHANGED Column Left-Alignment & Compact Units**: Left-aligned the `CHANGED` column header and values to keep emojis on the left. Shortened duration formatting units: `m` (minutes), `s` (seconds), `d` (days).
 
 ## [0.3.44] - 2026-06-17
 ### Added

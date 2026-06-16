@@ -151,7 +151,7 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         return
         
     if short_mode:
-        print_bold(f"{'STATUS':<11} | {'PROGRESS':^10} | {'RATIO':^5} | {'GHI':^5} | {'AGENT':^11} | {'CHANGED':^11} | {'TRACK ID':<50} | {'🌳':^3}", BOLD)
+        print_bold(f"{'STATUS':<11} | {'PROGRESS':^10} | {'RATIO':^5} | {'GHI':^5} | {'AGENT':^11} | {'CHANGED':<11} | {'TRACK ID':<50} | {'🌳':^3}", BOLD)
         print("=" * 127)
     else:
         print_bold(f"\n🛣️  Tracks Registry ({'all' if show_all else 'open'} tracks):", BOLD)
@@ -272,14 +272,14 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
                     else:
                         rel_str = f"{hours}h"
                 elif minutes > 0:
-                    rel_str = f"{minutes}min"
+                    rel_str = f"{minutes}m"
                 else:
-                    rel_str = f"{max(0, seconds)}sec"
+                    rel_str = f"{max(0, seconds)}s"
                 
                 display_time = f"{source_emoji} {rel_str}"
             else:
                 days = total_seconds // 86400
-                display_time = f"{source_emoji} {days}days"
+                display_time = f"{source_emoji} {days}d"
 
         # Determine if worktree exists
         has_worktree = False
@@ -442,7 +442,7 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
                 agent_str = agent_str[:11]
             display_time_str = track.get("display_time") or "-"
             tree_str = "🌳" if track.get("has_worktree") else ""
-            print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {agent_str:^11} | {display_time_str:^11} | {track_id:<50} | {tree_str:^3}")
+            print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {agent_str:^11} | {display_time_str:<11} | {track_id:<50} | {tree_str:^3}")
             continue
             
         wt_suffix = " [🌳]" if track.get("has_worktree") else ""
