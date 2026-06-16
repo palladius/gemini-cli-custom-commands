@@ -1,0 +1,16 @@
+{
+  "track_id": "telegram_incident_creation",
+  "status": "ACTIVE",
+  "description": "Implement incident creation in telegram",
+  "github_issue": {
+    "number": 123
+  },
+  "active_questions": [
+    {
+      "agent": "Mario",
+      "question": "Should we default to HTML formatting or MarkdownV2 for Telegram message payloads?",
+      "status": "awaiting_human",
+      "created_at": "2026-06-16T11:00:00Z"
+    }
+  ]
+}

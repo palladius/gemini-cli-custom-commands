@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.35] - 2026-06-16
+### Added
+- 📝 **Reference Questions**: Added reference JSON files (`question-awaiting.json` and `question-answered.json`) under `references/` directory to demonstrate metadata-based question states.
+
 ## [0.3.34] - 2026-06-16
 ### Changed
 - 👩 **Renamed Git Concierge**: Renamed the coordinator agent from Giovanni to Agostina (Lead Git Concierge) to align with the A.G. (Antigravity) theme.
