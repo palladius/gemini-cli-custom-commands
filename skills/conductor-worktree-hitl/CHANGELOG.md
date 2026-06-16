@@ -4,6 +4,10 @@ All notable changes to the `conductor-worktree-hitl` skill will be documented in
 
 ---
 
+## [0.3.41] - 2026-06-16
+### Changed
+- 📝 **Prompt Simplification**: Replaced long prompt with a minimal version that delegates Benjamin-specific conventions to `GEMINI.md` and worktree workflow steps to the `conductor-worktree-hitl` skill.
+
 ## [0.3.40] - 2026-06-16
 ### Added
 - 📝 **Vehicle Field in Question Schema**: Added a `"vehicle"` block to `references/question-answered.json` to track the delivery mechanism (medium, source/person, and type, e.g. telegram audio, peer agent Nino).
