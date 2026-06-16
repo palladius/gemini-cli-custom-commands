@@ -130,8 +130,8 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         return
         
     if short_mode:
-        print_bold(f"{'STATUS':^13} | {'PROGRESS':^10} | {'RATIO':^5} | {'GHI':^5} | {'CHANGED':^11} | {'TRACK ID'}", BOLD)
-        print("=" * 112)
+        print_bold(f"{'STATUS':<11} | {'PROGRESS':^10} | {'RATIO':^5} | {'GHI':^5} | {'CHANGED':^11} | {'TRACK ID'}", BOLD)
+        print("=" * 110)
     else:
         print_bold(f"\n🛣️  Tracks Registry ({'all' if show_all else 'open'} tracks):", BOLD)
         print("=" * 60)
@@ -314,8 +314,8 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
                 ratio_str = f"{plan_stats['completed']}/{plan_stats['total']}"
             
             bar = make_progress_bar(pct)
-            status_padded = f"{status:^11}"
-            status_colored = f"[{status_color}{status_padded}{RESET}]"
+            status_padded = f"{status:<11}"
+            status_colored = f"{status_color}{status_padded}{RESET}"
             ghi_str = f"#{github_issue_num}" if github_issue_num else ""
             display_time_str = track.get("display_time") or "-"
             print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {display_time_str:^11} | {track_id}")
