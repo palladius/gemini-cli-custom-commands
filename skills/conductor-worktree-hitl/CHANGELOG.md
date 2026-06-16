@@ -4,6 +4,11 @@ All notable changes to the `conductor-worktree-hitl` skill will be documented in
 
 ---
 
+## [0.3.42] - 2026-06-16
+### Added
+- 📊 **Location-Aware Last Changed Timestamp**: Added a `CHANGED` column in `conductor-inspector` showing when a track was last touched. It parses and compares both GitHub Issue timestamps (🐙) and local metadata/mtime updates (💻), showing the latest active timestamp.
+- 🔀 **Recent-On-Top Sorting**: Refactored track sorting to display the most recently active/changed tracks first.
+
 ## [0.3.41] - 2026-06-16
 ### Changed
 - 📝 **Prompt Simplification**: Replaced long prompt with a minimal version that delegates Benjamin-specific conventions to `GEMINI.md` and worktree workflow steps to the `conductor-worktree-hitl` skill.

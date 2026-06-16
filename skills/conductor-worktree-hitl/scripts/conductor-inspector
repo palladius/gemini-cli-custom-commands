@@ -3,6 +3,35 @@ import os
 import sys
 import json
 import re
+from datetime import datetime
+
+def parse_datetime(dt_str):
+    if not dt_str:
+        return None
+    dt_str = str(dt_str).strip()
+    if dt_str.endswith("Z"):
+        dt_str = dt_str[:-1] + "+00:00"
+    try:
+        return datetime.fromisoformat(dt_str)
+    except Exception:
+        try:
+            match = re.match(r"^(\d{4})[^\d]?(\d{2})[^\d]?(\d{2})[T\s]?(\d{2})?[^\d]?(\d{2})?[^\d]?(\d{2})?", dt_str)
+            if match:
+                parts = [int(p) for p in match.groups() if p is not None]
+                return datetime(*parts)
+        except Exception:
+            pass
+    return None
+
+def get_github_issue_timestamps(repo_path):
+    import subprocess
+    cmd = ["gh", "issue", "list", "--state", "all", "--json", "number,updatedAt", "--limit", "100"]
+    try:
+        result = subprocess.run(cmd, cwd=repo_path, capture_output=True, text=True, check=True)
+        data = json.loads(result.stdout)
+        return {item["number"]: item["updatedAt"] for item in data if "number" in item and "updatedAt" in item}
+    except Exception:
+        return {}
 
 # Terminal Colors
 BOLD = "\033[1m"
@@ -59,6 +88,7 @@ def parse_plan_tasks(plan_path):
 def inspect_repository(repo_path, show_all=True, short_mode=False):
     repo_path = os.path.abspath(repo_path)
     conductor_dir = os.path.join(repo_path, "conductor")
+    gh_timestamps = get_github_issue_timestamps(repo_path)
     
     print_bold(f"\n🔍 Inspecting Conductor Workspace: {repo_path}", CYAN)
     
@@ -94,8 +124,8 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         return
         
     if short_mode:
-        print_bold(f"{'STATUS':^13} | {'PROGRESS':^10} | {'RATIO':^5} | {'GHI':^5} | {'TRACK ID'}", BOLD)
-        print("=" * 98)
+        print_bold(f"{'STATUS':^13} | {'PROGRESS':^10} | {'RATIO':^5} | {'GHI':^5} | {'CHANGED':^11} | {'TRACK ID'}", BOLD)
+        print("=" * 112)
     else:
         print_bold(f"\n🛣️  Tracks Registry ({'all' if show_all else 'open'} tracks):", BOLD)
         print("=" * 60)
@@ -155,6 +185,52 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         if not plan_stats:
             plan_stats = parse_plan_tasks(plan_path)
             
+        # Determine timestamps
+        gh_time = None
+        if github_issue_num and github_issue_num in gh_timestamps:
+            gh_time = parse_datetime(gh_timestamps[github_issue_num])
+            
+        lc_time = None
+        if os.path.exists(metadata_path):
+            try:
+                with open(metadata_path, "r") as f:
+                    meta = json.load(f)
+                    updated_val = meta.get("updated_at") or meta.get("last_changed")
+                    if updated_val:
+                        lc_time = parse_datetime(updated_val)
+            except Exception:
+                pass
+                
+        if not lc_time and os.path.exists(metadata_path):
+            try:
+                mtime = os.path.getmtime(metadata_path)
+                lc_time = datetime.fromtimestamp(mtime)
+            except Exception:
+                pass
+                
+        # Compare and decide
+        effective_time = None
+        source_emoji = ""
+        
+        if gh_time and lc_time:
+            if gh_time >= lc_time:
+                effective_time = gh_time
+                source_emoji = "🐙"
+            else:
+                effective_time = lc_time
+                source_emoji = "💻"
+        elif gh_time:
+            effective_time = gh_time
+            source_emoji = "🐙"
+        elif lc_time:
+            effective_time = lc_time
+            source_emoji = "💻"
+            
+        display_time = "-"
+        if effective_time:
+            date_str = effective_time.strftime("%Y%m%d")
+            display_time = f"{source_emoji} {date_str}"
+
         track_details.append({
             "track_id": track_id,
             "status": status,
@@ -163,29 +239,23 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             "worktree_branch": worktree_branch,
             "worktree_dir": worktree_dir,
             "github_issue_num": github_issue_num,
-            "plan_stats": plan_stats
+            "plan_stats": plan_stats,
+            "display_time": display_time,
+            "effective_time": effective_time
         })
 
     # Filter completed if we only want open tracks
     if not show_all:
         track_details = [t for t in track_details if t["status"] not in ("COMPLETED", "RESOLVED", "CLOSED")]
 
-    # Sort tracks: NEW first, active/pending next, completed last, alphabetically within each group
-    def get_status_order(track):
-        status_val = track["status"].upper()
-        if status_val == "NEW":
-            order = 0
-        elif status_val in ("IN_PROGRESS", "ACTIVE"):
-            order = 1
-        elif status_val == "PENDING":
-            order = 2
-        elif status_val in ("COMPLETED", "RESOLVED", "CLOSED"):
-            order = 4
-        else:
-            order = 3
-        return (order, track["track_id"])
+    # Sort by effective last changed datetime (recent on top, latest first)
+    def get_sort_key(track):
+        t = track.get("effective_time")
+        if t is None:
+            return datetime(1970, 1, 1)
+        return t
 
-    track_details.sort(key=get_status_order)
+    track_details.sort(key=get_sort_key, reverse=True)
 
     for track in track_details:
         track_id = track["track_id"]
@@ -218,11 +288,15 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             status_padded = f"{status:^11}"
             status_colored = f"[{status_color}{status_padded}{RESET}]"
             ghi_str = f"#{github_issue_num}" if github_issue_num else ""
-            print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {track_id}")
+            display_time_str = track.get("display_time") or "-"
+            print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {display_time_str:^11} | {track_id}")
             continue
             
         print(f"🔸 Track: {BOLD}{track_id}{RESET}")
         print(f"   Status: {BOLD}{status_color}{status}{RESET}")
+        display_time = track.get("display_time")
+        if display_time and display_time != "-":
+            print(f"   Last Changed: {display_time}")
         print(f"   Details: {description}")
         
         if github_issue_num:
