@@ -8,6 +8,9 @@ All notable changes to the `conductor-worktree-hitl` skill will be documented in
 ### Added
 - 📊 **Location-Aware Last Changed Timestamp**: Added a `CHANGED` column in `conductor-inspector` showing when a track was last touched. It parses and compares both GitHub Issue timestamps (🐙) and local metadata/mtime updates (💻), showing the latest active timestamp.
 - 🔀 **Recent-On-Top Sorting**: Refactored track sorting to display the most recently active/changed tracks first.
+- 🕒 **Adaptive Relative Timestamps**: Displays changes within the last 24 hours as relative duration (e.g. `16min`, `1h5m`) and older changes in relative days (`XXdays`), improving layout readability.
+- 🧹 **Compact Status Layout**: Removed brackets `[ ]` from the short-mode `STATUS` column and changed it to left-justify (`STATUS     ` instead of `[  STATUS   ]`), saving 4 bytes of terminal prefix width.
+- 📝 **Execution Documentation**: Added sample execution output under `skills/conductor-worktree-hitl/references/inspector-execution.txt`.
 
 ## [0.3.41] - 2026-06-16
 ### Changed
