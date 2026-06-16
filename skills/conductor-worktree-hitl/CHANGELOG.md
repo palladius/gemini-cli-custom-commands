@@ -4,6 +4,10 @@ All notable changes to the `conductor-worktree-hitl` skill will be documented in
 
 ---
 
+## [0.3.37] - 2026-06-16
+### Changed
+- 📝 **Rename Tag Signature**: Renamed the GHI comment tracking tag signature from `conductruelle` to `conductree` across the starter prompt.
+
 ## [0.3.36] - 2026-06-16
 ### Changed
 - 📊 **Conductor Inspector**: Added the **GHI** (GitHub Issue) column to `--short` mode output to track issue numbers for each track.
