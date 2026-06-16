@@ -29,7 +29,7 @@ Before performing any task modifications, create an isolated Git Worktree:
     ```
 
 ### 2. Conductor Quality Gates & Plan Roast
-1.  Verify the track's `metadata.json` configuration. Populate the `"worktree"` and `"github_issue"` blocks.
+1.  Verify the track's `metadata.json` configuration. Populate the `"worktree"`, `"github_issue"`, and `"agent"` blocks. You MUST explicitly set `"agent": "<AgentName>"` at the root level of `metadata.json` so that the conductor inspector knows exactly which agent is assigned to the track, avoiding incorrect inference from reused or generic worktree directory paths.
 2.  **Injecting GitHub Issues as Tasks**: If specific tasks inside the track are tracked in separate GitHub Issues, use the `inject-ghi` utility to import them into the track's `"tasks"` database:
     ```bash
     ./scripts/inject-ghi --issue <number>
