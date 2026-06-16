@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.43] - 2026-06-16
+### Added
+- 🤖 **Agent & Worktree Tracking**: Re-implemented `AGENT` column and `🌳` (worktree emoji) detection columns in `conductor-inspector` script, which scans `.worktrees/` directory and parses track metadata files.
+
 ## [0.3.42] - 2026-06-16
 ### Added
 - 📊 **Location-Aware Last Changed Timestamp**: Added a `CHANGED` column in `conductor-inspector` showing when a track was last touched. It parses and compares both GitHub Issue timestamps (🐙) and local metadata/mtime updates (💻), showing the latest active timestamp.

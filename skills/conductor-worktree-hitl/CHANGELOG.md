@@ -4,6 +4,10 @@ All notable changes to the `conductor-worktree-hitl` skill will be documented in
 
 ---
 
+## [0.3.43] - 2026-06-16
+### Added
+- 🤖 **Agent & Worktree Tracking**: Re-implemented `AGENT` column and `🌳` (worktree emoji) detection columns in `conductor-inspector` script, which scans `.worktrees/` directory and parses track metadata files.
+
 ## [0.3.42] - 2026-06-16
 ### Added
 - 📊 **Location-Aware Last Changed Timestamp**: Added a `CHANGED` column in `conductor-inspector` showing when a track was last touched. It parses and compares both GitHub Issue timestamps (🐙) and local metadata/mtime updates (💻), showing the latest active timestamp.

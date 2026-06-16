@@ -1,32 +1,32 @@
-~/git/gemini-cli-custom-commands/skills/conductor-worktree-hitl/scripts/conductor-inspector . --all --short
+~/git/gemini-cli-custom-commands/skills/conductor-worktree-hitl/scripts/conductor-inspector /Users/ricc/git/adk-sre-benjamin --all --short
 
 🔍 Inspecting Conductor Workspace: /Users/ricc/git/adk-sre-benjamin
 📦 Product: Initial Concept
-STATUS      |  PROGRESS  | RATIO |  GHI  |   CHANGED   | TRACK ID
-==============================================================================================================
-NEW         | ░░░░░░░░░░ |  0/17 |  #8   |   💻 16min   | multi_env_state_management_20260616
-COMPLETED   | ████░░░░░░ | 15/37 |  #28  |   💻 25min   | pending_mutations_registry_20260602
-COMPLETED   | ██████████ | 11/11 |  #27  |   💻 29min   | live_gcp_connectors_20260601
-COMPLETED   | ██████████ | 24/24 |  #29  |   💻 29min   | telegram_incident_creation_20260603
-COMPLETED   | ██████████ |   7/7 |       |   💻 41min   | remove_test_project_123_20260616
-IN_PROGRESS | ████░░░░░░ |   3/8 |  #5   |   💻 51min   | incident_status_taxonomy_20260603
-IN_PROGRESS | ██░░░░░░░░ |  4/19 |  #18  |   💻 41sec   | unified_incident_lifecycle_observability_20260607
-NEW         | ░░░░░░░░░░ |  0/27 |  #26  |   🐙 35min   | gcp_resource_discovery_20260601
-COMPLETED   | ██████████ |   6/6 |  #7   |   🐙 38min   | wiki_cross_linking_20260603
-COMPLETED   | ██████████ | 10/10 |  #6   |   🐙 38min   | incident_delete_archive_20260603
-PENDING     | ░░░░░░░░░░ |  0/12 |  #9   |   💻 43min   | graduate_local_state_cloud_20260604
-NEW         | ░░░░░░░░░░ |  0/12 |  #1   |   💻 43min   | adk_observability_cloud_run_20260603
-COMPLETED   | ██████████ |   9/9 |  #10  |   💻 1h5m    | better_wiki_edit_ui_20260604
-COMPLETED   | ██████████ | 19/19 |       |  💻 11days   | sre_extension_prompts_20260605
-COMPLETED   | ██████████ |   9/9 |       |  💻 11days   | sre_demo_domain_20260604
-COMPLETED   | ██████████ |   7/7 |       |  💻 12days   | ui_navigation_deep_reload_20260604
-COMPLETED   | ██████████ | 19/19 |       |  💻 12days   | project_explorer_ui_improvements_20260603
-COMPLETED   | ██████████ | 22/22 |       |  💻 12days   | better_copilot_sidebar_20260603
-COMPLETED   | ██████████ | 35/35 |       |  💻 13days   | multi_view_project_explorer_20260602
-COMPLETED   | ██████████ | 37/37 |       |  💻 14days   | cross_chat_statefulness_20260602
-COMPLETED   | ██████████ | 19/19 |       |  💻 14days   | cross_chat_mirroring_20260602
-COMPLETED   | ██████████ |   8/8 |       |  💻 14days   | sre_skills_integration_20260601
-COMPLETED   | ██████████ | 11/11 |       |  💻 14days   | comms_integration_20260601
-COMPLETED   | ██████████ | 11/11 |       |  💻 15days   | sre_dashboard_20260601
-COMPLETED   | ██████████ |   8/8 |       |  💻 15days   | mock_diagnostics_20260529
-COMPLETED   | ██████████ | 19/19 |       |  💻 17days   | core_ics_delegation_20260529
+STATUS      |  PROGRESS  | RATIO |  GHI  |   AGENT    |   CHANGED   | TRACK ID                                           |  🌳 
+==============================================================================================================================
+NEW         | ░░░░░░░░░░ |  0/17 |  #8   |    dev     |   💻 24min   | multi_env_state_management_20260616                |  🌳 
+COMPLETED   | ████░░░░░░ | 15/37 |  #28  |            |   💻 33min   | pending_mutations_registry_20260602                |    
+COMPLETED   | ██████████ | 11/11 |  #27  |            |   💻 37min   | live_gcp_connectors_20260601                       |    
+COMPLETED   | ██████████ | 24/24 |  #29  |            |   💻 37min   | telegram_incident_creation_20260603                |    
+COMPLETED   | ██████████ |   7/7 |       |    dev     |   💻 49min   | remove_test_project_123_20260616                   |  🌳 
+IN_PROGRESS | ████░░░░░░ |   3/8 |  #5   | annabella  |   💻 59min   | incident_status_taxonomy_20260603                  |  🌳 
+IN_PROGRESS | ██░░░░░░░░ |  4/19 |  #18  | francesca  |   💻 8min    | unified_incident_lifecycle_observability_20260607  |  🌳 
+NEW         | ░░░░░░░░░░ |  0/27 |  #26  |            |   🐙 42min   | gcp_resource_discovery_20260601                    |    
+COMPLETED   | ██████████ |   6/6 |  #7   |  madhavi   |   🐙 45min   | wiki_cross_linking_20260603                        |  🌳 
+COMPLETED   | ██████████ | 10/10 |  #6   |   lucia    |   🐙 45min   | incident_delete_archive_20260603                   |  🌳 
+PENDING     | ░░░░░░░░░░ |  0/12 |  #9   |   luigi    |   💻 51min   | graduate_local_state_cloud_20260604                |  🌳 
+NEW         | ░░░░░░░░░░ |  0/12 |  #1   |            |   💻 51min   | adk_observability_cloud_run_20260603               |    
+COMPLETED   | ██████████ |   9/9 |  #10  |   mario    |   💻 1h13m   | better_wiki_edit_ui_20260604                       |  🌳 
+COMPLETED   | ██████████ | 19/19 |       |            |  💻 11days   | sre_extension_prompts_20260605                     |    
+COMPLETED   | ██████████ |   9/9 |       |            |  💻 11days   | sre_demo_domain_20260604                           |    
+COMPLETED   | ██████████ |   7/7 |       |            |  💻 12days   | ui_navigation_deep_reload_20260604                 |    
+COMPLETED   | ██████████ | 19/19 |       |            |  💻 12days   | project_explorer_ui_improvements_20260603          |    
+COMPLETED   | ██████████ | 22/22 |       |            |  💻 12days   | better_copilot_sidebar_20260603                    |    
+COMPLETED   | ██████████ | 35/35 |       |            |  💻 13days   | multi_view_project_explorer_20260602               |    
+COMPLETED   | ██████████ | 37/37 |       |            |  💻 14days   | cross_chat_statefulness_20260602                   |    
+COMPLETED   | ██████████ | 19/19 |       |            |  💻 14days   | cross_chat_mirroring_20260602                      |    
+COMPLETED   | ██████████ |   8/8 |       |            |  💻 14days   | sre_skills_integration_20260601                    |    
+COMPLETED   | ██████████ | 11/11 |       |            |  💻 14days   | comms_integration_20260601                         |    
+COMPLETED   | ██████████ | 11/11 |       |            |  💻 15days   | sre_dashboard_20260601                             |    
+COMPLETED   | ██████████ |   8/8 |       |            |  💻 15days   | mock_diagnostics_20260529                          |    
+COMPLETED   | ██████████ | 19/19 |       |            |  💻 17days   | core_ics_delegation_20260529                       |    

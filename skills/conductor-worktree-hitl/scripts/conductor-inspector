@@ -96,6 +96,27 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
     conductor_dir = os.path.join(repo_path, "conductor")
     gh_timestamps = get_github_issue_timestamps(repo_path)
     
+    # Scan .worktrees/ directory to match active worktrees and agent names
+    worktrees_by_ghi = {}
+    worktrees_by_slug = {}
+    worktrees_path = os.path.join(repo_path, ".worktrees")
+    if os.path.isdir(worktrees_path):
+        try:
+            for item in os.listdir(worktrees_path):
+                item_path = os.path.join(worktrees_path, item)
+                if os.path.isdir(item_path):
+                    match = re.match(r"^issue-(.+)-([^-]+)$", item)
+                    if match:
+                        issue_id = match.group(1)
+                        agent_name = match.group(2)
+                        val = {"dir": item, "agent": agent_name}
+                        if issue_id.isdigit():
+                            worktrees_by_ghi[issue_id] = val
+                        else:
+                            worktrees_by_slug[issue_id] = val
+        except Exception:
+            pass
+            
     print_bold(f"\n🔍 Inspecting Conductor Workspace: {repo_path}", CYAN)
     
     if not os.path.isdir(conductor_dir):
@@ -130,8 +151,8 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         return
         
     if short_mode:
-        print_bold(f"{'STATUS':<11} | {'PROGRESS':^10} | {'RATIO':^5} | {'GHI':^5} | {'CHANGED':^11} | {'TRACK ID'}", BOLD)
-        print("=" * 110)
+        print_bold(f"{'STATUS':<11} | {'PROGRESS':^10} | {'RATIO':^5} | {'GHI':^5} | {'AGENT':^10} | {'CHANGED':^11} | {'TRACK ID':<50} | {'🌳':^3}", BOLD)
+        print("=" * 126)
     else:
         print_bold(f"\n🛣️  Tracks Registry ({'all' if show_all else 'open'} tracks):", BOLD)
         print("=" * 60)
@@ -260,6 +281,103 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
                 days = total_seconds // 86400
                 display_time = f"{source_emoji} {days}days"
 
+        # Determine if worktree exists
+        has_worktree = False
+        if worktree_dir:
+            full_wt_path = os.path.join(repo_path, worktree_dir) if not os.path.isabs(worktree_dir) else worktree_dir
+            if os.path.isdir(full_wt_path):
+                has_worktree = True
+                
+        # Also check "path" from metadata:
+        if not has_worktree and os.path.exists(metadata_path):
+            try:
+                with open(metadata_path, "r") as f:
+                    meta = json.load(f)
+                    w_path = meta.get("worktree", {}).get("path")
+                    if w_path:
+                        full_wt_path = os.path.join(repo_path, w_path) if not os.path.isabs(w_path) else w_path
+                        if os.path.isdir(full_wt_path):
+                            has_worktree = True
+            except Exception:
+                pass
+                
+        if not has_worktree and github_issue_num:
+            if str(github_issue_num) in worktrees_by_ghi:
+                has_worktree = True
+                
+        if not has_worktree:
+            slug1 = track_id.replace("_", "-")
+            slug2 = re.sub(r"-\d{8}$", "", slug1)
+            if slug1 in worktrees_by_slug or slug2 in worktrees_by_slug:
+                has_worktree = True
+
+        # Extract Agent name
+        agent = None
+        # 1. Metadata keys
+        if os.path.exists(metadata_path):
+            try:
+                with open(metadata_path, "r") as f:
+                    meta = json.load(f)
+                    for key in ["agent", "agent_name", "assigned_agent", "assignee"]:
+                        if meta.get(key):
+                            agent = meta.get(key)
+                            break
+                            
+                    # 2. Active human questions
+                    if not agent:
+                        active_qs = meta.get("active_questions", [])
+                        if isinstance(active_qs, list):
+                            for q in active_qs:
+                                for key in ["agent", "agent_name", "assigned_agent", "assignee"]:
+                                    if q.get(key):
+                                        agent = q.get(key)
+                                        break
+                                if agent:
+                                    break
+                                    
+                    # 3. Tasks list
+                    if not agent:
+                        tasks = meta.get("tasks", [])
+                        if isinstance(tasks, list):
+                            for t in tasks:
+                                for key in ["agent", "agent_name", "assigned_agent", "assignee"]:
+                                    if t.get(key):
+                                        agent = t.get(key)
+                                        break
+                                if agent:
+                                    break
+            except Exception:
+                pass
+                
+        # 4. Worktree folder matching GHI
+        if not agent and github_issue_num:
+            ghi_str = str(github_issue_num)
+            if ghi_str in worktrees_by_ghi:
+                agent = worktrees_by_ghi[ghi_str]["agent"]
+                
+        # 5. Worktree folder matching slug
+        if not agent:
+            slug1 = track_id.replace("_", "-")
+            slug2 = re.sub(r"-\d{8}$", "", slug1)
+            if slug1 in worktrees_by_slug:
+                agent = worktrees_by_slug[slug1]["agent"]
+            elif slug2 in worktrees_by_slug:
+                agent = worktrees_by_slug[slug2]["agent"]
+                
+        # 6. Worktree path in metadata
+        if not agent and os.path.exists(metadata_path):
+            try:
+                with open(metadata_path, "r") as f:
+                    meta = json.load(f)
+                    w_path = meta.get("worktree", {}).get("path") or meta.get("worktree", {}).get("directory")
+                    if w_path:
+                        basename = os.path.basename(w_path)
+                        match = re.match(r"^issue-(.+)-([^-]+)$", basename)
+                        if match:
+                            agent = match.group(2)
+            except Exception:
+                pass
+
         track_details.append({
             "track_id": track_id,
             "status": status,
@@ -270,7 +388,9 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             "github_issue_num": github_issue_num,
             "plan_stats": plan_stats,
             "display_time": display_time,
-            "effective_time": effective_time
+            "effective_time": effective_time,
+            "agent": agent,
+            "has_worktree": has_worktree
         })
 
     # Filter completed if we only want open tracks
@@ -317,12 +437,17 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             status_padded = f"{status:<11}"
             status_colored = f"{status_color}{status_padded}{RESET}"
             ghi_str = f"#{github_issue_num}" if github_issue_num else ""
+            agent_str = track.get("agent") or ""
             display_time_str = track.get("display_time") or "-"
-            print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {display_time_str:^11} | {track_id}")
+            tree_str = "🌳" if track.get("has_worktree") else ""
+            print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {agent_str:^10} | {display_time_str:^11} | {track_id:<50} | {tree_str:^3}")
             continue
             
-        print(f"🔸 Track: {BOLD}{track_id}{RESET}")
+        wt_suffix = " [🌳]" if track.get("has_worktree") else ""
+        print(f"🔸 Track: {BOLD}{track_id}{RESET}{wt_suffix}")
         print(f"   Status: {BOLD}{status_color}{status}{RESET}")
+        if track.get("agent"):
+            print(f"   Agent: {BOLD}{track.get('agent')}{RESET}")
         display_time = track.get("display_time")
         if display_time and display_time != "-":
             print(f"   Last Changed: {display_time}")
