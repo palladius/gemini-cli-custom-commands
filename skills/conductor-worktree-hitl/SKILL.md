@@ -17,6 +17,11 @@ Before performing any task modifications, create an isolated Git Worktree:
     git worktree add .worktrees/issue-<number>-<role> -b feature/issue-<number>
     ```
 3.  Navigate your context into the worktree directory. All subsequent tool runs (editing, compiling, testing) must happen within this worktree.
+4.  **Symlink the Conductor Folder**: Inside the worktree directory, create a symbolic link pointing back to the main repository's `conductor/` directory:
+    ```bash
+    ln -s ../../conductor conductor
+    ```
+    This ensures a single point of sync/truth for all Conductor++ metadata and states, preventing branch conflicts on project tracking files.
 
 ### 2. Conductor Quality Gates & Plan Roast
 1.  Verify the track's `metadata.json` configuration. Populate the `"worktree"` and `"github_issue"` blocks.
