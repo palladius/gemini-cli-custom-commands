@@ -60,11 +60,12 @@ If you require clarification on a design choice, UI asset, or logic condition:
     ```
 5.  **Enter Polling Sleep**: Periodically read `metadata.json` (every 15 seconds). Once the local polling script updates the question status to `"answered"`, extract the `"answer"` value, clear the question from the local queue, and resume.
 
-### 4. Verification & Push
+### 4. Verification & Local Commit (No Remote Pushing)
 1.  Implement the feature to pass all tests.
 2.  Run the linting suite and verify test coverage meets style requirements (>80%).
-3.  Commit changes, push to origin, and attach a detailed summary using Git Notes:
+3.  **Commit Locally (Do NOT Push)**: Stage and commit all code changes locally to your feature branch. Under no circumstances should you run `git push`.
+4.  Attach a detailed summary using Git Notes:
     ```bash
     git notes add -m "Task completed: <summary>" <commit-hash>
     ```
-4.  Open a Pull Request and mark the task as `completed` in `metadata.json`.
+5.  Mark the task status as `completed` in `metadata.json`. The coordinator (Giovanni) will handle checking out the branch, validation, merging, and final pushing.

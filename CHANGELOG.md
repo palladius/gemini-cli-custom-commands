@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.32] - 2026-06-16
+### Changed
+- 🛡️ **Disable Remote Pushing**: Updated `SKILL.md` and the orchestration prompt to explicitly forbid subagents from executing `git push`. Subagents now commit locally to their branches, leaving merging and remote pushing strictly to the parent coordinator (Giovanni).
+
 ## [0.3.31] - 2026-06-16
 ### Added
 - 📝 **Orchestration Prompt**: Added the `multi-worktree-starter-prompt.md` prompt for Conductor++ worktree flow.
