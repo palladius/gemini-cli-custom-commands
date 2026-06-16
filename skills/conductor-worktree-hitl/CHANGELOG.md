@@ -4,6 +4,10 @@ All notable changes to the `conductor-worktree-hitl` skill will be documented in
 
 ---
 
+## [0.3.38] - 2026-06-16
+### Changed
+- 📝 **GHI Signature Alignment**: Updated the starter prompt to explicitly enforce GHI comment format `[QUESTION][<AgentName>]` and signing with `-- from <AgentName> on behalf of Riccardo` (using emojis) for consistency.
+
 ## [0.3.37] - 2026-06-16
 ### Changed
 - 📝 **Rename Tag Signature**: Renamed the GHI comment tracking tag signature from `conductruelle` to `conductree` across the starter prompt.

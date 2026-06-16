@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.38] - 2026-06-16
+### Changed
+- 📝 **GHI Signature Alignment**: Updated the starter prompt to explicitly enforce GHI comment format `[QUESTION][<AgentName>]` and signing with `-- from <AgentName> on behalf of Riccardo` (using emojis) for consistency.
+
 ## [0.3.37] - 2026-06-16
 ### Changed
 - 📝 **Rename Tag Signature**: Renamed the GHI comment tracking tag signature from `conductruelle` to `conductree` across the starter prompt.

@@ -14,7 +14,9 @@ If a subagent is blocked by a design choice, they must formulate a **hyper-descr
 - Format the question as a numbered multiple-choice list (with a write-in option).
 - **Dual Communication (Reentrant & GHI)**:
   1. **Local JSON (Reentrant)**: To prevent parallel write collisions, the subagent writes the question to its own track's `metadata.json` (inside its private track folder under `conductor/tracks/<track_id>/`). This is 100% race-free.
-  2. **GitHub GHI**: Post the question as a GitHub Issue comment, embedding the tracking signature: `[conductree:<track_id>:<question_id>]`.
+  2. **GitHub GHI**: Post the question as a GitHub Issue comment. The comment must be formatted as:
+     `[QUESTION][<AgentName>] <Your descriptive multiple-choice question> [conductree:<track_id>:<question_id>]`
+     Always sign the comment at the bottom: `-- from <AgentName> on behalf of Riccardo` (using plenty of emojis).
 
 ### 3. Answer Polling & Sync (Agostina)
 Agostina runs `poll_ghi_questions.py` to monitor GitHub comments.
