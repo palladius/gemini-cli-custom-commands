@@ -25,8 +25,15 @@ Before performing any task modifications, create an isolated Git Worktree:
 
 ### 2. Conductor Quality Gates & Plan Roast
 1.  Verify the track's `metadata.json` configuration. Populate the `"worktree"` and `"github_issue"` blocks.
-2.  Before coding, execute the Conductor `/roastme` command to analyze the `plan.md` against product guidelines and code style rules.
-3.  If `/roastme` identifies unresolved design constraints, proceed to the communication protocol.
+2.  **Injecting GitHub Issues as Tasks**: If specific tasks inside the track are tracked in separate GitHub Issues, use the `inject-ghi` utility to import them into the track's `"tasks"` database:
+    ```bash
+    ./scripts/inject-ghi --issue <number>
+    ```
+3.  **Handling Task-Specific Issues**:
+    - If a task has a `github_issue_url` specified, fetch the issue's contents and comments for context or human input before starting.
+    - When the task is complete, post a confirmation comment on the issue page.
+4.  Before coding, execute the Conductor `/roastme` command to analyze the `plan.md` against product guidelines and code style rules.
+5.  If `/roastme` identifies unresolved design constraints, proceed to the communication protocol.
 
 ### 3. Asynchronous Multiple-Choice Choice (`ask_me`)
 If you require clarification on a design choice, UI asset, or logic condition:
