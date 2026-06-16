@@ -12,12 +12,18 @@ def parse_datetime(dt_str):
     if dt_str.endswith("Z"):
         dt_str = dt_str[:-1] + "+00:00"
     try:
-        return datetime.fromisoformat(dt_str)
+        from datetime import timezone
+        dt = datetime.fromisoformat(dt_str)
+        if dt.tzinfo is not None:
+            dt = dt.astimezone(timezone.utc).replace(tzinfo=None)
+        return dt
     except Exception:
         try:
             match = re.match(r"^(\d{4})[^\d]?(\d{2})[^\d]?(\d{2})[T\s]?(\d{2})?[^\d]?(\d{2})?[^\d]?(\d{2})?", dt_str)
             if match:
                 parts = [int(p) for p in match.groups() if p is not None]
+                while len(parts) < 6:
+                    parts.append(0)
                 return datetime(*parts)
         except Exception:
             pass
@@ -204,7 +210,7 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         if not lc_time and os.path.exists(metadata_path):
             try:
                 mtime = os.path.getmtime(metadata_path)
-                lc_time = datetime.fromtimestamp(mtime)
+                lc_time = datetime.utcfromtimestamp(mtime)
             except Exception:
                 pass
                 
@@ -228,8 +234,31 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             
         display_time = "-"
         if effective_time:
-            date_str = effective_time.strftime("%Y%m%d")
-            display_time = f"{source_emoji} {date_str}"
+            from datetime import timezone
+            now_utc = datetime.now(timezone.utc).replace(tzinfo=None)
+            diff = now_utc - effective_time
+            total_seconds = int(diff.total_seconds())
+            
+            # If changed within the last 24 hours, show relative format
+            if total_seconds < 86400:
+                hours = total_seconds // 3600
+                minutes = (total_seconds % 3600) // 60
+                seconds = total_seconds % 60
+                
+                if hours > 0:
+                    if minutes > 0:
+                        rel_str = f"{hours}h{minutes}m"
+                    else:
+                        rel_str = f"{hours}h"
+                elif minutes > 0:
+                    rel_str = f"{minutes}min"
+                else:
+                    rel_str = f"{max(0, seconds)}sec"
+                
+                display_time = f"{source_emoji} {rel_str}"
+            else:
+                date_str = effective_time.strftime("%Y%m%d")
+                display_time = f"{source_emoji} {date_str}"
 
         track_details.append({
             "track_id": track_id,
