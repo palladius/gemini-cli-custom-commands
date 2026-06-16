@@ -22,6 +22,10 @@ Before performing any task modifications, create an isolated Git Worktree:
     ln -s ../../conductor conductor
     ```
     This ensures a single point of sync/truth for all Conductor++ metadata and states, preventing branch conflicts on project tracking files.
+5.  **Configure Git Hygiene**: To prevent the subagent from accidentally tracking or staging the `conductor` symlink or track metadata changes to its feature branch, add it to the worktree's local exclude file:
+    ```bash
+    echo "conductor" >> $(git rev-parse --git-dir)/info/exclude
+    ```
 
 ### 2. Conductor Quality Gates & Plan Roast
 1.  Verify the track's `metadata.json` configuration. Populate the `"worktree"` and `"github_issue"` blocks.
