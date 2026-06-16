@@ -51,6 +51,7 @@ Here's the full list of commands available in this extension. For more details, 
 Starting with version `0.0.22`, we are introducing **[Agent Skills](https://geminicli.com/docs/cli/skills/)**! 🚀 These allow Gemini to act more autonomously and precisely.
 
 *   **`cloud-build-investigation`**: 🏗️ Expert-level SRE skill for Google Cloud Build and Cloud Run investigations.
+*   **`conductor-worktree-hitl`**: 🔀 Manage asynchronous task implementation in Git Worktrees using Conductor++ and GitHub Issues.
 *   **`devrel-frictionlog-codelab`**: 🥑 Automates friction logging for a given Google Codelab URL.
 *   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia (MCP) tools and related Gemini skills.
 *   **`musicgen-lyria3`**: 🎵 Generate 30-second music clips or 2-3 minute full songs with the Lyria 3 model.
