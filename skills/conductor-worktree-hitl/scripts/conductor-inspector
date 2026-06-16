@@ -94,7 +94,7 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         return
         
     if short_mode:
-        print_bold(f"{'STATUS':^13} | {'PROGRESS BAR':^12} | {'PCT':^5} | {'TRACK ID'}", BOLD)
+        print_bold(f"{'STATUS':^13} | {'PROGRESS':^10} | {'RATIO':^5} | {'TRACK ID'}", BOLD)
         print("=" * 90)
     else:
         print_bold(f"\n🛣️  Tracks Registry ({'all' if show_all else 'open'} tracks):", BOLD)
@@ -168,17 +168,17 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             status_color = CYAN
             
         if short_mode:
-            pct_str = "N/A"
+            ratio_str = "N/A"
             pct = 0
             if plan_stats:
                 if plan_stats["total"] > 0:
                     pct = int((plan_stats["completed"] / plan_stats["total"]) * 100)
-                    pct_str = f"{pct}%"
+                ratio_str = f"{plan_stats['completed']}/{plan_stats['total']}"
             
             bar = make_progress_bar(pct)
             status_padded = f"{status:^11}"
             status_colored = f"[{status_color}{status_padded}{RESET}]"
-            print(f"{status_colored} | [{bar}] | {pct_str:>5} | {track_id}")
+            print(f"{status_colored} | {bar} | {ratio_str:>5} | {track_id}")
             continue
             
         print(f"🔸 Track: {BOLD}{track_id}{RESET}")

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.29] - 2026-06-16
+### Changed
+- 📊 **Conductor Inspector**: Refactored `--short` mode formatting: removed brackets `[]` around the progress bar and replaced percentage (`PCT`) with `N/M` ratio (`completed/total`).
+
 ## [0.3.28] - 2026-06-16
 ### Added
 - 🔀 **Worktree HITL Skill**: Added the new `conductor-worktree-hitl` skill supporting asynchronous multi-agent coordination inside Git Worktrees using GitHub Issues and Conductor++ metadata tracking.
