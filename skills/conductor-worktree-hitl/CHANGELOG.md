@@ -59,6 +59,7 @@ This changelog is contextually bound to the Condutree skill itself. Version numb
 ### Changed
 - 📊 **Agent Column Width & Truncation**: Increased the `AGENT` column width by 1 (to 11 characters) in the short-mode table. Implemented automatic truncation of agent names longer than 11 characters to fit perfectly.
 - 📊 **CHANGED Column Left-Alignment & Compact Units**: Left-aligned the `CHANGED` column header and values to keep emojis on the left. Shortened duration formatting units: `m` (minutes), `s` (seconds), `d` (days).
+- 📊 **CHANGED Column Right-Indentation**: Right-indented the duration text within the `CHANGED` column while keeping the source emoji at the left edge of the column.
 
 
 ---

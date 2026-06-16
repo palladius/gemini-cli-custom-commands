@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.46] - 2026-07-07
 ### Added
 - ✨ **Lyria3 Model Discovery**: New `musicgen-lyria3-list.py` script to query available music/audio models via GenAI SDK. Bumped skill to v0.0.10.
+### Changed
+- 📊 **CHANGED Column Right-Indentation**: Right-indented the duration text within the `CHANGED` column while keeping the source emoji at the left edge of the column.
 ### Fixed
 - 📝 **Portable Skill Paths**: Replaced hardcoded `~/git/...` path in `conductor-worktree-hitl/SKILL.md` step 7 with relative `./scripts/*`, following the Anthropic skills standard for portability.
 

@@ -275,11 +275,13 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
                     rel_str = f"{minutes}m"
                 else:
                     rel_str = f"{max(0, seconds)}s"
-                
-                display_time = f"{source_emoji} {rel_str}"
             else:
                 days = total_seconds // 86400
-                display_time = f"{source_emoji} {days}d"
+                rel_str = f"{days}d"
+                
+            # Right-indent within a width of 11: emoji on left, rel_str on right
+            spaces_needed = 10 - len(rel_str)
+            display_time = f"{source_emoji}{' ' * spaces_needed}{rel_str}"
 
         # Determine if worktree exists
         has_worktree = False
