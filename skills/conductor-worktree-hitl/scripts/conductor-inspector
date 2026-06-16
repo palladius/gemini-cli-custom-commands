@@ -477,6 +477,37 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
                     
         print("-" * 60)
 
+    # Calculate Totals
+    sum_completed = 0
+    sum_total = 0
+    has_stats = False
+    for t in track_details:
+        stats = t.get("plan_stats")
+        if stats:
+            sum_completed += stats["completed"]
+            sum_total += stats["total"]
+            has_stats = True
+            
+    completed_tracks = sum(1 for t in track_details if t["status"] in ("COMPLETED", "RESOLVED", "CLOSED"))
+    open_tracks = len(track_details) - completed_tracks
+    worktree_count = sum(1 for t in track_details if t.get("has_worktree"))
+    ratio_summary = f"{sum_completed}/{sum_total}" if has_stats else "N/A"
+    
+    if short_mode:
+        total_label = f"{'TOTAL':<11}"
+        empty_bar = " " * 10
+        total_ratio = f"{ratio_summary:>5}"
+        empty_ghi = " " * 5
+        empty_agent = " " * 10
+        empty_changed = " " * 11
+        tracks_summary = f"{completed_tracks} completed, {open_tracks} open ({len(track_details)} total)"
+        tree_summary = f"{worktree_count} 🌳"
+        print("=" * 126)
+        print(f"{total_label} | {empty_bar} | {total_ratio} | {empty_ghi} | {empty_agent} | {empty_changed} | {tracks_summary:<50} | {tree_summary:^3}")
+    else:
+        print("=" * 60)
+        print(f"📊 Totals: {completed_tracks} completed, {open_tracks} open ({len(track_details)} total) | Tasks: {ratio_summary} | Worktrees: {worktree_count} 🌳\n")
+
 if __name__ == "__main__":
     import argparse
     import sys
