@@ -121,8 +121,29 @@ def inspect_repository(repo_path):
             except Exception as e:
                 status = f"METADATA_ERROR ({str(e)})"
                 
-        # Parse plan
-        plan_stats = parse_plan_tasks(plan_path)
+        # Parse plan: first try JSON tasks list (Conductor++), then fall back to plan.md
+        plan_stats = None
+        if os.path.exists(metadata_path):
+            try:
+                with open(metadata_path, "r") as f:
+                    meta = json.load(f)
+                    tasks_list = meta.get("tasks")
+                    if isinstance(tasks_list, list) and len(tasks_list) > 0:
+                        total = len(tasks_list)
+                        completed = sum(1 for t in tasks_list if t.get("status") in ("completed", "resolved"))
+                        in_progress = sum(1 for t in tasks_list if t.get("status") in ("in_progress", "active"))
+                        pending = total - completed - in_progress
+                        plan_stats = {
+                            "total": total,
+                            "completed": completed,
+                            "in_progress": in_progress,
+                            "pending": pending
+                        }
+            except Exception:
+                pass
+
+        if not plan_stats:
+            plan_stats = parse_plan_tasks(plan_path)
         
         # Format Status with color
         status_color = RESET
