@@ -11,6 +11,12 @@
       "question": "Should we default to HTML formatting or MarkdownV2 for Telegram message payloads?",
       "status": "answered",
       "answer": "HTML is preferred for simplicity and better parsing consistency in our Telegram library.",
+      "vehicle": {
+        "type": "telegram",
+        "medium": "audio_message",
+        "delivered_by": "human",
+        "original_transcript": "Hey Mario, let's go with HTML formatting, it is much easier to maintain."
+      },
       "created_at": "2026-06-16T11:00:00Z"
     }
   ],

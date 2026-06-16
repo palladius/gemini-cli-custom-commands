@@ -4,6 +4,14 @@ All notable changes to the `conductor-worktree-hitl` skill will be documented in
 
 ---
 
+## [0.3.40] - 2026-06-16
+### Added
+- 📝 **Vehicle Field in Question Schema**: Added a `"vehicle"` block to `references/question-answered.json` to track the delivery mechanism (medium, source/person, and type, e.g. telegram audio, peer agent Nino).
+
+## [0.3.39] - 2026-06-16
+### Changed
+- 📝 **Skill Reference Documenting**: Referenced `references/question-awaiting.json` and `references/question-answered.json` schemas in `SKILL.md` under the local memory registry section.
+
 ## [0.3.38] - 2026-06-16
 ### Changed
 - 📝 **GHI Signature Alignment**: Updated the starter prompt to explicitly enforce GHI comment format `[QUESTION][<AgentName>]` and signing with `-- from <AgentName> on behalf of Riccardo` (using emojis) for consistency.

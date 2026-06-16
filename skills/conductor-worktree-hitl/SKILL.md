@@ -1,7 +1,7 @@
 ---
 name: conductor-worktree-hitl
 description: "Manage asynchronous task implementation in Git Worktrees using Conductor++ and GitHub Issues for low-friction HITL choice prompting and screenshot verification."
-version: 0.0.7
+version: 0.0.8
 ---
 
 # Conductor++ Asynchronous Git Worktree & GHI HITL Skill
@@ -59,6 +59,7 @@ If you require clarification on a design choice, UI asset, or logic condition:
       }
     ]
     ```
+    *(For complete schema structure, see [references/question-awaiting.json](./references/question-awaiting.json) for the open question format, and [references/question-answered.json](./references/question-answered.json) for the answered question format).*
 5.  **Enter Polling Sleep**: Periodically read `metadata.json` (every 15 seconds). Once the local polling script updates the question status to `"answered"`, extract the `"answer"` value, clear the question from the local queue, and resume.
 
 ### 4. Verification & Local Commit (No Remote Pushing)
