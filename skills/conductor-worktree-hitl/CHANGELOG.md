@@ -1,0 +1,39 @@
+# Changelog - Conductor Worktree HITL Skill
+
+All notable changes to the `conductor-worktree-hitl` skill will be documented in this file.
+
+---
+
+## [0.3.35] - 2026-06-16
+### Added
+- 📝 **Reference Questions**: Added reference JSON files (`question-awaiting.json` and `question-answered.json`) under `references/` directory to demonstrate metadata-based question states.
+
+## [0.3.34] - 2026-06-16
+### Changed
+- 👩 **Renamed Git Concierge**: Renamed the coordinator agent from Giovanni to Agostina (Lead Git Concierge) to align with the A.G. (Antigravity) theme.
+
+## [0.3.33] - 2026-06-16
+### Changed
+- 🤖 **Optimized Polling Loop**: Refactored `poll_ghi_questions.py` to scan local Conductor tracks metadata first and only perform GitHub API calls for issues that actively have questions awaiting human input, saving over 95% of API requests.
+
+## [0.3.32] - 2026-06-16
+### Changed
+- 🛡️ **Disable Remote Pushing**: Updated `SKILL.md` and the orchestration prompt to explicitly forbid subagents from executing `git push`. Subagents now commit locally to their branches, leaving merging and remote pushing strictly to the parent coordinator (Agostina).
+
+## [0.3.31] - 2026-06-16
+### Added
+- 📝 **Orchestration Prompt**: Added the `multi-worktree-starter-prompt.md` prompt for Conductor++ worktree flow.
+- 🛡️ **Git Hygiene Step**: Added instructions in `SKILL.md` to configure git exclude inside worktrees to prevent symlink tracking.
+
+## [0.3.30] - 2026-06-16
+### Changed
+- 🔀 **Conductor Inspector Sorting**: Implemented custom sorting for tracks where `NEW` status comes first, active/pending next, and `COMPLETED`/`RESOLVED`/`CLOSED` last.
+
+## [0.3.29] - 2026-06-16
+### Changed
+- 📊 **Conductor Inspector**: Refactored `--short` mode formatting: removed brackets `[]` around the progress bar and replaced percentage (`PCT`) with `N/M` ratio (`completed/total`).
+
+## [0.3.28] - 2026-06-16
+### Added
+- 🔀 **Worktree HITL Skill**: Added the new `conductor-worktree-hitl` skill supporting asynchronous multi-agent coordination inside Git Worktrees using GitHub Issues and Conductor++ metadata tracking.
+- 🤖 **Issue Polling Script**: Created [scripts/poll_ghi_questions.py](file:///Users/ricc/git/gemini-cli-custom-commands/skills/conductor-worktree-hitl/scripts/poll_ghi_questions.py) to aggregate and update active questions.
