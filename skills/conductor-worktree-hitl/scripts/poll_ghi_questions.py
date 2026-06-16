@@ -83,23 +83,67 @@ def update_conductor_tracks(issue_number, agent_name, answer_text):
                         print(f"   💾 Updated local track metadata: {track_id}/metadata.json")
             except Exception as e:
                 print(f"   ⚠️ Error updating track metadata for {track_id}: {e}", file=sys.stderr)
+def get_issues_awaiting_human():
+    # Scan conductor/tracks/*/metadata.json for any active questions awaiting human response
+    tracks_dir = os.path.join(CONDUCTOR_DIR, "tracks")
+    if not os.path.isdir(tracks_dir):
+        return {}
+
+    issues_to_poll = {}
+    for track_id in os.listdir(tracks_dir):
+        track_path = os.path.join(tracks_dir, track_id)
+        metadata_path = os.path.join(track_path, "metadata.json")
+        if os.path.exists(metadata_path):
+            try:
+                with open(metadata_path, "r") as f:
+                    meta = json.load(f)
+                
+                status = meta.get("status", "unknown").upper()
+                if status in ("COMPLETED", "RESOLVED", "CLOSED"):
+                    continue
+                
+                active_qs = meta.get("active_questions", [])
+                has_awaiting = any(q.get("status") == "awaiting_human" for q in active_qs)
+                
+                gh_issue = meta.get("github_issue", {})
+                issue_num = gh_issue.get("number")
+                
+                if has_awaiting and issue_num:
+                    issues_to_poll[issue_num] = {
+                        "track_id": track_id,
+                        "title": meta.get("description", "Awaiting input")
+                    }
+            except Exception as e:
+                print(f"   ⚠️ Error reading track metadata for {track_id}: {e}", file=sys.stderr)
+                
+    return issues_to_poll
 
 def process_questions():
-    print(f"🤖 Polling GitHub Issues for Agent Questions (Conductor: {CONDUCTOR_DIR})...")
-    issues = fetch_issues()
-    if not issues:
-        print("No open issues found.")
+    print(f"🤖 Scanning local tracks (Conductor: {CONDUCTOR_DIR})...")
+    issues_to_poll = get_issues_awaiting_human()
+    
+    if not issues_to_poll:
+        print("✅ No local tracks are currently awaiting human input. Skipping GitHub poll.")
+        # Ensure questions.json is empty/cleared
+        if os.path.exists(QUESTIONS_JSON):
+            try:
+                with open(QUESTIONS_JSON, "w") as f:
+                    json.dump([], f, indent=2)
+            except Exception:
+                pass
         return
 
+    print(f"🔍 Found {len(issues_to_poll)} issue(s) awaiting human input. Polling GitHub comments...")
     active_questions = []
 
     question_pattern = re.compile(r"\[QUESTION\](?:\[([^\]]+)\])?\s*(.*)", re.IGNORECASE)
     answer_pattern = re.compile(r"\[ANSWER\](?:\[([^\]]+)\])?\s*(.*)", re.IGNORECASE)
 
-    for issue in issues:
-        num = issue["number"]
-        title = issue["title"]
+    for num, track_info in issues_to_poll.items():
+        title = track_info["title"]
         comments = fetch_comments(num)
+        if not comments:
+            continue
 
         questions_by_agent = {}
 
