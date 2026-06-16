@@ -51,7 +51,7 @@ def parse_plan_tasks(plan_path):
         "pending": pending
     }
 
-def inspect_repository(repo_path):
+def inspect_repository(repo_path, show_all=True):
     repo_path = os.path.abspath(repo_path)
     conductor_dir = os.path.join(repo_path, "conductor")
     
@@ -88,7 +88,7 @@ def inspect_repository(repo_path):
         print("No feature/bugfix tracks registered.")
         return
         
-    print_bold(f"\n🛣️  Tracks Registry ({len(track_dirs)} registered tracks):", BOLD)
+    print_bold(f"\n🛣️  Tracks Registry ({'all' if show_all else 'open'} tracks):", BOLD)
     print("=" * 60)
     
     for track_id in sorted(track_dirs):
@@ -121,6 +121,10 @@ def inspect_repository(repo_path):
             except Exception as e:
                 status = f"METADATA_ERROR ({str(e)})"
                 
+        # Filter completed if we only want open tracks
+        if not show_all and status in ("COMPLETED", "RESOLVED", "CLOSED"):
+            continue
+
         # Parse plan: first try JSON tasks list (Conductor++), then fall back to plan.md
         plan_stats = None
         if os.path.exists(metadata_path):
@@ -183,12 +187,18 @@ def inspect_repository(repo_path):
         print("-" * 60)
 
 if __name__ == "__main__":
-    target_repo = "."
-    if len(sys.argv) > 1:
-        target_repo = sys.argv[1]
-        
-    if not os.path.exists(target_repo):
-        print(f"{RED}Error: Path {target_repo} does not exist.{RESET}")
+    import argparse
+    parser = argparse.ArgumentParser(description="Inspect a Conductor++ workspace's tracks and tasks.")
+    parser.add_argument("repo_path", nargs="?", default=".", help="Path to the target git repository (default: .)")
+    
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--open", action="store_true", help="Display only open (non-completed) tracks")
+    group.add_argument("--all", action="store_true", help="Display all tracks (including completed/resolved)")
+    
+    args = parser.parse_args()
+    
+    if not os.path.exists(args.repo_path):
+        print(f"{RED}Error: Path {args.repo_path} does not exist.{RESET}")
         sys.exit(1)
         
-    inspect_repository(target_repo)
+    inspect_repository(args.repo_path, show_all=args.all)
