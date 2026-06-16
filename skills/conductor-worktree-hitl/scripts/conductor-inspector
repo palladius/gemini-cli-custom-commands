@@ -188,6 +188,8 @@ def inspect_repository(repo_path, show_all=True):
 
 if __name__ == "__main__":
     import argparse
+    import sys
+    
     parser = argparse.ArgumentParser(description="Inspect a Conductor++ workspace's tracks and tasks.")
     parser.add_argument("repo_path", nargs="?", default=".", help="Path to the target git repository (default: .)")
     
@@ -195,6 +197,11 @@ if __name__ == "__main__":
     group.add_argument("--open", action="store_true", help="Display only open (non-completed) tracks")
     group.add_argument("--all", action="store_true", help="Display all tracks (including completed/resolved)")
     
+    # If no arguments provided, print help and exit
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(0)
+        
     args = parser.parse_args()
     
     if not os.path.exists(args.repo_path):
