@@ -68,4 +68,4 @@ If you require clarification on a design choice, UI asset, or logic condition:
     ```bash
     git notes add -m "Task completed: <summary>" <commit-hash>
     ```
-5.  Mark the task status as `completed` in `metadata.json`. The coordinator (Giovanni) will handle checking out the branch, validation, merging, and final pushing.
+5.  Mark the task status as `completed` in `metadata.json`. The coordinator (Agostina) will handle checking out the branch, validation, merging, and final pushing.
