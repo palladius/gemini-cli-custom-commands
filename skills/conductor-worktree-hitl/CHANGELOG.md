@@ -4,6 +4,10 @@ All notable changes to the `conductor-worktree-hitl` skill will be documented in
 
 ---
 
+## [0.3.36] - 2026-06-16
+### Changed
+- 📊 **Conductor Inspector**: Added the **GHI** (GitHub Issue) column to `--short` mode output to track issue numbers for each track.
+
 ## [0.3.35] - 2026-06-16
 ### Added
 - 📝 **Reference Questions**: Added reference JSON files (`question-awaiting.json` and `question-answered.json`) under `references/` directory to demonstrate metadata-based question states.
