@@ -1,0 +1,111 @@
+#!/usr/bin/env python3
+import os
+import sys
+import json
+import subprocess
+import argparse
+
+def run_command(cmd):
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        return result.stdout.strip()
+    except subprocess.CalledProcessError as e:
+        print(f"Error running command {' '.join(cmd)}: {e.stderr}", file=sys.stderr)
+        return None
+
+def fetch_issue_details(issue_number):
+    print(f"🔍 Fetching GitHub Issue #{issue_number}...")
+    cmd = ["gh", "issue", "view", str(issue_number), "--json", "title,url"]
+    output = run_command(cmd)
+    if not output:
+        return None
+    try:
+        return json.loads(output)
+    except json.JSONDecodeError:
+        return None
+
+def inject_ghi_to_track(conductor_dir, track_id, issue_number):
+    metadata_path = os.path.join(conductor_dir, "tracks", track_id, "metadata.json")
+    if not os.path.exists(metadata_path):
+        print(f"❌ Error: Track metadata not found at {metadata_path}", file=sys.stderr)
+        sys.exit(1)
+
+    issue_data = fetch_issue_details(issue_number)
+    if not issue_data:
+        print(f"❌ Error: Could not fetch details for Issue #{issue_number}", file=sys.stderr)
+        sys.exit(1)
+
+    try:
+        with open(metadata_path, "r") as f:
+            meta = json.load(f)
+
+        # Initialize tasks list if not exists
+        if "tasks" not in meta:
+            meta["tasks"] = []
+
+        # Check if already injected
+        task_id = f"ghi_{issue_number}"
+        for t in meta["tasks"]:
+            if t.get("task_id") == task_id:
+                print(f"⚠️ Warning: Issue #{issue_number} is already injected as task '{task_id}'.")
+                return
+
+        # Append new task
+        new_task = {
+            "task_id": task_id,
+            "description": issue_data["title"],
+            "status": "pending",
+            "github_issue_url": issue_data["url"]
+        }
+        meta["tasks"].append(new_task)
+        meta["updated_at"] = subprocess.run(["date", "-u", "+%Y-%m-%dT%H:%M:%SZ"], capture_output=True, text=True).stdout.strip()
+
+        with open(metadata_path, "w") as f:
+            json.dump(meta, f, indent=2)
+
+        print(f"✅ Successfully injected Issue #{issue_number} into track '{track_id}' as task '{task_id}'!")
+    except Exception as e:
+        print(f"❌ Error updating metadata.json: {e}", file=sys.stderr)
+        sys.exit(1)
+
+def find_conductor_dir():
+    curr = os.getcwd()
+    while True:
+        candidate = os.path.join(curr, "conductor")
+        if os.path.isdir(candidate):
+            return candidate
+        parent = os.path.dirname(curr)
+        if parent == curr:
+            break
+        curr = parent
+    return os.path.join(os.getcwd(), "conductor")
+
+def main():
+    parser = argparse.ArgumentParser(description="Inject a GitHub Issue as a task inside a Conductor++ track.")
+    parser.add_argument("--issue", type=int, required=True, help="GitHub Issue number to inject")
+    parser.add_argument("--track", type=str, help="Target Conductor track ID (e.g. better_wiki_edit_ui_20260604)")
+    args = parser.parse_args()
+
+    conductor_dir = find_conductor_dir()
+    
+    # Resolve track_id if not specified
+    track_id = args.track
+    if not track_id:
+        tracks_dir = os.path.join(conductor_dir, "tracks")
+        if not os.path.isdir(tracks_dir):
+            print("❌ Error: No tracks directory found at conductor/tracks/", file=sys.stderr)
+            sys.exit(1)
+        tracks = [t for t in os.listdir(tracks_dir) if os.path.isdir(os.path.join(tracks_dir, t))]
+        if not tracks:
+            print("❌ Error: No registered tracks found.", file=sys.stderr)
+            sys.exit(1)
+        
+        # Sort by most recently modified metadata.json
+        tracks.sort(key=lambda t: os.path.getmtime(os.path.join(tracks_dir, t, "metadata.json")), reverse=True)
+        track_id = tracks[0]
+        print(f"ℹ️ Target track not specified. Defaulting to most recently active: '{track_id}'")
+
+    inject_ghi_to_track(conductor_dir, track_id, args.issue)
+
+if __name__ == "__main__":
+    main()
