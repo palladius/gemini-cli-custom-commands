@@ -1,0 +1,173 @@
+#!/usr/bin/env python3
+import os
+import sys
+import json
+import re
+
+# Terminal Colors
+BOLD = "\033[1m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+RED = "\033[31m"
+CYAN = "\033[36m"
+RESET = "\033[0m"
+
+def print_bold(text, color=""):
+    print(f"{BOLD}{color}{text}{RESET}")
+
+def parse_plan_tasks(plan_path):
+    """Parses plan.md to count total, completed, in-progress, and pending tasks."""
+    if not os.path.exists(plan_path):
+        return None
+    
+    total = 0
+    completed = 0
+    in_progress = 0
+    pending = 0
+    
+    # Matches list checkboxes: - [ ] Task, - [x] Task, - [~] Task
+    checkbox_pattern = re.compile(r"^\s*-\s+\[([ x~])\]")
+    
+    try:
+        with open(plan_path, "r", encoding="utf-8") as f:
+            for line in f:
+                match = checkbox_pattern.match(line)
+                if match:
+                    total += 1
+                    status_char = match.group(1)
+                    if status_char == "x":
+                        completed += 1
+                    elif status_char == "~":
+                        in_progress += 1
+                    else:
+                        pending += 1
+    except Exception:
+        return None
+        
+    return {
+        "total": total,
+        "completed": completed,
+        "in_progress": in_progress,
+        "pending": pending
+    }
+
+def inspect_repository(repo_path):
+    repo_path = os.path.abspath(repo_path)
+    conductor_dir = os.path.join(repo_path, "conductor")
+    
+    print_bold(f"\n🔍 Inspecting Conductor Workspace: {repo_path}", CYAN)
+    
+    if not os.path.isdir(conductor_dir):
+        print(f"{RED}Error: 'conductor/' directory not found in {repo_path}.{RESET}")
+        print("Please ensure Conductor is initialized in this repository.")
+        sys.exit(1)
+        
+    # Read Product Metadata
+    product_path = os.path.join(conductor_dir, "product.md")
+    if os.path.exists(product_path):
+        try:
+            with open(product_path, "r") as f:
+                content = f.read().strip()
+                title_line = [line for line in content.split("\n") if line.startswith("# ")][:1]
+                title = title_line[0].replace("# ", "") if title_line else "Unknown Product"
+                print_bold(f"📦 Product: {title}", BOLD)
+        except Exception:
+            pass
+
+    # Scan Tracks
+    tracks_dir = os.path.join(conductor_dir, "tracks")
+    if not os.path.isdir(tracks_dir):
+        print(f"{YELLOW}No tracks directory found at 'conductor/tracks/'.{RESET}")
+        return
+
+    tracks = os.listdir(tracks_dir)
+    # Filter only directories
+    track_dirs = [t for t in tracks if os.path.isdir(os.path.join(tracks_dir, t))]
+    
+    if not track_dirs:
+        print("No feature/bugfix tracks registered.")
+        return
+        
+    print_bold(f"\n🛣️  Tracks Registry ({len(track_dirs)} registered tracks):", BOLD)
+    print("=" * 60)
+    
+    for track_id in sorted(track_dirs):
+        track_path = os.path.join(tracks_dir, track_id)
+        metadata_path = os.path.join(track_path, "metadata.json")
+        plan_path = os.path.join(track_path, "plan.md")
+        
+        status = "unknown"
+        description = "No description"
+        active_questions = []
+        worktree_branch = None
+        worktree_dir = None
+        github_issue_num = None
+        
+        # Parse metadata
+        if os.path.exists(metadata_path):
+            try:
+                with open(metadata_path, "r") as f:
+                    meta = json.load(f)
+                    status = meta.get("status", "unknown").upper()
+                    description = meta.get("description", description)
+                    active_questions = meta.get("active_questions", [])
+                    
+                    worktree = meta.get("worktree", {})
+                    worktree_branch = worktree.get("branch")
+                    worktree_dir = worktree.get("directory")
+                    
+                    gh_issue = meta.get("github_issue", {})
+                    github_issue_num = gh_issue.get("number")
+            except Exception as e:
+                status = f"METADATA_ERROR ({str(e)})"
+                
+        # Parse plan
+        plan_stats = parse_plan_tasks(plan_path)
+        
+        # Format Status with color
+        status_color = RESET
+        if status in ("COMPLETED", "RESOLVED", "CLOSED"):
+            status_color = GREEN
+        elif status in ("IN_PROGRESS", "ACTIVE"):
+            status_color = YELLOW
+        elif status == "PENDING":
+            status_color = CYAN
+            
+        print(f"🔸 Track: {BOLD}{track_id}{RESET}")
+        print(f"   Status: {BOLD}{status_color}{status}{RESET}")
+        print(f"   Details: {description}")
+        
+        if github_issue_num:
+            print(f"   GitHub Issue: #{github_issue_num}")
+            
+        if worktree_branch:
+            print(f"   Git Worktree: {worktree_branch} (dir: {worktree_dir})")
+            
+        if plan_stats:
+            pct = 0
+            if plan_stats["total"] > 0:
+                pct = int((plan_stats["completed"] / plan_stats["total"]) * 100)
+            print(f"   Progress: {BOLD}{pct}%{RESET} ({plan_stats['completed']}/{plan_stats['total']} tasks completed, {plan_stats['in_progress']} active)")
+            
+        # Display questions / blockers
+        if active_questions:
+            print_bold(f"   ⚠️ Active Human Questions ({len(active_questions)}):", YELLOW)
+            for q in active_questions:
+                q_status = q.get("status", "awaiting_human").upper()
+                q_color = YELLOW if q_status == "AWAITING_HUMAN" else GREEN
+                print(f"     - [{q_color}{q_status}{RESET}] {q.get('question')}")
+                if q.get("answer"):
+                    print(f"       ↳ {GREEN}Answer: {q['answer']}{RESET}")
+                    
+        print("-" * 60)
+
+if __name__ == "__main__":
+    target_repo = "."
+    if len(sys.argv) > 1:
+        target_repo = sys.argv[1]
+        
+    if not os.path.exists(target_repo):
+        print(f"{RED}Error: Path {target_repo} does not exist.{RESET}")
+        sys.exit(1)
+        
+    inspect_repository(target_repo)
