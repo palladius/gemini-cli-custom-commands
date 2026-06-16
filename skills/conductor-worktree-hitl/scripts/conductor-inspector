@@ -217,7 +217,7 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             bar = make_progress_bar(pct)
             status_padded = f"{status:^11}"
             status_colored = f"[{status_color}{status_padded}{RESET}]"
-            ghi_str = f"#{github_issue_num}" if github_issue_num else "-"
+            ghi_str = f"#{github_issue_num}" if github_issue_num else ""
             print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {track_id}")
             continue
             
