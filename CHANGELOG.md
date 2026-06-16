@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.28] - 2026-06-16
+### Added
+- 🔀 **Worktree HITL Skill**: Added the new `conductor-worktree-hitl` skill supporting asynchronous multi-agent coordination inside Git Worktrees using GitHub Issues and Conductor++ metadata tracking.
+- 🤖 **Issue Polling Script**: Created [scripts/poll_ghi_questions.py](file:///Users/ricc/git/gemini-cli-custom-commands/skills/conductor-worktree-hitl/scripts/poll_ghi_questions.py) to aggregate and update active questions.
+
 ## [0.3.27] - 2026-06-08
 ### Added
 - 🥑 **Friction Log Skill**: Added the `outputGdocUrl` field to the [references/friction_log.yaml](file:///usr/local/google/home/ricc/git/gemini-cli-custom-commands/skills/devrel-frictionlog-codelab/references/friction_log.yaml) template.

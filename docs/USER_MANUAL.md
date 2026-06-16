@@ -59,6 +59,7 @@ This document provides a list of all the custom commands available in this exten
 This extension also provides **Agent Skills**, which are specialized capabilities that Gemini can use autonomously.
 
 *   **`cloud-build-investigation`**: 🏗️ Expert-level SRE skill for Google Cloud Build (GCB) and Cloud Run investigations. Correlates git commits with build failures and analyzes logs.
+*   **`conductor-worktree-hitl`**: 🔀 Manage asynchronous task implementation in Git Worktrees using Conductor++ and GitHub Issues for low-friction HITL choice prompting and screenshot verification.
 *   **`devrel-frictionlog-codelab`**: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Reproduces steps and logs friction points.
 *   **`genmedia-setup`**: 🎨 **[MIGRATED]** Setup and use GenMedia (MCP) tools and related Gemini skills (Veo, Imagen, Chirp, Lyria).
 *   **`musicgen-lyria3`**: 🎵 Generates 30-second clips or 2-minute songs using Lyria 3. Supports custom prompts and lyrics.
