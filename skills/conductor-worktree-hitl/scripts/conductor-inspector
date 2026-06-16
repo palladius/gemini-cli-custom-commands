@@ -151,8 +151,8 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         return
         
     if short_mode:
-        print_bold(f"{'STATUS':<11} | {'PROGRESS':^10} | {'RATIO':^5} | {'GHI':^5} | {'AGENT':^10} | {'CHANGED':^11} | {'TRACK ID':<50} | {'🌳':^3}", BOLD)
-        print("=" * 126)
+        print_bold(f"{'STATUS':<11} | {'PROGRESS':^10} | {'RATIO':^5} | {'GHI':^5} | {'AGENT':^11} | {'CHANGED':^11} | {'TRACK ID':<50} | {'🌳':^3}", BOLD)
+        print("=" * 127)
     else:
         print_bold(f"\n🛣️  Tracks Registry ({'all' if show_all else 'open'} tracks):", BOLD)
         print("=" * 60)
@@ -438,9 +438,11 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             status_colored = f"{status_color}{status_padded}{RESET}"
             ghi_str = f"#{github_issue_num}" if github_issue_num else ""
             agent_str = track.get("agent") or ""
+            if len(agent_str) > 11:
+                agent_str = agent_str[:11]
             display_time_str = track.get("display_time") or "-"
             tree_str = "🌳" if track.get("has_worktree") else ""
-            print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {agent_str:^10} | {display_time_str:^11} | {track_id:<50} | {tree_str:^3}")
+            print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {agent_str:^11} | {display_time_str:^11} | {track_id:<50} | {tree_str:^3}")
             continue
             
         wt_suffix = " [🌳]" if track.get("has_worktree") else ""
@@ -498,11 +500,11 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         empty_bar = " " * 10
         total_ratio = f"{ratio_summary:>5}"
         empty_ghi = " " * 5
-        empty_agent = " " * 10
+        empty_agent = " " * 11
         empty_changed = " " * 11
         tracks_summary = f"{completed_tracks} completed, {open_tracks} open ({len(track_details)} total)"
         tree_summary = f"{worktree_count} 🌳"
-        print("=" * 126)
+        print("=" * 127)
         print(f"{total_label} | {empty_bar} | {total_ratio} | {empty_ghi} | {empty_agent} | {empty_changed} | {tracks_summary:<50} | {tree_summary:^3}")
     else:
         print("=" * 60)

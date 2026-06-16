@@ -22,6 +22,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 📊 **Conductor Inspector — Total Summary Line**: Added a final summary row to `conductor-inspector` output showing aggregate track counts and overall task completion ratio (e.g., `8/20 tasks done`).
 - 📝 **Explicit Agent Field Required**: Updated `SKILL.md` to mandate that subagents set `"agent": "<AgentName>"` explicitly at the root of `metadata.json` to prevent incorrect inference from generic worktree directory paths.
 - 🤖 Maintenance run by `gc-skillume-bot-v0_2`.
+- 🧹 Routine checks and minor updates.
+### Changed
+- 📊 **Agent Column Width & Truncation**: Increased the `AGENT` column width by 1 (to 11 characters) in the short-mode table. Implemented automatic truncation of agent names longer than 11 characters to fit perfectly.
 
 ## [0.3.43] - 2026-06-16
 ### Added
