@@ -71,3 +71,25 @@ If you require clarification on a design choice, UI asset, or logic condition:
     git notes add -m "Task completed: <summary>" <commit-hash>
     ```
 5.  Mark the task status as `completed` in `metadata.json`. The coordinator (Agostina) will handle checking out the branch, validation, merging, and final pushing.
+
+---
+
+## 🚀 Proposed GHI: condutree v2.0 Roadmap & Streamlining
+
+**Title**: `feat(condutree): automate workspace symlinking and streamline worktree status helper (v2.0)`
+
+### Context & Gaps in v1.0
+Currently, `condutree v1.0` (this skill) relies on manual or ad-hoc shell scripts for workspace setup (symlinking the `conductor` directory, adding local git excludes) and doesn't cleanly handle `.env` configurations. Furthermore, checking the unified status of all parallel worktrees requires parsing multiple raw git commands and JSON files, creating cognitive load for human operators.
+
+### Proposed Solution
+For `condutree v2.0`, we plan to streamline these tasks by packaging the setup/status checks into a single, cohesive workflow:
+1.  **Automated Shared Config Symlinking**: Automatically symlink `.env` files alongside the central `conductor/` folder to ensure subagents inherit environment secrets without manual copies.
+2.  **Worktree Git Status Helper**: Implement a pure Python script under `conductor/bin/git_status_patched.py` that walks active `.worktrees/`, parses each track's `metadata.json` (extracting active questions, blocked states, and current tasks), runs `git status --porcelain` in each tree, and prints a clean, aggregated color-coded summary.
+3.  **`justfile` Integration**: Package this invocation as `conductor/bin/git-status-patched.sh` and expose it via a standard `just git-status-condutree` target in the project's root `justfile`.
+
+### Implementation Checklist
+- [ ] Implement automated `.env` symlinking during isolated worktree setup.
+- [ ] Create `conductor/bin/git_status_patched.py` walk and parse script.
+- [ ] Expose `just git-status-condutree` target in root `justfile` wrapping `conductor/bin/git-status-patched.sh`.
+- [ ] Document the updated v2.0 automation flow in the user manual.
+
