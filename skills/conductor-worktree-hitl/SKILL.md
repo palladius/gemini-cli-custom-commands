@@ -1,7 +1,8 @@
 ---
 name: conductor-worktree-hitl
 description: "Manage asynchronous task implementation in Git Worktrees using Conductor++ and GitHub Issues for low-friction HITL choice prompting and screenshot verification."
-version: 0.0.10
+meta:
+  version: 0.0.11
 ---
 
 # Conductor++ Asynchronous Git Worktree & GHI HITL Skill
@@ -27,6 +28,8 @@ Before performing any task modifications, create an isolated Git Worktree:
     ```bash
     echo "conductor" >> $(git rev-parse --git-dir)/info/exclude
     ```
+6.  If conflicts arise, find a way to solve these conflicts deterministically. Eg, say different agents work on different worktrees and need to spin up a web server on port 8080, use this DEFAULT OVER CONFIGURATION instead: use port 42000 + GitHub Issue.
+7. Copy the scripts in scripts/ to GIT_REPO/conductor/bin/ so they can be called from there. At startup run a diff to make sure you use the latest version. 
 
 ### 2. Conductor Quality Gates & Plan Roast
 1.  Verify the track's `metadata.json` configuration. Populate the `"worktree"`, `"github_issue"`, and `"agent"` blocks. You MUST explicitly set `"agent": "<AgentName>"` at the root level of `metadata.json` so that the conductor inspector knows exactly which agent is assigned to the track, avoiding incorrect inference from reused or generic worktree directory paths.

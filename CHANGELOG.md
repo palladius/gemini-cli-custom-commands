@@ -6,8 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [0.3.44] - 2026-06-17
+### Added
+- 🌳 **Condutree v2.0 Roadmap**: Appended a structured GHI feature proposal to `conductor-worktree-hitl/SKILL.md` outlining the next major version of the worktree orchestration skill. Proposed features include automated `.env` symlinking alongside the shared `conductor/` folder, a new `conductor/bin/git_status_patched.py` status aggregator script (walks all `.worktrees/`, parses `metadata.json`, runs `git status --porcelain`), and a `just git-status-condutree` target in the root `justfile`.
+### Changed
+- 📊 **Conductor Inspector — Total Summary Line**: Added a final summary row to `conductor-inspector` output showing aggregate track counts and overall task completion ratio (e.g., `8/20 tasks done`).
+- 📝 **Explicit Agent Field Required**: Updated `SKILL.md` to mandate that subagents set `"agent": "<AgentName>"` explicitly at the root of `metadata.json` to prevent incorrect inference from generic worktree directory paths.
 - 🤖 Maintenance run by `gc-skillume-bot-v0_2`.
-- 🧹 Routine checks and minor updates.
 
 ## [0.3.43] - 2026-06-16
 ### Added
@@ -168,7 +172,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🐛 [musicgen-lyria3] Fixed silent failure bug: scripts now exit with 1 if destination directory is missing or on any generation error.
 - 🤖 Maintenance run by `gc-skillume-bot-v0_2`.
 
-## [0.3.10] - 2026-05-05
+## [0.3.9b] - 2026-05-05
+### Changed
 - 📝 Anonymize project ID in genmedia-setup sample settings. -- made with gc-skillume-bot-v0_2
 
 ## [0.3.9] - 2026-05-03
@@ -177,6 +182,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🤖 Signed: gc-skillume-bot-v0_2.
 
 ## [0.3.8] - 2026-04-29
+### Changed
+- 🧹 Internal cleanup and dependency checks (no user-facing changes).
 
 ## [0.3.7] - 2026-04-22
 ### Added
