@@ -6,3 +6,4 @@ docs/articles/
 #.gemini/settings.json
 #.gemini/commands
 *.skill
+__pycache__/
