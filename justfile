@@ -32,3 +32,5 @@ gemini:
     gemini -e '' --allowed-mcp-server-names '' -y
     # -p 'Code some functionality making sure that CHANGELOG.md and README.md are updated accordingly. Run tests and make sure all is well.'
 
+lint:
+  skill-lint
