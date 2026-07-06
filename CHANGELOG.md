@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.45] - 2026-07-03
+### Added
+- 🔌 **Antigravity & Claude Code Support**: Adapted README.md and added `plugin.json` manifests for Antigravity, Claude Code, and Codex.
+
 ## [0.3.44] - 2026-06-17
 ### Added
 - 🌳 **Condutree v2.0 Roadmap**: Appended a structured GHI feature proposal to `conductor-worktree-hitl/SKILL.md` outlining the next major version of the worktree orchestration skill. Proposed features include automated `.env` symlinking alongside the shared `conductor/` folder, a new `conductor/bin/git_status_patched.py` status aggregator script (walks all `.worktrees/`, parses `metadata.json`, runs `git status --porcelain`), and a `just git-status-condutree` target in the root `justfile`.

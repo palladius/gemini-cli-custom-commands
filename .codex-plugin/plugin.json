@@ -1,0 +1,6 @@
+{
+  "name": "palladius-common-commands",
+  "version": "0.3.44",
+  "description": "Riccardo's public Antigravity custom commands, GCP/SRE tools, and agent skills.",
+  "skills": "./skills/"
+}

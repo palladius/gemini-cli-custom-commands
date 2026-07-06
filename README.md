@@ -1,33 +1,44 @@
-# Palladius Gemini CLI custom commands (or 🔄)
+# Riccardo's Custom Antigravity & Gemini CLI Commands 🔄 (🔌)
 
 Self: https://github.com/palladius/gemini-cli-custom-commands
 
-This is a collection of all "Carlessian" commands, packaged into one place.
+This is a collection of all "Carlessian" custom commands and agent skills, packaged into one place.
 
-**TL;DR** `$ gemini extensions install https://github.com/palladius/gemini-cli-custom-commands`
-
- ![Version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/palladius/gemini-cli-custom-commands/main/gemini-extension.json&query=$.version&label=version&color=red&labelColor=blue) [![License](https://img.shields.io/badge/License-Apache%202.0-green?labelColor=yellow)](LICENSE)
+![Version](https://img.shields.io/badge/dynamic/json?url=https://raw.githubusercontent.com/palladius/gemini-cli-custom-commands/main/gemini-extension.json&query=$.version&label=version&color=red&labelColor=blue) [![License](https://img.shields.io/badge/License-Apache%202.0-green?labelColor=yellow)](LICENSE)
 - 📖 [User Manual](docs/USER_MANUAL.md)
 - 📝 [Changelog](CHANGELOG.md)
 - 💡 Inspired by [google-gemini/gemini-cli-security](https://github.com/google-gemini/gemini-cli-security) extension.
-- 🚀 Referenced in the Official [Gemini CLI Extensions](https://geminicli.com/extensions/browse/) site (wOOt!)
+- 🚀 Referenced in the Official [Gemini CLI Extensions](https://geminicli.com/extensions/browse/) site.
 
-## INSTALL
+## Plugin & Extension Compatibility
 
-**Note** *(requires Gemini CLI v`0.4.0` or newer)*:
+This repository functions as a native plugin/extension across multiple agent ecosystems:
 
-```bash
-# 🔍 Check version >= 0.4.0
-gemini -v
-# 💛 Install
-gemini extensions install https://github.com/palladius/gemini-cli-custom-commands
-# 🔄 Update
-gemini extensions update palladius-common-commands
-gemini extensions update --all
-# 🤢 Uninstall
-gemini extensions uninstall palladius-common-commands
-```
+### 1. Antigravity UI & `agy` CLI
+*   **Workspace-Level**: Clone or symlink this directory into `.agents/plugins/palladius-common-commands/` at the root of your workspace.
+*   **Global-Level**: Clone or symlink this directory into `~/.gemini/config/plugins/palladius-common-commands/`.
+*   **Verification**: Check active plugins and skills inside the CLI/UI using:
+    ```bash
+    agc plugins
+    agc skills
+    ```
 
+### 2. Claude Code
+*   **Workspace-Level**: Place or symlink this repository folder inside `.claude/plugins/palladius-common-commands/` at the root of your workspace.
+*   **Global-Level**: Run Claude Code with the plugin directory flag pointing to this repo:
+    ```bash
+    claude --plugin-dir /path/to/gemini-cli-custom-commands
+    ```
+*   Claude Code will automatically recognize `.claude-plugin/plugin.json` and load the skills under the `/palladius-common-commands:` namespace.
+
+### 3. OpenAI Codex
+*   This extension is fully Codex-compatible (uses the `.codex-plugin/plugin.json` manifest).
+
+### 4. Legacy: Gemini CLI
+*   Installable via the classic extension system (requires Gemini CLI v`0.4.0` or newer):
+    ```bash
+    gemini extensions install https://github.com/palladius/gemini-cli-custom-commands
+    ```
 
 ## Available Commands
 
@@ -48,7 +59,7 @@ Here's the full list of commands available in this extension. For more details, 
 
 ## 🧠 Agent Skills
 
-Starting with version `0.0.22`, we are introducing **[Agent Skills](https://geminicli.com/docs/cli/skills/)**! 🚀 These allow Gemini to act more autonomously and precisely.
+These allow agents to act more autonomously and precisely within the Antigravity ecosystem:
 
 *   **`cloud-build-investigation`**: 🏗️ Expert-level SRE skill for Google Cloud Build and Cloud Run investigations.
 *   **`conductor-worktree-hitl`**: 🔀 Manage asynchronous task implementation in Git Worktrees using Conductor++ and GitHub Issues.
@@ -57,33 +68,6 @@ Starting with version `0.0.22`, we are introducing **[Agent Skills](https://gemi
 *   **`musicgen-lyria3`**: 🎵 Generate 30-second music clips or 2-3 minute full songs with the Lyria 3 model.
 *   **`pcc-check-for-updates`**: 🔄 Our flagship skill! A robust **Ruby**-based version checker.
 
-## Wow Factor
-
-Here are a few examples of how you can use these commands in practice:
-
-*   **Find all the TODOs in your code:**
-    ```bash
-    gemini -p "/common:find_todos"
-    ```
-*   **Check for updates to this extension:**
-    Ask Gemini: "Is my palladius-common-commands extension up to date?"
-*   **Commit and push your changes with a helpful message:**
-    ```bash
-    gemini -p "/git:commit_push"
-    ```
-*   **Plan a new feature:**
-    ```bash
-    gemini -p "/plan:do add a search bar to the website"
-    ```
-
-**WARNING**: This project is intended for demonstration purposes only. It is not intended for use in a production environment.
-
-
 ## Thanks
 
-
-
-
-
 * Arthur Yau for contributing the code/PDA framework.
-
