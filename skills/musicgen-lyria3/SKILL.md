@@ -2,7 +2,7 @@
 name: musicgen-lyria3
 description: Generate 30-second music clips (default) or 2-3 minute full songs with the Lyria 3 model from Google GenAI. Supports creating music with lyrics, vocals, and specific genres from text prompts. Now includes metadata/lyrics saving and custom output filenames.
 metadata:
-  version: 0.0.9
+  version: 0.0.10
 compatibility: Gemini CLI
 ---
 
@@ -18,6 +18,7 @@ The skill utilizes bundled Python scripts:
 
 - `scripts/musicgen-lyria3-30sec.py` (Default): Interacts with the `lyria-3-clip-preview` model for 30-second clips.
 - `scripts/musicgen-lyria3-2min.py`: Interacts with the `lyria-3-pro-preview` model for full-length 2-3 minute songs.
+- `scripts/musicgen-lyria3-list.py`: Queries available music/audio models via the GenAI SDK.
 
 ### Workflow
 
@@ -31,6 +32,9 @@ The skill utilizes bundled Python scripts:
 ### Example Usage
 
 ```bash
+# List available music/audio models
+uv run scripts/musicgen-lyria3-list.py
+
 # Basic 30-sec generation (Default)
 uv run scripts/musicgen-lyria3-30sec.py --prompt "A high-energy synth-pop song with female vocals"
 
@@ -52,4 +56,4 @@ To achieve the best results with Lyria 3, be as descriptive as possible:
 
 ## Resources
 
-- `scripts/musicgen-lyria3-30sec.py` & `scripts/musicgen-lyria3-2min.py`: The Python scripts that perform the generation using `google-genai`.
+- `scripts/musicgen-lyria3-30sec.py`, `scripts/musicgen-lyria3-2min.py`, & `scripts/musicgen-lyria3-list.py`: The Python scripts that perform the generation and discovery using `google-genai`.
