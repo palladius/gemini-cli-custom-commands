@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.46] - 2026-07-07
+### Added
+- ✨ **Lyria3 Model Discovery**: New `musicgen-lyria3-list.py` script to query available music/audio models via GenAI SDK. Bumped skill to v0.0.10.
+### Fixed
+- 📝 **Portable Skill Paths**: Replaced hardcoded `~/git/...` path in `conductor-worktree-hitl/SKILL.md` step 7 with relative `./scripts/*`, following the Anthropic skills standard for portability.
+
 ## [0.3.45] - 2026-07-03
 ### Added
 - 🔌 **Antigravity & Claude Code Support**: Adapted README.md and added `plugin.json` manifests for Antigravity, Claude Code, and Codex.
