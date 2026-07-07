@@ -1,0 +1,11 @@
+# -----------------------------------------------------------------------------
+# COPY-PASTE ME: Copy the target below into your project's root justfile.
+# -----------------------------------------------------------------------------
+
+# List all available targets
+default:
+    just -l
+
+# Aggregated status check of active condutree worktrees
+git-status-condutree:
+    @if [ -f conductor/bin/git-status-patched.sh ]; then ./conductor/bin/git-status-patched.sh; else echo "Error: conductor/bin/git-status-patched.sh not found."; exit 1; fi

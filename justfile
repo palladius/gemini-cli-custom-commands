@@ -34,3 +34,14 @@ gemini:
 
 lint:
   skill-lint
+
+# [TASK] Aggregated status check of all active condutree worktrees (v2.0)
+git-status-condutree:
+    @if [ -f conductor/bin/git-status-patched.sh ]; then \
+        ./conductor/bin/git-status-patched.sh; \
+    elif [ -f skills/conductor-worktree-hitl/scripts/git-status-patched.sh ]; then \
+        ./skills/conductor-worktree-hitl/scripts/git-status-patched.sh; \
+    else \
+        echo "Error: git-status-patched.sh not found. Make sure conductor-worktree-hitl is installed."; \
+        exit 1; \
+    fi

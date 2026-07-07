@@ -2,7 +2,7 @@
 name: conductor-worktree-hitl
 description: "Manage asynchronous task implementation in Git Worktrees using Conductor++ and GitHub Issues for low-friction HITL choice prompting and screenshot verification."
 meta:
-  version: 0.0.11
+  version: 2.0.0
 ---
 
 # Conductor++ Asynchronous Git Worktree & GHI HITL Skill
@@ -19,14 +19,16 @@ Before performing any task modifications, create an isolated Git Worktree:
     git worktree add .worktrees/issue-<number>-<role> -b feature/issue-<number>
     ```
 3.  Navigate your context into the worktree directory. All subsequent tool runs (editing, compiling, testing) must happen within this worktree.
-4.  **Symlink the Conductor Folder**: Inside the worktree directory, create a symbolic link pointing back to the main repository's `conductor/` directory:
+4.  **Symlink the Conductor Folder & Shared Secrets**: Inside the worktree directory, create symbolic links pointing back to the main repository's `conductor/` directory and `.env` file (if present) to ensure shared configuration/secrets sync:
     ```bash
     ln -s ../../conductor conductor
+    if [ -f ../../.env ]; then ln -s ../../.env .env; fi
     ```
-    This ensures a single point of sync/truth for all Conductor++ metadata and states, preventing branch conflicts on project tracking files.
-5.  **Configure Git Hygiene**: To prevent the subagent from accidentally tracking or staging the `conductor` symlink or track metadata changes to its feature branch, add it to the worktree's local exclude file:
+    This ensures a single point of sync/truth for all Conductor++ metadata and environment configurations.
+5.  **Configure Git Hygiene**: To prevent the subagent from accidentally tracking or staging the `conductor` symlink, track metadata, or `.env` files to its feature branch, add them to the worktree's local exclude file:
     ```bash
     echo "conductor" >> $(git rev-parse --git-dir)/info/exclude
+    echo ".env" >> $(git rev-parse --git-dir)/info/exclude
     ```
 6.  If conflicts arise, find a way to solve these conflicts deterministically. Eg, say different agents work on different worktrees and need to spin up a web server on port 8080, use this DEFAULT OVER CONFIGURATION instead: use port 42000 + GitHub Issue.
 7. Copy the scripts in scripts/ to GIT_REPO/conductor/bin/ so they can be called from there. At startup run a diff to make sure you use the latest version. 
@@ -77,6 +79,123 @@ If you require clarification on a design choice, UI asset, or logic condition:
 
 ---
 
+## 📊 Conductor Track JSON (metadata.json) Evolution
+
+Every Conductor track maintains its state in a specific metadata file at a standard path:
+*   **Sample Path**: `conductor/tracks/telegram_incident_creation/metadata.json`
+
+The file structure evolves dynamically as the track is assigned to agents, linked to GitHub Issues (GHI), and processes human feedback:
+
+### 1. Initial State (Unassigned)
+When a track is first created, it starts with only basic details *(see reference file [references/track-initial.json](./references/track-initial.json))*:
+```json
+{
+  "track_id": "telegram_incident_creation",
+  "status": "NEW",
+  "description": "Implement incident creation in telegram",
+  "tasks": []
+}
+```
+
+### 2. Assignment State (Agent & Worktree Setup)
+When a subagent checks out the track, it updates `metadata.json` to assign itself (`"agent"`) and document its isolated worktree branch and path *(see reference file [references/track-assigned.json](./references/track-assigned.json))*:
+```json
+{
+  "track_id": "telegram_incident_creation",
+  "status": "ACTIVE",
+  "description": "Implement incident creation in telegram",
+  "agent": "Mario",
+  "worktree": {
+    "branch": "feature/issue-123",
+    "directory": ".worktrees/issue-123-mario"
+  },
+  "tasks": []
+}
+```
+
+### 3. Linked to GitHub Issue (GHI Integration)
+When associated with a GitHub Issue (GHI), a `"github_issue"` block is populated containing the issue number:
+```json
+{
+  "track_id": "telegram_incident_creation",
+  "status": "ACTIVE",
+  "description": "Implement incident creation in telegram",
+  "agent": "Mario",
+  "worktree": {
+    "branch": "feature/issue-123",
+    "directory": ".worktrees/issue-123-mario"
+  },
+  "github_issue": {
+    "number": 123
+  },
+  "tasks": []
+}
+```
+
+### 4. Awaiting Human Input (HITL Active)
+When the subagent posts a question to the GHI, it appends the question to `"active_questions"` with `"status": "awaiting_human"`:
+```json
+{
+  "track_id": "telegram_incident_creation",
+  "status": "ACTIVE",
+  "description": "Implement incident creation in telegram",
+  "agent": "Mario",
+  "worktree": {
+    "branch": "feature/issue-123",
+    "directory": ".worktrees/issue-123-mario"
+  },
+  "github_issue": {
+    "number": 123
+  },
+  "active_questions": [
+    {
+      "agent": "Mario",
+      "question": "Should we default to HTML formatting or MarkdownV2 for Telegram message payloads?",
+      "status": "awaiting_human",
+      "created_at": "2026-06-16T11:00:00Z"
+    }
+  ],
+  "tasks": []
+}
+```
+
+### 5. Answered State (HITL Complete)
+Once the polling script parses the answer from the GHI comments, it updates the question block to `"status": "answered"`, adds the `"answer"`, and attaches the `"vehicle"` delivery details:
+```json
+{
+  "track_id": "telegram_incident_creation",
+  "status": "ACTIVE",
+  "description": "Implement incident creation in telegram",
+  "agent": "Mario",
+  "worktree": {
+    "branch": "feature/issue-123",
+    "directory": ".worktrees/issue-123-mario"
+  },
+  "github_issue": {
+    "number": 123
+  },
+  "active_questions": [
+    {
+      "agent": "Mario",
+      "question": "Should we default to HTML formatting or MarkdownV2 for Telegram message payloads?",
+      "status": "answered",
+      "answer": "HTML is preferred for simplicity and better parsing consistency in our Telegram library.",
+      "vehicle": {
+        "type": "telegram",
+        "medium": "audio_message",
+        "delivered_by": "human",
+        "original_transcript": "Hey Mario, let's go with HTML formatting, it is much easier to maintain."
+      },
+      "created_at": "2026-06-16T11:00:00Z"
+    }
+  ],
+  "tasks": [],
+  "updated_at": "2026-06-16T11:05:00Z"
+}
+```
+
+---
+
 ## 🚀 Proposed GHI: condutree v2.0 Roadmap & Streamlining
 
 **Title**: `feat(condutree): automate workspace symlinking and streamline worktree status helper (v2.0)`
@@ -91,8 +210,8 @@ For `condutree v2.0`, we plan to streamline these tasks by packaging the setup/s
 3.  **`justfile` Integration**: Package this invocation as `conductor/bin/git-status-patched.sh` and expose it via a standard `just git-status-condutree` target in the project's root `justfile`.
 
 ### Implementation Checklist
-- [ ] Implement automated `.env` symlinking during isolated worktree setup.
-- [ ] Create `conductor/bin/git_status_patched.py` walk and parse script.
-- [ ] Expose `just git-status-condutree` target in root `justfile` wrapping `conductor/bin/git-status-patched.sh`.
-- [ ] Document the updated v2.0 automation flow in the user manual.
+- [x] Implement automated `.env` symlinking during isolated worktree setup.
+- [x] Create `conductor/bin/git_status_patched.py` walk and parse script.
+- [x] Expose `just git-status-condutree` target in root `justfile` wrapping `conductor/bin/git-status-patched.sh`.
+- [x] Document the updated v2.0 automation flow in the user manual.
 

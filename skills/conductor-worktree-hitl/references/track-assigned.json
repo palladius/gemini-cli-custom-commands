@@ -1,0 +1,14 @@
+{
+  "track_id": "telegram_incident_creation",
+  "status": "ACTIVE",
+  "description": "Implement incident creation in telegram",
+  "agent": "Mario",
+  "worktree": {
+    "branch": "feature/issue-123",
+    "directory": ".worktrees/issue-123-mario"
+  },
+  "github_issue": {
+    "number": 123
+  },
+  "tasks": []
+}
