@@ -6,6 +6,14 @@
 default:
     just -l
 
-# Aggregated status check of active condutree worktrees
+# Conductor status (open tracks only)
+conductor-status:
+    python3 conductor/bin/conductor-inspector . --open --short
+
+# Conductor status (all tracks including completed)
+conductor-status-all:
+    python3 conductor/bin/conductor-inspector . --all --short
+
+# Aggregated git status check of active condutree worktrees
 git-status-condutree:
     @if [ -f conductor/bin/git-status-patched.sh ]; then ./conductor/bin/git-status-patched.sh; else echo "Error: conductor/bin/git-status-patched.sh not found."; exit 1; fi

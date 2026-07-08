@@ -6,6 +6,14 @@ This changelog is contextually bound to the Condutree skill itself. Version numb
 
 ---
 
+## [2.1.0] - 2026-07-08
+### Added
+- 📊 **Reference Justfile Recipes**: Added `conductor-status` (`--open --short`) and `conductor-status-all` (`--all --short`) recipes to `references/justfile` so new projects get them out of the box.
+### Changed
+- 📝 **Comment Fix**: Clarified `git-status-condutree` comment from "Aggregated status check" to "Aggregated git status check" to distinguish from `conductor-status`.
+
+---
+
 ## [2.0.1] - 2026-07-07
 ### Changed
 - 🧹 **Manual Cleanup**: Removed the obsolete `Proposed GHI: condutree v2.0 Roadmap & Streamlining` section from the end of `SKILL.md`.
