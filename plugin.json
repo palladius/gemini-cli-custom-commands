@@ -1,3 +1,5 @@
 {
-  "name": "palladius-common-commands"
+  "name": "palladius-common-commands",
+  "version": "0.3.46",
+  "description": "Riccardo's Gemini CLI extension, packaged with GCP and SRE Custom Commands and skills."
 }
