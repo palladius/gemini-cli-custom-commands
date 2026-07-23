@@ -1,6 +1,6 @@
-~/git/gemini-cli-custom-commands/skills/conductor-worktree-hitl/scripts/conductor-inspector /Users/ricc/git/adk-sre-benjamin --all --short
+$SKILL_DIR/scripts/conductor-inspector /path/to/your/project --all --short
 
-🔍 Inspecting Conductor Workspace: /Users/ricc/git/adk-sre-benjamin
+🔍 Inspecting Conductor Workspace: /path/to/your/project
 📦 Product: Initial Concept
 STATUS      |  PROGRESS  | RATIO |  GHI  |    AGENT    | CHANGED     | TRACK ID                                           |  🌳 
 ===============================================================================================================================

@@ -17,7 +17,7 @@ This changelog is contextually bound to the Condutree skill itself. Version numb
 ## [2.0.1] - 2026-07-07
 ### Changed
 - 🧹 **Manual Cleanup**: Removed the obsolete `Proposed GHI: condutree v2.0 Roadmap & Streamlining` section from the end of `SKILL.md`.
-- 📝 **Documentation Addition**: Created a comprehensive [USER_MANUAL.md](file:///usr/local/google/home/ricc/git/skillume/gemini-cli-custom-commands/skills/conductor-worktree-hitl/docs/USER_MANUAL.md) detailing setup, execution flow, scripts, and state JSON structures.
+- 📝 **Documentation Addition**: Created a comprehensive [USER_MANUAL.md](docs/USER_MANUAL.md) detailing setup, execution flow, scripts, and state JSON structures.
 
 ---
 
