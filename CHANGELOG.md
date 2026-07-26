@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.49] - 2026-07-26
+### Added & Changed
+- 🛡️ **Conductor HITL Worktree v2.1.1**: Added **The Real-Code Mandate** (strictly banning doc-only or metadata-only feature PRs / "Jerry-work") and **Mandatory Test Expansion** (requiring automated unit test additions/expansions for all feature tracks) to `conductor-worktree-hitl` skill. 🪵🇮🇹✨
+
 ## [0.3.48] - 2026-07-23
 ### Fixed
 - 📝 **Portable Skill Paths**: Replaced hardcoded personal paths in `conductor-worktree-hitl` references with `$SKILL_DIR` and relative paths -- by gc-skillume-bot-v0_2

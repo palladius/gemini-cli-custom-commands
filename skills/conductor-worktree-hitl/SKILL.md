@@ -2,7 +2,7 @@
 name: conductor-worktree-hitl
 description: "Manage asynchronous task implementation in Git Worktrees using Conductor++ and GitHub Issues for low-friction HITL choice prompting and screenshot verification."
 meta:
-  version: 2.1.0
+  version: 2.1.1
 ---
 
 # Conductor++ Asynchronous Git Worktree & GHI HITL Skill
@@ -75,14 +75,16 @@ If you require clarification on a design choice, UI asset, or logic condition:
 5.  **Enter Polling Sleep**: Periodically read `metadata.json` (every 15 seconds). Once the local polling script updates the question status to `"answered"`, extract the `"answer"` value, clear the question from the local queue, and resume.
 
 ### 4. Verification & Local Commit (No Remote Pushing)
-1.  Implement the feature to pass all tests.
-2.  Run the linting suite and verify test coverage meets style requirements (>80%).
-3.  **Commit Locally (Do NOT Push)**: Stage and commit all code changes locally to your feature branch. Under no circumstances should you run `git push`.
-4.  Attach a detailed summary using Git Notes:
+1.  **The Real-Code Mandate (No Doc-Only PRs)**: When implementing a feature or bugfix track, you MUST produce tangible, meaningful changes to the actual executable codebase (e.g., application scripts, Python algorithms, React UI code). Under no circumstances should a feature track finish with only markdown docs or Conductor metadata changes—no "Jerry-work" allowed!
+2.  **Mandatory Test Expansion**: Every feature or bugfix track MUST introduce new automated unit tests or expand existing test suites (e.g., `tests/test_*.py`) proving that the new code is fully functional and regression-proof.
+3.  Implement the feature and verify all unit tests pass cleanly.
+4.  Run the linting suite and verify test coverage meets style requirements (>80%).
+5.  **Commit Locally (Do NOT Push)**: Stage and commit all code changes locally to your feature branch. Under no circumstances should you run `git push`.
+6.  Attach a detailed summary using Git Notes:
     ```bash
     git notes add -m "Task completed: <summary>" <commit-hash>
     ```
-5.  Mark the task status as `completed` in `metadata.json`. The coordinator (Agostina) will handle checking out the branch, validation, merging, and final pushing.
+7.  Mark the task status as `completed` in `metadata.json`. The coordinator (Agostina) will handle checking out the branch, validation, merging, and final pushing.
 
 ---
 
