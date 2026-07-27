@@ -6,6 +6,15 @@ This changelog is contextually bound to the Condutree skill itself. Version numb
 
 ---
 
+## [2.2.0] - 2026-07-27
+### Fixed
+- 🔧 **Conductor v1/v2 Metadata Compatibility**: Fixed `conductor-inspector` crashing with `METADATA_ERROR ('str' object has no attribute 'get')` and `METADATA_ERROR ('NoneType' object has no attribute 'get')` on Conductor v2 tracks. The `worktree` field is now handled as `dict` (with `path` or `directory` key), `str` (bare path), `None`, or `{}`. The `github_issue` field is now handled as `dict` (with `number`), `str` (URL — issue number extracted via regex), `int`, or `null`. Fix applied in 3 locations: main metadata parsing, worktree detection, and agent extraction.
+- 🐍 **Python DeprecationWarning**: Replaced deprecated `datetime.utcfromtimestamp()` with timezone-aware `datetime.fromtimestamp(..., tz=UTC)`.
+### Added
+- 📌 **Version Display**: Added `VERSION` constant (`2.2.0`) printed in the header line (e.g. `(conductor-inspector v2.2.0)`) so stale copies across repos are immediately identifiable.
+
+---
+
 ## [2.1.0] - 2026-07-08
 ### Added
 - 📊 **Reference Justfile Recipes**: Added `conductor-status` (`--open --short`) and `conductor-status-all` (`--all --short`) recipes to `references/justfile` so new projects get them out of the box.

@@ -46,7 +46,10 @@ YELLOW = "\033[33m"
 RED = "\033[31m"
 CYAN = "\033[36m"
 PINK = "\033[35m"
+DIM = "\033[2m"
 RESET = "\033[0m"
+
+VERSION = "2.2.0"
 
 def print_bold(text, color=""):
     print(f"{BOLD}{color}{text}{RESET}")
@@ -118,7 +121,7 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         except Exception:
             pass
             
-    print_bold(f"\n🔍 Inspecting Conductor Workspace: {repo_path}", CYAN)
+    print_bold(f"\n🔍 Inspecting Conductor Workspace: {repo_path} {DIM}(conductor-inspector v{VERSION}){RESET}", CYAN)
     
     if not os.path.isdir(conductor_dir):
         print(f"{RED}Error: 'conductor/' directory not found in {repo_path}.{RESET}")
@@ -180,12 +183,27 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
                     description = meta.get("description", description)
                     active_questions = meta.get("active_questions", [])
                     
-                    worktree = meta.get("worktree", {})
-                    worktree_branch = worktree.get("branch")
-                    worktree_dir = worktree.get("directory")
+                    # v1/v2 compat: worktree can be dict, string path, None, or empty dict
+                    worktree_raw = meta.get("worktree")
+                    if isinstance(worktree_raw, dict):
+                        worktree_branch = worktree_raw.get("branch")
+                        worktree_dir = worktree_raw.get("directory") or worktree_raw.get("path")
+                    elif isinstance(worktree_raw, str):
+                        worktree_dir = worktree_raw
+                        worktree_branch = None
+                    # else: None or unexpected type — leave defaults
                     
-                    gh_issue = meta.get("github_issue", {})
-                    github_issue_num = gh_issue.get("number")
+                    # v1/v2 compat: github_issue can be dict, string URL, None, or int
+                    gh_issue_raw = meta.get("github_issue")
+                    if isinstance(gh_issue_raw, dict):
+                        github_issue_num = gh_issue_raw.get("number")
+                    elif isinstance(gh_issue_raw, str):
+                        # Extract issue number from URL like "https://github.com/.../issues/5"
+                        url_match = re.search(r'/issues/(\d+)', gh_issue_raw)
+                        github_issue_num = int(url_match.group(1)) if url_match else gh_issue_raw
+                    elif isinstance(gh_issue_raw, int):
+                        github_issue_num = gh_issue_raw
+                    # else: None — leave default
             except Exception as e:
                 status = f"METADATA_ERROR ({str(e)})"
                 
@@ -232,7 +250,7 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         if not lc_time and os.path.exists(metadata_path):
             try:
                 mtime = os.path.getmtime(metadata_path)
-                lc_time = datetime.utcfromtimestamp(mtime)
+                lc_time = datetime.fromtimestamp(mtime, tz=__import__('datetime').timezone.utc)
             except Exception:
                 pass
                 
@@ -296,7 +314,12 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             try:
                 with open(metadata_path, "r") as f:
                     meta = json.load(f)
-                    w_path = meta.get("worktree", {}).get("path")
+                    worktree_raw = meta.get("worktree")
+                    w_path = None
+                    if isinstance(worktree_raw, dict):
+                        w_path = worktree_raw.get("path") or worktree_raw.get("directory")
+                    elif isinstance(worktree_raw, str):
+                        w_path = worktree_raw
                     if w_path:
                         full_wt_path = os.path.join(repo_path, w_path) if not os.path.isabs(w_path) else w_path
                         if os.path.isdir(full_wt_path):
@@ -372,7 +395,12 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             try:
                 with open(metadata_path, "r") as f:
                     meta = json.load(f)
-                    w_path = meta.get("worktree", {}).get("path") or meta.get("worktree", {}).get("directory")
+                    worktree_raw = meta.get("worktree")
+                    w_path = None
+                    if isinstance(worktree_raw, dict):
+                        w_path = worktree_raw.get("path") or worktree_raw.get("directory")
+                    elif isinstance(worktree_raw, str):
+                        w_path = worktree_raw
                     if w_path:
                         basename = os.path.basename(w_path)
                         match = re.match(r"^issue-(.+)-([^-]+)$", basename)
