@@ -20,9 +20,9 @@
 
 | Step # | Codelab Step Title | Vote (`🟢`/`🟡`/`🔴`) | Duration | Empirical Verification & Notes |
 | :---: | :--- | :---: | :---: | :--- |
-| **01** | **Overview & Prerequisites** | ⏳ | `0m` | [Original](codelab/original/01.md) \| [Log](FRICTION_LOG/01.md) |
-| **02** | **Environment / Project Setup** | ⏳ | `0m` | [Original](codelab/original/02.md) \| [Log](FRICTION_LOG/02.md) |
-| **03** | **Infrastructure Deployment** | ⏳ | `0m` | [Original](codelab/original/03.md) \| [Log](FRICTION_LOG/03.md) |
-| **04** | **Core Codelab Scenario / Verification** | ⏳ | `0m` | [Original](codelab/original/04.md) \| [Log](FRICTION_LOG/04.md) |
-| **05** | **Teardown & Cleanup (`terraform destroy`)** | ⏳ | `0m` | [Original](codelab/original/05.md) \| [Log](FRICTION_LOG/05.md) |
+| **01** | **Step 1 (e.g. Setup / Auth)** | ⏳ | `0m` | [Original](codelab/original/01.md) \| [Log](FRICTION_LOG/01.md) |
+| **02** | **Step 2 (e.g. Environment Deploy)** | ⏳ | `0m` | [Original](codelab/original/02.md) \| [Log](FRICTION_LOG/02.md) |
+| **03** | **Step 3** | ⏳ | `0m` | [Original](codelab/original/03.md) \| [Log](FRICTION_LOG/03.md) |
+| **04** | **Step 4** | ⏳ | `0m` | [Original](codelab/original/04.md) \| [Log](FRICTION_LOG/04.md) |
+| **05** | **Step 5** | ⏳ | `0m` | [Original](codelab/original/05.md) \| [Log](FRICTION_LOG/05.md) |
 | **...** | *(AI Note: Add or remove rows `06..NN` to match the exact steps of this Codelab)* | ⏳ | `...` | `...` |

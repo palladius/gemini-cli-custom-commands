@@ -125,8 +125,11 @@ Must grade every single Codelab step (`🟢 GREEN`, `🟡 YELLOW`, `🔴 RED`) w
 
 | Step # | Codelab Step Title | Vote | Duration | Empirical Verification & Notes |
 | :---: | :--- | :---: | :---: | :--- |
-| **1** | **Prerequisites & Auth Setup** | 🟢 **GREEN** | `~2m` | Identity & billing verified |
-| **2** | **Environment / Cluster Provisioning** | 🟡 **YELLOW** | `~11m` | e.g. 1 retry needed due to API race condition |
-| **...** | **...** | 🔴 **RED** | `~5m` | e.g. `Permission denied` on script (`BUG-03`) |
+| **01** | **Step 1 (e.g. Setup / Auth)** | 🟢 **GREEN** | `~2m` | Identity & billing verified |
+| **02** | **Step 2 (e.g. Environment Deploy)** | 🟡 **YELLOW** | `~11m` | e.g. 1 retry needed due to API race condition |
+| **03** | **Step 3** | 🔴 **RED** | `~5m` | e.g. `Permission denied` on script (`BUG-03`) |
+| **04** | **Step 4** | 🟢 **GREEN** | `~4m` | Verification passed |
+| **05** | **Step 5** | 🟢 **GREEN** | `~5m` | Teardown completed |
+| **...** | **...** *(Expand/contract to match exact N steps)* | ... | `...` | `...` |
 
 6. **Always clean up expensive cloud resources (`terraform destroy`)** once the friction log and postmortem artifacts are captured, unless explicitly asked to leave them running.
