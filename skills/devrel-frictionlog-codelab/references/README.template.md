@@ -20,7 +20,9 @@
 
 | Step # | Codelab Step Title | Vote (`🟢`/`🟡`/`🔴`) | Duration | Empirical Verification & Notes |
 | :---: | :--- | :---: | :---: | :--- |
-| **1** | **Prerequisites & Auth Setup** | ⏳ | `0m` | Pending execution |
-| **2** | **Environment / Infrastructure Provisioning** | ⏳ | `0m` | Pending execution |
-| **3** | **Core Codelab Scenario Execution** | ⏳ | `0m` | Pending execution |
-| **4** | **Teardown (`terraform destroy`)** | ⏳ | `0m` | Always clean up cloud resources when done |
+| **01** | **Overview & Prerequisites** | ⏳ | `0m` | [Original](codelab/original/01.md) \| [Log](FRICTION_LOG/01.md) |
+| **02** | **Environment / Project Setup** | ⏳ | `0m` | [Original](codelab/original/02.md) \| [Log](FRICTION_LOG/02.md) |
+| **03** | **Infrastructure Deployment** | ⏳ | `0m` | [Original](codelab/original/03.md) \| [Log](FRICTION_LOG/03.md) |
+| **04** | **Core Codelab Scenario / Verification** | ⏳ | `0m` | [Original](codelab/original/04.md) \| [Log](FRICTION_LOG/04.md) |
+| **05** | **Teardown & Cleanup (`terraform destroy`)** | ⏳ | `0m` | [Original](codelab/original/05.md) \| [Log](FRICTION_LOG/05.md) |
+| **...** | *(AI Note: Add or remove rows `06..NN` to match the exact steps of this Codelab)* | ⏳ | `...` | `...` |
