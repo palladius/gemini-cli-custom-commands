@@ -1,9 +1,9 @@
 #!/bin/bash
 # setup_scaffold.sh
-# Usage: ./setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID] [CODELAB_VERSION] [OUTPUT_GDOC_URL]
+# Usage: ./setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL_OR_MD_PATH] [BUG_ID] [CODELAB_VERSION] [OUTPUT_GDOC_URL]
 
 if [ -z "$1" ]; then
-  echo "Usage: $0 <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL] [BUG_ID] [CODELAB_VERSION] [OUTPUT_GDOC_URL]"
+  echo "Usage: $0 <YYYYMMDD-frictionlog-CODELAB_TITLE> [CODELAB_URL_OR_MD_PATH] [BUG_ID] [CODELAB_VERSION] [OUTPUT_GDOC_URL]"
   exit 1
 fi
 
@@ -105,8 +105,15 @@ if [ ! -f "$BASE_DIR/README.md" ] && [ -f "$README_TEMPLATE" ]; then
       "$README_TEMPLATE" > "$BASE_DIR/README.md"
 fi
 
+# If CODELAB_URL (or local index.lab.md path) was provided, automatically extract steps
+# and dynamically replace the Step-by-Step Scorecard Table in README.md with the exact N steps!
+if [ -n "$CODELAB_URL" ] && [ -f "$SCRIPT_DIR/extract_codelab.py" ]; then
+  echo "🔍 Extracting codelab steps from $CODELAB_URL to populate dynamic N-step scorecard..."
+  python3 "$SCRIPT_DIR/extract_codelab.py" "$CODELAB_URL" "$BASE_DIR/codelab/original" || true
+fi
+
 cat <<EOF > "$BASE_DIR/.version"
-Created with skill devrel-frictionlog-codelab v0.2.0
+Created with skill devrel-frictionlog-codelab v0.2.1
 Find me in https://github.com/palladius/gemini-cli-custom-commands
 EOF
 

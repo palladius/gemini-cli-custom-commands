@@ -1,6 +1,6 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.2.0
+version: 0.2.1
 description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Use when a user provides a codelab URL and wants the agent to systematically reproduce the steps, log friction for each page, optionally create a GCP project, clone external repos to fix bugs, and produce a detailed report of the experience in a README.md and BUGS.md with Synoptic Executive Tables, Step-by-Step Scorecards, and Commit Hook progression.
 # version: in the bash script.
 ---
@@ -36,27 +36,33 @@ This skill automates the process of going through a Google Codelab, reproducing 
 
 When the user provides a Codelab URL, follow these exact steps. Ensure each step is fully completed before moving on to the next. Do not skip steps. This skill is designed to be resumable, so if the execution is interrupted, restart the skill and pick up where you left off.
 
-### Step 1: Preparation
+### Step 1: Preparation & Dynamic Scaffold
 
 1. Determine the base campaign directory (`b<BUG_ID>-<YYYYMMDD>-frictionlog-<CODELAB_SLUG>`) and iteration subdirectory (`<YYYYMMDD>-fl<NNN>`, e.g. `20260911-fl001`).
 2. Ensure the Buganizer campaign issue is tagged with hotlist `#8950858`.
-3. Run the included `scripts/setup_scaffold.sh` script to deterministically create the scaffolding:
+3. Run the included `scripts/setup_scaffold.sh` script passing the Codelab URL (or local `index.lab.md` path) as the second argument:
 
     ```bash
-    ./scripts/setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE>
+    ./scripts/setup_scaffold.sh <YYYYMMDD-frictionlog-CODELAB_TITLE> <CODELAB_URL_OR_MD_PATH> [BUG_ID]
     ```
 
-    This script automatically creates the `codelab/original/`, `codelab/proposed/`, `FRICTION_LOG/`, and `external-repos/` directories. It also initializes the `.env` / `.env.fl` file, the `BUGS.md` file, the `external-repos/.gitignore`, and writes a `.version` file for tracking the skill version and repository.
+    This script automatically creates the directory structure AND invokes `scripts/extract_codelab.py`, which extracts every step (`01.md` .. `NN.md`) and **dynamically populates the Step-by-Step Scorecard Table in `README.md` with the exact `N` steps, real step titles, and durations**!
 
-### Step 2: Download and Mirror Codelab Content
+### Step 2: Download and Mirror Codelab Content (Dynamic Scorecard Sync)
 
-1. Attempt to extract the codelab content using the included Python script:
+1. If `setup_scaffold.sh` was called without `<CODELAB_URL>`, run `extract_codelab.py` directly:
 
     ```bash
-    python3 scripts/extract_codelab.py <URL> <YYYYMMDD-frictionlog-CODELAB_TITLE>/codelab/original
+    python3 scripts/extract_codelab.py <URL_OR_MD_PATH> <YYYYMMDD-frictionlog-CODELAB_TITLE>/codelab/original
     ```
 
-2. *Fallback*: If the `extract_codelab.py` script fails or yields empty files (due to dynamic rendering), use your internal `web_fetch` tool or `curl` to read the Codelab pages and save the textual content into `01.md`, `02.md`, etc., within `codelab/original/`.
+2. *Fallback for JS-rendered Codelabs*: If `extract_codelab.py` yields empty files (due to dynamic JS rendering), use `web_fetch` or `curl` to save each step into `codelab/original/01.md`, `02.md`, ..., `NN.md` (with `# Step Title` on line 1), and then run:
+
+    ```bash
+    python3 scripts/extract_codelab.py --sync-readme <YYYYMMDD-frictionlog-CODELAB_TITLE>
+    ```
+
+    This scans `codelab/original/*.md` and **dynamically replaces the placeholder Pagella Semaforica in `README.md` with the exact `N` steps and titles**!
 3. Copy all the original markdown files into the `codelab/proposed/` directory. You will apply fixes and patches to the copies in this directory later.
 
 ### Step 3: GCP Project Setup

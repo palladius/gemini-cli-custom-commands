@@ -1,5 +1,9 @@
 # Changelog - devrel-frictionlog-codelab Skill
 
+## [0.2.1] - 2026-09-14
+
+- 🧠 **Dynamic N-Step Pagella Semaforica (`extract_codelab.py` + `setup_scaffold.sh`)**: Resolved static placeholder limitation! `extract_codelab.py` now parses HTML (`<google-codelab-step label="..." duration="...">`), local DevSite Markdown (`index.lab.md`), or `--sync-readme <base_dir>` (`codelab/original/*.md`) and **dynamically rewrites `README.md` with the exact `N` steps, real step titles, and estimated durations**.
+
 ## [0.2.0] - 2026-09-14
 
 - 🚫 **Commit Hook Progression Mandate**: Enforced strict rule never to run multiple Friction Logs on the same Git Commit SHA (`REPO_COMMIT_HOOK` with SHA + Timestamp).

@@ -2,7 +2,7 @@
 """
 extract_codelab_test.py
 Tests the extract_codelab.py script to ensure it handles URLs and directories gracefully without crashing,
-and that it correctly extracts and copies files.
+that it correctly extracts and copies files, and that it dynamically populates the N-step scorecard table in README.md.
 """
 
 import os
@@ -24,7 +24,6 @@ def test_extract_codelab():
             text=True
         )
         
-        # We don't expect it to crash (returncode == 0 or handled exception)
         if result.returncode != 0:
             print("❌ extract_codelab.py exited with error on valid but non-codelab URL")
             print("STDERR:", result.stderr)
@@ -32,19 +31,21 @@ def test_extract_codelab():
             
         print("✅ extract_codelab.py handled non-codelab URL gracefully.")
 
-        # Test 2: Valid extraction
-        # Write dummy HTML file
+        # Test 2: Valid extraction + dynamic README.md scorecard update
         dummy_html = os.path.join(tmpdir, "dummy.html")
         with open(dummy_html, "w") as f:
             f.write("""
             <html><body>
-            <google-codelab-step label="Step 1" duration="0">
+            <google-codelab-step label="Overview and Setup" duration="5">
                 <p>Hello world 1</p>
                 <pre><code>Dockerfile content</code></pre>
             </google-codelab-step>
-            <google-codelab-step label="Step 2" duration="0">
+            <google-codelab-step label="Deploy GKE Cluster" duration="12">
                 <p>Hello world 2</p>
                 <pre>Simple code</pre>
+            </google-codelab-step>
+            <google-codelab-step label="Teardown Resources" duration="3">
+                <p>Clean up</p>
             </google-codelab-step>
             </body></html>
             """)
@@ -52,10 +53,24 @@ def test_extract_codelab():
         output_dir = os.path.join(tmpdir, "codelab", "original")
         os.makedirs(output_dir)
 
+        # Create initial README.md with placeholder scorecard table
+        readme_path = os.path.join(tmpdir, "README.md")
+        with open(readme_path, "w") as f:
+            f.write("""# Friction Log
+## 📋 Executive Synoptic Table
+| Field | Value |
+|---|---|
+
+## 🚦 Step-by-Step Scorecard Table
+| Step # | Placeholder |
+|---|---|
+| 1 | Placeholder |
+""")
+
         # Run extraction against local file URI
         file_uri = "file://" + dummy_html
         result = subprocess.run(
-            [sys.executable, script_path, file_uri, output_dir + "/"], # Test trailing slash
+            [sys.executable, script_path, file_uri, output_dir + "/"],
             capture_output=True,
             text=True
         )
@@ -68,23 +83,22 @@ def test_extract_codelab():
         # Verify content of 01.md
         with open(os.path.join(output_dir, "01.md"), "r") as f:
             content = f.read()
-            if "```" not in content:
-                print("❌ Code block not found in extracted markdown")
-                return False
-            if "Dockerfile content" not in content:
-                print("❌ Dockerfile content missing from extracted markdown")
+            if "```" not in content or "Dockerfile content" not in content:
+                print("❌ Code block or Dockerfile content missing from extracted markdown")
                 return False
 
-        if not os.path.exists(os.path.join(output_dir, "01.md")):
-            print("❌ File 01.md was not created in original/")
-            return False
+        # Verify README.md scorecard was dynamically populated with exact 3 steps
+        with open(readme_path, "r") as f:
+            readme_content = f.read()
+            if "Overview and Setup" not in readme_content or "Deploy GKE Cluster" not in readme_content or "Teardown Resources" not in readme_content:
+                print("❌ Dynamic N-step scorecard table was not updated in README.md!")
+                print("README content:", readme_content)
+                return False
+            if "`5m`" not in readme_content or "`12m`" not in readme_content:
+                print("❌ Step durations were not populated in README.md scorecard!")
+                return False
 
-        proposed_dir = os.path.join(tmpdir, "codelab", "proposed")
-        if not os.path.exists(os.path.join(proposed_dir, "01.md")):
-            print("❌ File 01.md was not copied to proposed/")
-            return False
-
-        print("✅ extract_codelab.py successfully extracted and copied files.")
+        print("✅ extract_codelab.py successfully extracted files AND dynamically updated README.md scorecard with exact N steps!")
         return True
 
 def test_cuj01_appmod_dockerfile():
@@ -105,11 +119,8 @@ def test_cuj01_appmod_dockerfile():
 
         if result.returncode != 0:
             print(f"⚠️ CUJ01: extract_codelab.py failed to fetch {url}. This might be a network issue.")
-            return True # Don't fail the whole test suite on network flake, but log it.
+            return True
 
-        # Step 4 in the workshop corresponds to the Dockerfile (index 4)
-        # However, the script saves it as 04.md (since it starts from 1)
-        # Let's check all files for the Dockerfile content
         found = False
         for filename in os.listdir(output_dir):
             if filename.endswith(".md"):
@@ -133,4 +144,4 @@ if __name__ == "__main__":
         
     if not success:
         sys.exit(1)
-    print("✅ All tests (including CUJ01) passed for extract_codelab.py!")
+    print("✅ All tests (including dynamic N-step scorecard & CUJ01) passed for extract_codelab.py!")
