@@ -93,8 +93,20 @@ spec:
 EOF
 fi
 
+# Populate README.md from template if not already existing
+README_TEMPLATE="$SCRIPT_DIR/../references/README.template.md"
+if [ ! -f "$BASE_DIR/README.md" ] && [ -f "$README_TEMPLATE" ]; then
+  sed -e "s|{{NAME}}|$BASE_DIR_NAME|g" \
+      -e "s|{{CODELAB_URL}}|$CODELAB_URL|g" \
+      -e "s|{{BUG_ID}}|$BUG_ID|g" \
+      -e "s|{{PROJECT_ID}}|$PROJECT_ID|g" \
+      -e "s|{{IDENTITY}}|$IDENTITY|g" \
+      -e "s|{{STARTED_AT}}|$STARTED_AT|g" \
+      "$README_TEMPLATE" > "$BASE_DIR/README.md"
+fi
+
 cat <<EOF > "$BASE_DIR/.version"
-Created with skill devrel-frictionlog-codelab v0.0.3
+Created with skill devrel-frictionlog-codelab v0.2.0
 Find me in https://github.com/palladius/gemini-cli-custom-commands
 EOF
 
