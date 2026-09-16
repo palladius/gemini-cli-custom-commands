@@ -12,14 +12,15 @@ import argparse
 from google import genai
 from google.genai import types
 
-__version__ = "0.0.8"
+__version__ = "0.0.9"
 
 '''
-Lyria 3 Music Generation Script
--------------------------------
-This script generates 2-minute full-length songs using Google's Lyria 3 model.
+Lyria 3.5 Music Generation Script
+---------------------------------
+This script generates full-length songs using Google's Lyria 3.5 model.
 
 Changelog:
+- 0.0.9: Updated default model to lyria-3.5 (with --model flag support and fallback).
 - 0.0.8: Fixed silent failure bug: script now exits with 1 if destination directory is missing or on any generation error.
 - 0.0.7: Improved API key handling by checking GOOGLE_GENAI_API_KEY and GEMINI_API_KEY environment variables.
 - 0.0.6: Added safety filter handling with descriptive errors for LLM prompt redesign.
@@ -32,7 +33,7 @@ Changelog:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate 2-minute full-length Lyria 3 songs using Google GenAI.",
+        description="Generate full-length Lyria 3.5 songs using Google GenAI.",
         epilog="Example usage: ./musicgen-lyria3-2min.py --prompt \"A fast-paced EDM track with heavy bass\""
     )
     parser.add_argument(
@@ -40,6 +41,12 @@ def main():
         type=str, 
         default=None, 
         help="The text prompt describing the music you want the AI to generate."
+    )
+    parser.add_argument(
+        "-m", "--model",
+        type=str,
+        default="lyria-3.5",
+        help="The Lyria model to use (defaults to lyria-3.5)."
     )
     parser.add_argument(
         "-o", "--output-file", 
@@ -75,10 +82,10 @@ def main():
     api_key = os.environ.get('GOOGLE_GENAI_API_KEY') or os.environ.get('GEMINI_API_KEY')
     client = genai.Client(api_key=api_key)
 
-    print(f"🎸 Generating music for prompt: \033[36m'{args.prompt}'\033[0m...")
+    print(f"🎸 Generating music with model '{args.model}' for prompt: \033[36m'{args.prompt}'\033[0m...")
     try:
         response = client.models.generate_content(
-            model="lyria-3-pro-preview",
+            model=args.model,
             contents=args.prompt,
             config=types.GenerateContentConfig(
                 response_modalities=["AUDIO", "TEXT"],

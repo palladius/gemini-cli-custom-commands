@@ -1,59 +1,41 @@
 ---
 name: musicgen-lyria3
-description: Generate 30-second music clips (default) or 2-3 minute full songs with the Lyria 3 model from Google GenAI. Supports creating music with lyrics, vocals, and specific genres from text prompts. Now includes metadata/lyrics saving and custom output filenames.
+description: Generate 30-second music clips (default) or 2-3 minute full songs with the Lyria 3.5 model family from Google GenAI. Supports creating music with lyrics, vocals, and specific genres from text prompts. Automatically saves matching lyrics (.txt) in the same directory.
 metadata:
-  version: 0.0.10
+  version: 0.0.13
 compatibility: Gemini CLI
 ---
 
-# Musicgen Lyria3
+# Musicgen Lyria 3.5
 
 ## Overview
 
-This skill enables the generation of high-quality 30-second music previews (default) or full-length 2-3 minute songs using Google's Lyria 3 model via the GenAI SDK. It can produce music in various genres, including tracks with vocals and specific lyrics provided in the text prompt.
+Generate 30-second clips or full-length songs with Google's Lyria 3.5 family via the Gemini Interactions API (44.1 kHz stereo audio, structural coherence, vocals, and lyrics).
 
-## Core Capability
+## Models & Scripts
 
-The skill utilizes bundled Python scripts:
+| Model | Model ID | Best for | Duration | Bundled Script |
+| :--- | :--- | :--- | :--- | :--- |
+| **Lyria 3 Clip** | `lyria-3-clip-preview` | Short clips, loops, previews | ⏱️ 30s | `scripts/musicgen-lyria3-30sec.py` (Default) |
+| **Lyria 3.5** | `lyria-3.5` | Full songs (verses, choruses, bridges) | 🎵 2–3 min | `scripts/musicgen-lyria3-2min.py` |
 
-- `scripts/musicgen-lyria3-30sec.py` (Default): Interacts with the `lyria-3-clip-preview` model for 30-second clips.
-- `scripts/musicgen-lyria3-2min.py`: Interacts with the `lyria-3-pro-preview` model for full-length 2-3 minute songs.
-- `scripts/musicgen-lyria3-list.py`: Queries available music/audio models via the GenAI SDK.
+- `scripts/musicgen-lyria3-list.py`: List available audio/music models.
 
-### Workflow
+## Storage Rules
 
-1. **Understand the Request**: Identify if the user wants music, a song, or an audio clip based on a description.
-2. **Formulate a Prompt**: Ensure the prompt includes genre, mood, instruments, and any specific lyrics or vocal styles requested.
-3. **Execute Generation**: Run the script using `uv run` or `python` (if dependencies are met).
-4. **Confirm Output**:
-    - The script saves the resulting audio as `clip.mp3` (default) or a custom filename.
-    - **New**: Lyrics and metadata are automatically saved to a matching `.txt` file (e.g., `clip.txt`).
+- Output audio is saved as `<output_path>.mp3`.
+- **MANDATORY**: Lyrics and metadata MUST ALWAYS be saved in the **exact same folder** as the audio file with the **exact same base name** (e.g., `assets/song_v2.mp3` ➔ `assets/song_v2.txt`).
 
-### Example Usage
+## Example Usage
 
 ```bash
-# List available music/audio models
-uv run scripts/musicgen-lyria3-list.py
+# 30-sec clip (Default)
+uv run scripts/musicgen-lyria3-30sec.py -o "assets/music/clip" -p "A synth-pop song: 'Electrified, living for the night.'"
 
-# Basic 30-sec generation (Default)
-uv run scripts/musicgen-lyria3-30sec.py --prompt "A high-energy synth-pop song with female vocals"
-
-# Custom output filename and specific lyrics (30-sec)
-uv run scripts/musicgen-lyria3-30sec.py -o "neon-lights" -p "A synth-pop song with these lyrics: 'Electrified, we're living for the night, under neon lights so bright.'"
-
-# Generate a full-length 2-3 minute song
-uv run scripts/musicgen-lyria3-2min.py --prompt "An epic cinematic orchestral piece about a journey home, building through sweeping strings."
+# Full song with Lyria 3.5
+uv run scripts/musicgen-lyria3-2min.py -o "assets/music/song" -p "An energetic pop-rock anthem: 'Full lyrics here...'"
 ```
 
-## Guidance for Prompts
+## Italian Phonetic Guidelines
 
-To achieve the best results with Lyria 3, be as descriptive as possible:
-
-- **Style & Genre**: "90s grunge", "lo-fi hip hop", "cinematic orchestral".
-- **Tempo & Mood**: "120 BPM energetic", "slow and atmospheric".
-- **Instruments**: "synthesizers", "distorted guitar", "pounding drums".
-- **Vocals & Lyrics**: Explicitly state if vocals are needed and provide the lyrics in quotes.
-
-## Resources
-
-- `scripts/musicgen-lyria3-30sec.py`, `scripts/musicgen-lyria3-2min.py`, & `scripts/musicgen-lyria3-list.py`: The Python scripts that perform the generation and discovery using `google-genai`.
+AI singing models mispronounce unaccented Italian words. Always use explicit accents or spacing inline: `Nicòla` (not `Nicola`), `Mòdena`, `Dàvide`, `Cacio Cavallo` (spaced), `mattacchióne`, `energìa` (not `energià`), `tecnologìa`, `fantasìa`.
