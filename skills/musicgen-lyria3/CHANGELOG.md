@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0] - 2026-09-18
+- 🏷️✨ Auto-embed ID3v2.3 tags into generated MP3s:
+  - 📜 **Lyrics**: Stored in `USLT` frame and mirrored in `COMM` comment frame for 100% media player compatibility.
+  - 👤 **Artist Avatar**: Embedded the official **Drake Riccardo Clean NO** meme (`assets/drake_riccardo_artist_default.png`) as `APIC` Type 8 (Artist/performer).
+  - 🎵 **Metadata**: Title (auto-cleaned from filename), Artist (`Riccardo C feat. Google Lyria 3`), Album, Year (`2026`), and `TXXX:AI_TOOL`.
+  - 🎛️ **CLI Flags**: Added `--title`, `--artist`, `--album`, `--cover`, `--artist-image` to both `musicgen-lyria3-30sec.py` and `musicgen-lyria3-2min.py`.
+
 ## [0.0.9] - 2026-05-30
 - ✨ Added generated music and text files for Seby 6 anni. (-- made with Gemini CLI by gc-skillume-bot-v0_2)
 
