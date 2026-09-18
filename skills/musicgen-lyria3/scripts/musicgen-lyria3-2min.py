@@ -3,23 +3,28 @@
 # requires-python = ">=3.11"
 # dependencies = [
 #     "google-genai",
+#     "mutagen",
 # ]
 # ///
 
 import os
 import sys
 import argparse
+import datetime
 from google import genai
 from google.genai import types
+from mutagen.id3 import ID3, TIT2, TPE1, TALB, TDRC, TCON, USLT, COMM, APIC, TXXX, error
 
-__version__ = "0.0.9"
+__version__ = "0.1.0"
 
 '''
 Lyria 3.5 Music Generation Script
 ---------------------------------
-This script generates full-length songs using Google's Lyria 3.5 model.
+This script generates full-length songs using Google's Lyria 3.5 model,
+and automatically embeds rich ID3 tags (lyrics in USLT/COMM, Artist avatar meme, metadata).
 
 Changelog:
+- 0.1.0: Added automatic ID3v2.3 tagging: embedded lyrics (USLT + COMM), custom artist meme cover (APIC), album and AI metadata.
 - 0.0.9: Updated default model to lyria-3.5 (with --model flag support and fallback).
 - 0.0.8: Fixed silent failure bug: script now exits with 1 if destination directory is missing or on any generation error.
 - 0.0.7: Improved API key handling by checking GOOGLE_GENAI_API_KEY and GEMINI_API_KEY environment variables.
@@ -31,9 +36,94 @@ Changelog:
 - 0.0.1: Initial basic script with hardcoded prompt.
 '''
 
+DEFAULT_ARTIST_IMAGE = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+    "assets",
+    "drake_riccardo_artist_default.png"
+)
+
+def embed_metadata(
+    mp3_path: str,
+    lyrics_text: str,
+    title: str | None = None,
+    artist: str = "Riccardo C feat. Google Lyria 3",
+    album: str = "Lyria 3.5 Generated Albums",
+    genre: str = "AI Music",
+    cover_image: str | None = None,
+    artist_image: str | None = None,
+    model_name: str = "lyria-3.5"
+):
+    try:
+        try:
+            tags = ID3(mp3_path)
+        except error:
+            tags = ID3()
+
+        if not title:
+            base = os.path.splitext(os.path.basename(mp3_path))[0]
+            title = base.replace("_", " ").replace("-", " ").title()
+
+        tags.delall("TIT2")
+        tags.add(TIT2(encoding=3, text=title))
+
+        tags.delall("TPE1")
+        tags.add(TPE1(encoding=3, text=artist))
+
+        tags.delall("TALB")
+        tags.add(TALB(encoding=3, text=album))
+
+        year = str(datetime.datetime.now().year)
+        tags.delall("TDRC")
+        tags.add(TDRC(encoding=3, text=year))
+
+        tags.delall("TCON")
+        tags.add(TCON(encoding=3, text=genre))
+
+        if lyrics_text and lyrics_text.strip():
+            clean_lyrics = lyrics_text.strip()
+            tags.delall("USLT")
+            tags.add(USLT(encoding=3, lang="ita", desc="", text=clean_lyrics))
+
+            tags.delall("COMM")
+            comm_text = f"Generato con Google Lyria 3.5 ({model_name}). Artista: {artist}\n\nLYRICS / TESTO:\n{clean_lyrics}"
+            tags.add(COMM(encoding=3, lang="ita", desc="", text=comm_text))
+
+        tags.delall("TXXX:AI_TOOL")
+        tags.add(TXXX(encoding=3, desc="AI_TOOL", text=f"Google Lyria 3.5 ({model_name})"))
+        tags.delall("TXXX:CREATOR")
+        tags.add(TXXX(encoding=3, desc="CREATOR", text=artist))
+
+        # Cover image (Type 3: Front Cover)
+        if cover_image and os.path.exists(cover_image):
+            with open(cover_image, "rb") as f:
+                cdata = f.read()
+            mime = "image/png" if cover_image.lower().endswith(".png") else "image/jpeg"
+            non_3 = [frame for frame in tags.getall("APIC") if frame.type != 3]
+            tags.delall("APIC")
+            for a in non_3:
+                tags.add(a)
+            tags.add(APIC(encoding=3, mime=mime, type=3, desc="Cover Art", data=cdata))
+
+        # Artist picture (Type 8: Artist/performer)
+        art_img = artist_image if (artist_image and os.path.exists(artist_image)) else DEFAULT_ARTIST_IMAGE
+        if art_img and os.path.exists(art_img):
+            with open(art_img, "rb") as f:
+                adata = f.read()
+            mime = "image/png" if art_img.lower().endswith(".png") else "image/jpeg"
+            non_8 = [frame for frame in tags.getall("APIC") if frame.type != 8]
+            tags.delall("APIC")
+            for a in non_8:
+                tags.add(a)
+            tags.add(APIC(encoding=3, mime=mime, type=8, desc="Artist (Drake Riccardo Meme Clean)", data=adata))
+
+        tags.save(mp3_path, v2_version=3)
+        print(f"🏷️ ID3 metadata & lyrics embedded into: \033[32m{mp3_path}\033[0m")
+    except Exception as ex:
+        print(f"⚠️ Warning: Could not embed ID3 metadata: {ex}")
+
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate full-length Lyria 3.5 songs using Google GenAI.",
+        description="Generate full-length Lyria 3.5 songs using Google GenAI with automatic ID3 tagging and lyrics.",
         epilog="Example usage: ./musicgen-lyria3-2min.py --prompt \"A fast-paced EDM track with heavy bass\""
     )
     parser.add_argument(
@@ -55,6 +145,36 @@ def main():
         help="The filename to save the generated audio to. Defaults to clip.mp3."
     )
     parser.add_argument(
+        "--title",
+        type=str,
+        default=None,
+        help="Song title for ID3 tag (defaults to output filename without underscores)."
+    )
+    parser.add_argument(
+        "--artist",
+        type=str,
+        default="Riccardo C feat. Google Lyria 3",
+        help="Artist name for ID3 tag (defaults to 'Riccardo C feat. Google Lyria 3')."
+    )
+    parser.add_argument(
+        "--album",
+        type=str,
+        default="Lyria 3.5 Generated Albums",
+        help="Album name for ID3 tag."
+    )
+    parser.add_argument(
+        "--cover",
+        type=str,
+        default=None,
+        help="Path to cover art image (PNG/JPG) to embed as front cover."
+    )
+    parser.add_argument(
+        "--artist-image",
+        type=str,
+        default=None,
+        help="Path to custom artist image to embed (defaults to Drake Riccardo meme)."
+    )
+    parser.add_argument(
         "-v", "--version",
         action="version",
         version=f"%(prog)s {__version__}"
@@ -72,11 +192,9 @@ def main():
     if not output_filename.endswith(".mp3"):
         output_filename += ".mp3"
 
-    # Check if parent directory exists
-    parent_dir = os.path.dirname(output_filename)
-    if parent_dir and not os.path.exists(parent_dir):
-        print(f"❌ Error: Destination directory '{parent_dir}' does not exist.")
-        print("💡 HINT: Please create the directory before running this script.")
+    out_dir = os.path.dirname(output_filename)
+    if out_dir and not os.path.exists(out_dir):
+        print(f"❌ Error: Output directory does not exist: {out_dir}")
         sys.exit(1)
 
     api_key = os.environ.get('GOOGLE_GENAI_API_KEY') or os.environ.get('GEMINI_API_KEY')
@@ -92,7 +210,6 @@ def main():
             ),
         )
 
-        # Handle safety filters / blocked content
         if response.prompt_feedback and response.prompt_feedback.block_reason:
             print(f"❌ Error: The request was blocked by the safety filter. Reason: {response.prompt_feedback.block_reason}")
             print("💡 HINT for AI Agent: This prompt triggers a safety filter (likely due to names of people or protected terms).")
@@ -101,7 +218,6 @@ def main():
                 print(f"   Message: {response.prompt_feedback.block_reason_message}")
             sys.exit(1)
 
-        # Parse the response
         text_content = ""
         found_audio = False
         
@@ -128,10 +244,21 @@ def main():
             print("⚠️ No audio was generated in the response.")
             sys.exit(1)
 
+        # Embed ID3 tags and lyrics
+        embed_metadata(
+            mp3_path=output_filename,
+            lyrics_text=text_content,
+            title=args.title,
+            artist=args.artist,
+            album=args.album,
+            cover_image=args.cover,
+            artist_image=args.artist_image,
+            model_name=args.model
+        )
+
     except Exception as e:
         print(f"❌ Error generating music: {str(e)}")
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()
