@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.1] - 2026-09-19
+- 🎤⏱️ **Karaoke & Subtitle Timeline Alignment (.srt / .lrc)**:
+  - Documented automatic audio-lyrics alignment using Whisper ASR via `uv`.
+  - Added dedicated documentation in `references/karaoke_timeline_alignment.md` for generating `.srt` and `.lrc` timeline formats.
+
 ## [0.1.0] - 2026-09-18
 - 🏷️✨ Auto-embed ID3v2.3 tags into generated MP3s:
   - 📜 **Lyrics**: Stored in `USLT` frame and mirrored in `COMM` comment frame for 100% media player compatibility.

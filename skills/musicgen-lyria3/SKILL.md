@@ -51,3 +51,8 @@ uv run scripts/musicgen-lyria3-2min.py -o "assets/music/song" --cover "assets/im
 ## Italian Phonetic Guidelines
 
 AI singing models mispronounce unaccented Italian words. Always use explicit accents or spacing inline: `Nicòla` (not `Nicola`), `Mòdena`, `Dàvide`, `Cacio Cavallo` (spaced), `mattacchióne`, `energìa` (not `energià`), `tecnologìa`, `fantasìa`.
+
+## Karaoke & Subtitles (.srt / .lrc)
+
+If the user asks for synchronized lyrics, teleprompter slides, or subtitles (`.srt` / `.lrc`) for karaoke, use Whisper via `uv` to align the audio to lyrics. For the step-by-step procedure, read [references/karaoke_timeline_alignment.md](references/karaoke_timeline_alignment.md).
+
