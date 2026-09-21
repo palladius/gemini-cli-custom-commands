@@ -194,18 +194,28 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
                     # else: None or unexpected type — leave defaults
                     
                     # v1/v2 compat: github_issue can be dict, string URL, None, or int
-                    gh_issue_raw = meta.get("github_issue")
+                    gh_issue_raw = meta.get("github_issue") or meta.get("issue") or meta.get("issue_id")
                     if isinstance(gh_issue_raw, dict):
                         github_issue_num = gh_issue_raw.get("number")
                     elif isinstance(gh_issue_raw, str):
-                        # Extract issue number from URL like "https://github.com/.../issues/5"
+                        # Extract issue number from URL like "https://github.com/.../issues/5" or plain "28"
                         url_match = re.search(r'/issues/(\d+)', gh_issue_raw)
-                        github_issue_num = int(url_match.group(1)) if url_match else gh_issue_raw
+                        if url_match:
+                            github_issue_num = int(url_match.group(1))
+                        elif gh_issue_raw.strip().isdigit():
+                            github_issue_num = int(gh_issue_raw.strip())
+                        else:
+                            github_issue_num = gh_issue_raw
                     elif isinstance(gh_issue_raw, int):
                         github_issue_num = gh_issue_raw
                     # else: None — leave default
             except Exception as e:
                 status = f"METADATA_ERROR ({str(e)})"
+
+        if not github_issue_num:
+            m = re.search(r'issue_(\d+)', track_id)
+            if m:
+                github_issue_num = int(m.group(1))
                 
         # Parse plan: first try JSON tasks list (Conductor++), then fall back to plan.md
         plan_stats = None
@@ -250,7 +260,8 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
         if not lc_time and os.path.exists(metadata_path):
             try:
                 mtime = os.path.getmtime(metadata_path)
-                lc_time = datetime.fromtimestamp(mtime, tz=__import__('datetime').timezone.utc)
+                from datetime import timezone
+                lc_time = datetime.fromtimestamp(mtime, tz=timezone.utc).replace(tzinfo=None)
             except Exception:
                 pass
                 

@@ -56,3 +56,17 @@ AI singing models mispronounce unaccented Italian words. Always use explicit acc
 
 If the user asks for synchronized lyrics, teleprompter slides, or subtitles (`.srt` / `.lrc`) for karaoke, use Whisper via `uv` to align the audio to lyrics. For the step-by-step procedure, read [references/karaoke_timeline_alignment.md](references/karaoke_timeline_alignment.md).
 
+### Standalone Karaoke HTML Generation
+
+When generating a karaoke HTML page from the aligned timestamps:
+
+1. **Audio source**: Always use the **battezzata** (chosen-one) version of the mp3, NOT a random version. Check for symlinks named `chosen-one-long.mp3` / `chosen-one-short.mp3`.
+2. **Scrubbing progress bar**: The karaoke HTML MUST include a clickable progress bar at the bottom of the page for REW/FF (rewind/fast-forward). Users must be able to click anywhere on the bar to jump to that position in the song. Also support Arrow Left/Right keys for 5-second jumps.
+3. **Lyrics text**: Use the lyrics from the `.txt` sidecar file of the chosen mp3, NOT from Whisper transcription (which garbles sung Italian). Whisper is only for timestamp alignment.
+4. **No broken fallback sources**: Only include one `<source>` tag pointing to the verified mp3. Do NOT add fallback `<source>` tags pointing to symlinks that may break in different serving contexts.
+5. **No `crossorigin` attribute**: When serving from Python SimpleHTTPServer or similar local servers without CORS headers, do NOT add `crossorigin="anonymous"` to the `<audio>` tag.
+
+## Documentation & Sources
+
+- **Official Google AI Music Generation Docs**: [https://ai.google.dev/gemini-api/docs/music-generation](https://ai.google.dev/gemini-api/docs/music-generation)
+
