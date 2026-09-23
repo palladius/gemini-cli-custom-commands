@@ -68,6 +68,12 @@ This skill automates the process of going through a Google Codelab, reproducing 
 * Eliminate manual environment sourcing (`source .env`) by enforcing `set dotenv-load := true` in `justfile`.
 * If an environment variable is missing (e.g., `GOOGLE_CLOUD_ACCOUNT`), scripts must output clear, actionable, copy-paste terminal remedies rather than failing with cryptic errors.
 
+### 9. Tone Sobriety & Typography Restraint (No "Fake Wows" or AI Self-Talk)
+* **Never use hyperbole or market-speak:** Eliminate fake enthusiastic claims like *"The WOW moment!"*, *"Amazing capability!"*, or celebratory commentary directed at the LLM itself.
+* **Critique with empathy:** Before writing that something is a "wow moment", ask: *is this truly a wow moment for the human student, or is it an everyday occurrence / confusing technical step?*
+* **Keep the tone sober, technical, and measured.**
+* **Typography Rule:** Reserve **bold** strictly for technical entities (command flags, file paths, shell commands, environment variables, critical warning labels). Never bold emotive adjectives or artificial praise.
+
 ## Core Workflow
 
 When the user provides a Codelab URL, follow these exact steps. Ensure each step is fully completed before moving on to the next. Do not skip steps. This skill is designed to be resumable, so if the execution is interrupted, restart the skill and pick up where you left off.
