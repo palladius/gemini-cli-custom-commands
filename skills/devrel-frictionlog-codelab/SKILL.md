@@ -77,6 +77,23 @@ This skill automates the process of going through a Google Codelab, reproducing 
 * **Keep the tone sober, technical, and measured.**
 * **Typography Rule:** Reserve **bold** strictly for technical entities (command flags, file paths, shell commands, environment variables, critical warning labels). Never bold emotive adjectives or artificial praise.
 
+### 10. Strict TDD Mandate for Bug Fixes (Test-First Progression)
+* **Every bug fix MUST be preceded by a failing automated test.** Never write a fix directly in the codebase without first demonstrating the failure in the test suite.
+* **TDD Invariant:**
+  1. Write an automated unit, integration, or architecture test (`bin/rails test`, `bundle exec archspec`, or dedicated shell test) proving the defect.
+  2. Run the test suite and verify that the test **FAILS (RED)**.
+  3. Implement the minimal fix in application code or configuration.
+  4. Run the test suite and verify that the test **PASSES (GREEN)**.
+  5. Commit both test and fix together.
+* **Cumulative Test Robustness:** Every FL iteration MUST leave the repository with strictly more automated tests than before (`tests_count(FL_{N}) > tests_count(FL_{N-1})`). This guarantees that regressions are permanently locked out.
+
+### 11. Spec & Constitution Awareness + 160-Char Tweet Checkpoint
+* If the repository contains `docs/CONSTITUTION.md` or `docs/SPEC.md` (or `workshop/SKELETON.md`), the FL agent MUST verify step compliance against them.
+* At the conclusion of every Codelab page in `FRICTION_LOG/XX.md`, the agent MUST write a **160-character Tweet Checkpoint** answering:
+  `🐦 Constitution/Spec Tweet: [Yes/No + brief rationale <= 160 chars]`
+* Example:
+  `🐦 Tweet: ✅ Step 6 fully adheres to Constitution Art. 10 (compose.prod.yaml sidecars active) and Spec: web, worker, and proxy containers all running.`
+
 ## Core Workflow
 
 When the user provides a Codelab URL, follow these exact steps. Ensure each step is fully completed before moving on to the next. Do not skip steps. This skill is designed to be resumable, so if the execution is interrupted, restart the skill and pick up where you left off.
@@ -161,6 +178,10 @@ For each page `XX`:
     * Use 🟡 (Yellow) if the experience was suboptimal, required a workaround, or had minor friction.
     * Use 🟢 (Green) if the experience was smooth and worked out-of-the-box.
 5. At the end of the page, write a **Proof of Execution** block showing exact CLI output (`kubectl get pods`, `curl -I`, etc.).
+6. Write the **160-Char Tweet Checkpoint**:
+   ```markdown
+   > 🐦 **Constitution/Spec Tweet:** [Max 160 chars: did this step adhere to docs/CONSTITUTION.md / SPEC.md?]
+   ```
 
 ### Step 5: Final Output Synthesis & Mandatory Synoptic Tables
 
