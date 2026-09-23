@@ -32,14 +32,17 @@ This skill automates the process of going through a Google Codelab, reproducing 
 * Assign a **different dedicated GCP Project** (e.g. from the 90-day pool `011F17-0F9CE4-E03264`) to each iteration (`FL001`, `FL002`, `FL003`) to ensure clean state isolation.
 * Include **2-3 lines of explicit justification/delta** explaining what changed between Commit `X` (`FL001`) and Commit `Y` (`FL002`) to justify running the new Friction Log.
 
-### 4. Test the Outcome & Architecture, Never Just Command Exit Codes (No Tautology Trap!)
-* **Do NOT accept `exit 0` as proof of success.** 
-* When a codelab step promises an architectural capability (e.g. "Deploy multi-container Docker Compose sidecars on Cloud Run", "Connect via Cloud SQL Auth Proxy mTLS"), the agent MUST verify the underlying **cloud state and architecture**:
-  ```bash
-  # Check actual containers deployed, not just deploy exit code
-  gcloud run services describe blog --format="value(spec.template.spec.containers[].name)" | grep cloudsql-proxy
-  ```
-* If the command succeeds with `exit 0` but deploys an architectural mismatch (e.g. monolithic container instead of promised sidecars), it is a **P1 Architectural Defect**.
+### 4. Narrative Intent vs. Executed Mechanism (Semantic Drift Check)
+* **Never accept `exit 0` as proof of success.** An automated command exiting with 0 only proves valid syntax, not that the author's intent was executed.
+* **The Semantic Drift Check (Thought Protocol):**
+  When analyzing any step in `thinking mode`, the agent must contrast:
+  1. **Narrative Intent:** What did the title, introductory paragraph, and architecture diagram promise the student? (e.g. *"Deploying multi-container sidecars with Docker Compose"*, *"Authenticating with Zero-Trust IAM"*).
+  2. **Executed Mechanism:** What command is the codelab *actually* instructing the student to run? (e.g. `gcloud run deploy blog --source .` vs `gcloud alpha run compose up compose.prod.yaml`).
+* **If the executed mechanism fails to implement the narrative intent, flag a P1 Semantic Drift Defect.**
+  - If the page promises Docker Compose, but runs a monolithic `gcloud run deploy`, that is a defect.
+  - If the page promises Secret Manager runtime injection, but passes credentials in plain text environment variables, that is a defect.
+  - If the page promises Cloud SQL, but the app connects to an ephemeral local SQLite database, that is a defect.
+* **Empirical State Verification:** Always formulate an assertion that queries the underlying platform state (containers, IAM roles, mounted volumes) rather than relying on the command's exit code.
 
 ### 5. The "Less is More" Sacred Covenant: High Friction for Codelab Edits
 * **Every single line added to student-facing codelab text must be weighed with a heavy heart.**
@@ -131,7 +134,9 @@ For each page `XX`:
 1. Check if `FRICTION_LOG/XX.md` already exists and is complete. If it is, **skip** to the next page. This allows the workflow to be resumable.
 2. **Execute the 6-Question Structural Audit**:
    - **Q1: Prerequisite Integrity**: What was expected to be finished in Page `XX-1`? Is our environment and cloud state 100% prepared, or did we carry over half-baked state?
-   - **Q2: Teleological Purpose & Scope**: What is the exact learning outcome of this page? Explicitly separate **Mandatory Steps** from **Optional Sidebars**.
+   - **Q2: Teleological Purpose & Scope (Semantic Drift Check)**:
+     - What is the exact learning outcome of this page? Explicitly separate **Mandatory Steps** from **Optional Sidebars**.
+     - **Cognitive Drift Check (High Thinking)**: Compare the **Narrative Promise** of the page (title, intro, diagram) with the **Executed CLI Commands**. Does the command actually achieve what the prose promised? (e.g. If the text says *"we now deploy via Docker Compose"*, does the command actually invoke Docker Compose or a compose file? If the text says *"private IAM blob signing"*, does the config actually enable IAM signing?). If there is a mismatch, flag a **P1 Semantic Drift Defect** immediately.
    - **Q3: Mandatory Gatekeeping**: Run all mandatory instructions verbatim. If ANY mandatory command fails or cannot be completed:
      - 🛑 **ABORT IMMEDIATELY**.
      - Mark the step 🔴 **RED** in `FRICTION_LOG/XX.md` with the exact blocker and root cause.
