@@ -1,5 +1,14 @@
 # Changelog - devrel-frictionlog-codelab Skill
 
+## [0.3.0] - 2026-09-23
+
+- 🦖 **Friction Logging v2.0 (Lessons Learned from FL100)**:
+  - **No Tautology Trap (Outcome & Architecture Assertion)**: Enforced rule that exit code 0 is insufficient. Agents must verify underlying cloud architecture and container sidecars rather than shallow command syntax.
+  - **The "Less is More" Sacred Covenant**: High friction for editing student codelabs. Edits require heavy justification; edge-case workarounds belong in agent skills, automated tests, or tooling wrappers, never polluting the codelab.
+  - **Proactive Visual Mandate**: Strictly abolished the bystander effect on `TODO(riccardo): add screenshot`. Agents must capture, crop, and embed screenshots autonomously.
+  - **IaC Single Source of Truth**: Explicitly prohibited manual CLI commands that collide with or duplicate Terraform-provisioned resources.
+  - **User Empathy & Windows Users**: Aggressively minimize cognitive friction for novice and Windows attendees; require `justfile` dotenv auto-loading and actionable, self-healing bash fixes when variables are missing.
+
 ## [0.2.1] - 2026-09-14
 
 - 🧠 **Dynamic N-Step Pagella Semaforica (`extract_codelab.py` + `setup_scaffold.sh`)**: Resolved static placeholder limitation! `extract_codelab.py` now parses HTML (`<google-codelab-step label="..." duration="...">`), local DevSite Markdown (`index.lab.md`), or `--sync-readme <base_dir>` (`codelab/original/*.md`) and **dynamically rewrites `README.md` with the exact `N` steps, real step titles, and estimated durations**.

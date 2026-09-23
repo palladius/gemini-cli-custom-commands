@@ -1,7 +1,7 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.2.1
-description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL. Use when a user provides a codelab URL and wants the agent to systematically reproduce the steps, log friction for each page, optionally create a GCP project, clone external repos to fix bugs, and produce a detailed report of the experience in a README.md and BUGS.md with Synoptic Executive Tables, Step-by-Step Scorecards, and Commit Hook progression.
+version: 0.3.0
+description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL (v2.0). Systematically reproduces steps, enforces outcome-based architectural assertions, proactively captures TODO screenshots, strictly prevents codelab bloat with the Less-Is-More covenant, avoids IaC/Terraform collisions, and generates Synoptic Executive Tables, Step Scorecards, and Commit Hook progression.
 # version: in the bash script.
 ---
 
@@ -31,6 +31,42 @@ This skill automates the process of going through a Google Codelab, reproducing 
 * In the Campaign Master `README.md` (`b<BUG_ID>-<YYYYMMDD>-frictionlog-<SLUG>/README.md`), maintain a **Master Multi-Iteration FL Plan Table (`FL001`, `FL002`, `FL003`)**.
 * Assign a **different dedicated GCP Project** (e.g. from the 90-day pool `011F17-0F9CE4-E03264`) to each iteration (`FL001`, `FL002`, `FL003`) to ensure clean state isolation.
 * Include **2-3 lines of explicit justification/delta** explaining what changed between Commit `X` (`FL001`) and Commit `Y` (`FL002`) to justify running the new Friction Log.
+
+### 4. Test the Outcome & Architecture, Never Just Command Exit Codes (No Tautology Trap!)
+* **Do NOT accept `exit 0` as proof of success.** 
+* When a codelab step promises an architectural capability (e.g. "Deploy multi-container Docker Compose sidecars on Cloud Run", "Connect via Cloud SQL Auth Proxy mTLS"), the agent MUST verify the underlying **cloud state and architecture**:
+  ```bash
+  # Check actual containers deployed, not just deploy exit code
+  gcloud run services describe blog --format="value(spec.template.spec.containers[].name)" | grep cloudsql-proxy
+  ```
+* If the command succeeds with `exit 0` but deploys an architectural mismatch (e.g. monolithic container instead of promised sidecars), it is a **P1 Architectural Defect**.
+
+### 5. The "Less is More" Sacred Covenant: High Friction for Codelab Edits
+* **Every single line added to student-facing codelab text must be weighed with a heavy heart.**
+* Never bloat the codelab with 10 lines of rare edge-case workarounds, compiler warnings, or esoteric shell fixes.
+* **Hierarchy of Resolution:**
+  1. Fix it silently in application code, dependencies, or automated wrappers (`just recipes`, `bin/dev`).
+  2. Add unit/integration tests in the repository (`bundle exec archspec`, `bin/rails test`).
+  3. Document the tribal knowledge in an **Agent Skill** (`skills/how-to-use-this-repo/references/`).
+  4. Only if 50%+ of all students will hit the issue, add a concise 1-line note to the codelab.
+
+### 6. The Proactive Visual Mandate (Eliminate Bystander Effect on TODO Screenshots)
+* Whenever the agent encounters a `> 📸 TODO(riccardo): add screenshot of ...` in the codelab, it is **strictly forbidden to ignore it or leave it as a TODO**.
+* The agent has live credentials, headless Chrome (`google-chrome --headless`), local ports/proxies, and running services.
+* The agent MUST proactively:
+  1. Trigger or render the relevant UI / terminal state.
+  2. Capture, crop, and save the image into `assets/images/` and the staging directory.
+  3. Replace the `TODO` with the markdown image tag and verify visual rendering.
+
+### 7. Enforce IaC Single Source of Truth (No Terraform vs CLI Collisions)
+* Infrastructure provisioned by Terraform (secrets, buckets, service accounts, databases) must **never be redundantly re-created via manual CLI commands**.
+* Commands following Terraform steps must be **Pre-Flight Inspection Checklists** (e.g., `gcloud secrets describe rails-master-key`), not colliding creations (`gcloud secrets create`).
+
+### 8. Empathize with Windows Users & Eliminate Environment Friction
+* Assume 50% of students are non-expert Windows users who struggle with git, PowerShell paths, and shell environments.
+* Keep copy-paste commands foolproof.
+* Eliminate manual environment sourcing (`source .env`) by enforcing `set dotenv-load := true` in `justfile`.
+* If an environment variable is missing (e.g., `GOOGLE_CLOUD_ACCOUNT`), scripts must output clear, actionable, copy-paste terminal remedies rather than failing with cryptic errors.
 
 ## Core Workflow
 
