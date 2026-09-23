@@ -122,14 +122,28 @@ When the user provides a Codelab URL, follow these exact steps. Ensure each step
     * Save the newly created `PROJECT_ID` to the `.env.fl` file.
 4. **Automation Mandate**: From this point forward, automate as much as you reasonably can without asking for permission between steps.
 
-### Step 4: Autonomous Execution, Logging, and Repo Analysis
+### Step 4: Autonomous Execution, Logging, and Repo Analysis (The 6-Question Step Audit)
 
 Begin reproducing the codelab autonomously, going through each page (`01`, `02`, ..., `NN`) sequentially.
 
 For each page `XX`:
 
 1. Check if `FRICTION_LOG/XX.md` already exists and is complete. If it is, **skip** to the next page. This allows the workflow to be resumable.
-2. Follow the instructions on the codelab page as closely as possible, running commands and performing tasks verbatim.
+2. **Execute the 6-Question Structural Audit**:
+   - **Q1: Prerequisite Integrity**: What was expected to be finished in Page `XX-1`? Is our environment and cloud state 100% prepared, or did we carry over half-baked state?
+   - **Q2: Teleological Purpose & Scope**: What is the exact learning outcome of this page? Explicitly separate **Mandatory Steps** from **Optional Sidebars**.
+   - **Q3: Mandatory Gatekeeping**: Run all mandatory instructions verbatim. If ANY mandatory command fails or cannot be completed:
+     - 🛑 **ABORT IMMEDIATELY**.
+     - Mark the step 🔴 **RED** in `FRICTION_LOG/XX.md` with the exact blocker and root cause.
+     - Ask the user for help if the step inherently requires human interaction, or halt execution. **Never silently skip a mandatory failure.**
+   - **Q4: Optional Part Accounting**: Test optional exercises. If not performed or failed, document why without penalizing the primary core grade.
+   - **Q5: Structural Placement Critique**:
+     - Could this step have been anticipated 2 steps earlier?
+     - Should it be postponed or merged into another step (e.g. did a standalone step have no reason to exist)?
+     - Did it perform duplicate work already handled by Terraform or automated scripts?
+   - **Q6: Audience Alignment & Density Check**:
+     - Are difficult concepts explained simply and intuitively?
+     - Did we dwell too long on trivia that only 1 student in 20 will ever encounter? (If so, flag for trimming under the "Less is More" covenant).
 3. **External Repositories**: If the codelab references an external Git repository:
     * Clone the repository into the `external-repos/` directory.
     * Record the exact Commit SHA and Commit Timestamp (`git log -1 --format="%h (%ci)"`).
@@ -138,7 +152,7 @@ For each page `XX`:
 4. **Log your experience** by writing to `FRICTION_LOG/XX.md`:
     * Use bullet points for every distinct action or instruction.
     * **Include a timestamp** at the beginning of each bullet point in the format `` * `HH:MM:SS` `` to track execution time and make the logs easily grep-able.
-    * Use 🔴 (Red) if the experience was bad, broken, or a blocker (`Exit code != 0`).
+    * Use 🔴 (Red) if the experience was bad, broken, or a blocker (`Exit code != 0` or mandatory gate failure).
     * Use 🟡 (Yellow) if the experience was suboptimal, required a workaround, or had minor friction.
     * Use 🟢 (Green) if the experience was smooth and worked out-of-the-box.
 5. At the end of the page, write a **Proof of Execution** block showing exact CLI output (`kubectl get pods`, `curl -I`, etc.).
