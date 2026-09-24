@@ -33,23 +33,20 @@ This skill automates the process of going through a Google Codelab, reproducing 
 * Include **2-3 lines of explicit justification/delta** explaining what changed between Commit `X` (`FL001`) and Commit `Y` (`FL002`) to justify running the new Friction Log.
 
 ### 4. Narrative Intent vs. Executed Mechanism (Semantic Drift Check)
-* **Never accept `exit 0` as proof of success.** An automated command exiting with 0 only proves valid syntax, not that the author's intent was executed.
-* **The Semantic Drift Check (Thought Protocol):**
-  When analyzing any step in `thinking mode`, the agent must contrast:
-  1. **Narrative Intent:** What did the title, introductory paragraph, and architecture diagram promise the student? (e.g. *"Deploying multi-container sidecars with Docker Compose"*, *"Authenticating with Zero-Trust IAM"*).
-  2. **Executed Mechanism:** What command is the codelab *actually* instructing the student to run? (e.g. `gcloud run deploy blog --source .` vs `gcloud alpha run compose up compose.prod.yaml`).
-* **If the executed mechanism fails to implement the narrative intent, flag a P1 Semantic Drift Defect.**
-  - If the page promises Docker Compose, but runs a monolithic `gcloud run deploy`, that is a defect.
-  - If the page promises Secret Manager runtime injection, but passes credentials in plain text environment variables, that is a defect.
-  - If the page promises Cloud SQL, but the app connects to an ephemeral local SQLite database, that is a defect.
-* **Empirical State Verification:** Always formulate an assertion that queries the underlying platform state (containers, IAM roles, mounted volumes) rather than relying on the command's exit code.
+* **Never accept `exit 0` as proof of success.** A command returning exit code 0 only proves valid syntax, not that the author's declared intent was actually fulfilled.
+* **The Semantic Drift Check (Thought Protocol in High Thinking Mode):**
+  When analyzing any step, the agent must contrast:
+  1. **Narrative Promise:** What does the page title, introduction, and architecture diagram promise the student? (e.g., a specific design pattern, runtime architecture, security mechanism, or persistence tier).
+  2. **Executed Mechanism:** What command or configuration does the codelab *actually* execute? Does the command deliver the promised architecture, or does it take a silent shortcut that bypasses what is being taught?
+* **If the executed mechanism fails to implement the declared architecture, flag a P1 Semantic Drift Defect.**
+* **Empirical State Verification:** Always formulate an assertion that queries the underlying platform/system state directly (inspecting live runtime specifications, configurations, or resources) rather than relying solely on the command's exit code.
 
 ### 5. The "Less is More" Sacred Covenant: High Friction for Codelab Edits
 * **Every single line added to student-facing codelab text must be weighed with a heavy heart.**
 * Never bloat the codelab with 10 lines of rare edge-case workarounds, compiler warnings, or esoteric shell fixes.
 * **Hierarchy of Resolution:**
-  1. Fix it silently in application code, dependencies, or automated wrappers (`just recipes`, `bin/dev`).
-  2. Add unit/integration tests in the repository (`bundle exec archspec`, `bin/rails test`).
+  1. Fix it silently in application code, dependencies, or automated wrappers (`just recipes`, `npm test`, etc.).
+  2. Add unit/integration tests in the repository test suite.
   3. Document the tribal knowledge in an **Agent Skill** (`skills/how-to-use-this-repo/references/`).
   4. Only if 50%+ of all students will hit the issue, add a concise 1-line note to the codelab.
 
@@ -63,7 +60,7 @@ This skill automates the process of going through a Google Codelab, reproducing 
 
 ### 7. Enforce IaC Single Source of Truth (No Terraform vs CLI Collisions)
 * Infrastructure provisioned by Terraform (secrets, buckets, service accounts, databases) must **never be redundantly re-created via manual CLI commands**.
-* Commands following Terraform steps must be **Pre-Flight Inspection Checklists** (e.g., `gcloud secrets describe rails-master-key`), not colliding creations (`gcloud secrets create`).
+* Commands following Terraform steps must be **Pre-Flight Inspection Checklists** (e.g., `gcloud secrets describe <SECRET_NAME>`), not colliding creations (`gcloud secrets create`).
 
 ### 8. Empathize with Windows Users & Eliminate Environment Friction
 * Assume 50% of students are non-expert Windows users who struggle with git, PowerShell paths, and shell environments.
@@ -80,7 +77,7 @@ This skill automates the process of going through a Google Codelab, reproducing 
 ### 10. Strict TDD Mandate for Bug Fixes (Test-First Progression)
 * **Every bug fix MUST be preceded by a failing automated test.** Never write a fix directly in the codebase without first demonstrating the failure in the test suite.
 * **TDD Invariant:**
-  1. Write an automated unit, integration, or architecture test (`bin/rails test`, `bundle exec archspec`, or dedicated shell test) proving the defect.
+  1. Write an automated unit, integration, or architecture test in the project's native test framework proving the defect.
   2. Run the test suite and verify that the test **FAILS (RED)**.
   3. Implement the minimal fix in application code or configuration.
   4. Run the test suite and verify that the test **PASSES (GREEN)**.
@@ -153,7 +150,7 @@ For each page `XX`:
    - **Q1: Prerequisite Integrity**: What was expected to be finished in Page `XX-1`? Is our environment and cloud state 100% prepared, or did we carry over half-baked state?
    - **Q2: Teleological Purpose & Scope (Semantic Drift Check)**:
      - What is the exact learning outcome of this page? Explicitly separate **Mandatory Steps** from **Optional Sidebars**.
-     - **Cognitive Drift Check (High Thinking)**: Compare the **Narrative Promise** of the page (title, intro, diagram) with the **Executed CLI Commands**. Does the command actually achieve what the prose promised? (e.g. If the text says *"we now deploy via Docker Compose"*, does the command actually invoke Docker Compose or a compose file? If the text says *"private IAM blob signing"*, does the config actually enable IAM signing?). If there is a mismatch, flag a **P1 Semantic Drift Defect** immediately.
+     - **Cognitive Drift Check (High Thinking)**: Compare the **Narrative Promise** of the page (title, intro, diagram) with the **Executed CLI Commands**. Does the command actually achieve what the prose promised, or is it a degraded shortcut that leaves the student with an architecture different from what was taught? If there is a mismatch between declared learning intent and actual implementation, flag a **P1 Semantic Drift Defect** immediately.
    - **Q3: Mandatory Gatekeeping**: Run all mandatory instructions verbatim. If ANY mandatory command fails or cannot be completed:
      - 🛑 **ABORT IMMEDIATELY**.
      - Mark the step 🔴 **RED** in `FRICTION_LOG/XX.md` with the exact blocker and root cause.
