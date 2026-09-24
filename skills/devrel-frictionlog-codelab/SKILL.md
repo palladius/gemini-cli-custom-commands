@@ -1,7 +1,7 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.3.2
-description: 🥑 [DevRel] Automates friction logging for Google Codelabs (v2.0) with virgin project baselines, kickoff triad agreement, and deterministic telemetry.
+version: 0.3.3
+description: 🥑 [DevRel] Automates friction logging for Google Codelabs (v2.0) with virgin project baselines, kickoff triad agreement, AI runner telemetry, and deterministic manifest validation.
 ---
 
 # DevRel Friction Log Codelab
@@ -203,6 +203,8 @@ Must contain the following exact rows:
 | :--- | :--- | :--- |
 | **ITERATION_ID** | `YYYYMMDD-flNNN` (`FL-NNN`) | e.g., `20260911-fl001` (`FL-001`) |
 | **START_DATETIME** | `YYYY-MM-DD HH:MM:SS TZ` | End time: `YYYY-MM-DD HH:MM:SS TZ` |
+| **SKILL_VERSION** | `devrel-frictionlog-codelab` `vX.Y.Z` | Tracked since v0.3.1 (e.g., `v0.3.3`) |
+| **AI_RUNNER** | `Antigravity 2.0` / `Gemini CLI 0.37+` | Model: `gemini-2.5-pro` (pool: `gemini`) |
 | **PROJECT_ID** | `<GCP_PROJECT_ID>` | GCP Project used for reproduction |
 | **BILLING_ACCOUNT** | `<BILLING_ACCOUNT_ID>` | Billing Account ID & name |
 | **TESTER_IDENTITY** | `<EMAIL>` | Identity / gcloud configuration used |

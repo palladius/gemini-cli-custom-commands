@@ -1,5 +1,12 @@
 # Changelog - devrel-frictionlog-codelab Skill
 
+## [0.3.3] - 2026-09-24
+
+- 🤖 **Explicit AI Runner & Harness Telemetry in Synoptic Tables**:
+  - Added **`AI_RUNNER`** (`Antigravity 2.0` / `Gemini CLI 0.37+`) and **`AI_MODEL`** (`gemini-2.5-pro`) rows explicitly to the mandatory Executive Synoptic Table in `SKILL.md` and Markdown reports.
+  - Added **`SKILL_VERSION`** row to Markdown table template matching machine-readable telemetry (`friction_log.yaml`).
+  - Added GCP Resources Artifact standard (`gcp_resources_flXXX.md`) detailing live endpoints, database instances, buckets, and teardown confirmation.
+
 ## [0.3.2] - 2026-09-24
 
 - 🤝 **Mandatory Kickoff Triad Agreement & Virgin Baselines**:
