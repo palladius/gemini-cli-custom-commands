@@ -21,6 +21,38 @@ try:
 except ImportError:
     HAS_YAML = False
 
+import glob
+import re
+
+def autodetect_ai_runner():
+    """Autodetects AI Harness and Model from environment, transcript logs, or settings."""
+    harness = os.environ.get("AI_HARNESS", "Antigravity")
+    model = os.environ.get("AI_MODEL") or os.environ.get("GEMINI_MODEL")
+
+    if not model:
+        # Search recent Antigravity transcripts in ~/.gemini/antigravity/brain/*/transcript.jsonl
+        transcript_files = glob.glob(os.path.expanduser("~/.gemini/antigravity/brain/**/transcript.jsonl"), recursive=True)
+        for tfile in sorted(transcript_files, key=os.path.getmtime, reverse=True)[:5]:
+            try:
+                with open(tfile, "r", encoding="utf-8", errors="ignore") as tf:
+                    # Scan first 100 lines
+                    for _ in range(100):
+                        line = tf.readline()
+                        if not line:
+                            break
+                        if "Model Selection" in line:
+                            match = re.search(r"Model Selection` from None to ([^.\n]+)", line)
+                            if match:
+                                model = match.group(1).strip()
+                                harness = "Antigravity 2.0"
+                                break
+                if model:
+                    break
+            except Exception:
+                continue
+
+    return harness or "Antigravity", model or "Gemini 3.7 Flash (Low)"
+
 # Mandatory fields hierarchy: (dot_path, default_value, expected_type)
 MANDATORY_FIELDS = [
     ("apiVersion", "devrel.google.com/v2alpha1", str),
@@ -33,9 +65,9 @@ MANDATORY_FIELDS = [
     ("environment.git.commit_timestamp", "unknown", str),
     ("environment.git.branch", "unknown", str),
     ("environment.ai_runner.harness", "Antigravity", str),
-    ("environment.ai_runner.model", "unknown-model", str),
+    ("environment.ai_runner.model", "Gemini 3.7 Flash (Low)", str),
     ("environment.skill.name", "devrel-frictionlog-codelab", str),
-    ("environment.skill.version", "0.3.2", str),
+    ("environment.skill.version", "0.3.4", str),
     ("environment.gcp.project_id", "unknown-project", str),
     ("human_intervention.prompts_exchanged", 0, int),
     ("human_intervention.manual_unblocks_count", 0, int),
@@ -86,14 +118,22 @@ def validate_and_autofill(data, autofill=False):
     missing = []
     autofilled = []
 
+    detected_harness, detected_model = autodetect_ai_runner()
+
     for dot_path, default_val, exp_type in MANDATORY_FIELDS:
         val = get_nested(data, dot_path)
         is_missing = val is None or (isinstance(val, str) and not val.strip())
 
         if is_missing:
             if autofill:
-                set_nested(data, dot_path, default_val)
-                autofilled.append((dot_path, default_val))
+                if dot_path == "environment.ai_runner.model" and detected_model:
+                    resolved_val = detected_model
+                elif dot_path == "environment.ai_runner.harness" and detected_harness:
+                    resolved_val = detected_harness
+                else:
+                    resolved_val = default_val
+                set_nested(data, dot_path, resolved_val)
+                autofilled.append((dot_path, resolved_val))
             else:
                 missing.append(dot_path)
         else:

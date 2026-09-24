@@ -1,7 +1,7 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.3.3
-description: 🥑 [DevRel] Automates friction logging for Google Codelabs (v2.0) with virgin project baselines, kickoff triad agreement, AI runner telemetry, and deterministic manifest validation.
+version: 0.3.4
+description: 🥑 [DevRel] Automates friction logging for Google Codelabs (v2.0) with virgin project baselines, kickoff triad agreement, pre-teardown UAT proof artifacts, and deterministic telemetry.
 ---
 
 # DevRel Friction Log Codelab
@@ -97,6 +97,22 @@ This skill automates the process of going through a Google Codelab, reproducing 
 * Telemetry format (`friction_log.yaml` / `friction_log.json`, `apiVersion: devrel.google.com/v2alpha1`) was introduced in skill **`v0.3.0`**.
 * Explicit tracking of `environment.skill.name` and `environment.skill.version` is mandatory starting from **`v0.3.1`** / **`v0.3.2`**.
 * Every Friction Log artifact (`.env.fl`, `README.md`, `FRICTION_LOG.md`, `friction_log.yaml`) must explicitly record the skill version.
+
+### 14. Mandatory Pre-Teardown UAT Gate & Artifact Proof of Work
+* **The agent is STRICTLY FORBIDDEN from tearing down cloud infrastructure (`terraform destroy`, unlinking billing, deleting projects) without interactive user UAT validation!**
+* Before executing any destructive cleanup commands, the agent MUST:
+  1. **Generate a Proof of Work Artifact** (`gcp_resources_flXXX.md` / `proof_of_work.md`) containing:
+     - Screenshots of the running application / UI in action.
+     - Live Cloud Run service URLs and custom domain endpoints.
+     - The Hive Multi-Project Registry link showing service status 🟢 **UP**.
+     - Database instance details (Cloud SQL connection name, authorized IPs).
+     - Storage bucket URLs, BigQuery datasets, and Vertex AI / GenAI endpoints.
+  2. **Present the Artifact & Request Explicit UAT Validation**:
+     - Present the Proof of Work Artifact link to the user.
+     - Ask the user for validation: *"I have completed all reproduction steps and verified the environment. Here is the proof of work artifact. Do you validate the run and authorize infrastructure teardown?"*
+  3. **Wait for Human Confirmation**:
+     - Only after the user confirms UAT validation and explicitly approves teardown may the agent execute `terraform destroy` and unlink the billing account.
+     - If the user wishes to inspect the live app or test additional features first, the agent leaves the infrastructure running until instructed.
 
 ## Core Workflow
 
