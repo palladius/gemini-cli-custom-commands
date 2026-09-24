@@ -1,5 +1,13 @@
 # Changelog - devrel-frictionlog-codelab Skill
 
+## [0.3.1] - 2026-09-24
+
+- 📊 **Deterministic Machine-Readable Telemetry & Validator Suite**:
+  - Mandated generation of `friction_log.json` / `friction_log.yaml` (`apiVersion: devrel.google.com/v2alpha1`).
+  - Added `scripts/validate_telemetry.py` to enforce presence of mandatory fields (`metadata`, `git`, `ai_runner`, `human_intervention`, `steps`, `bugs_logged`).
+  - Implemented `--autofill` flag to safely backfill any unobserved mandatory fields with sensible defaults (e.g. `UNKNOWN`) preventing parser breakage.
+  - Added automated test suite `scripts/validate_telemetry_test.py` covering strict validation, YAML/JSON parsing, and autofill recovery.
+
 ## [0.3.0] - 2026-09-23
 
 - 🦖 **Friction Logging v2.0 (Lessons Learned from FL100)**:

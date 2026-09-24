@@ -216,4 +216,11 @@ This manifest MUST record:
 - **`steps`**: Granular array of steps with duration in seconds, errors/warnings count, semantic drift flag, captured screenshots, and the 160-char tweet checkpoint.
 - **`bugs_logged`**: Tracked bug IDs, severities, and GHI / Buganizer links.
 
+**Mandatory Validation & Autofill Tool**:
+The agent MUST run the included validator to ensure schema compliance before finalizing the log:
+```bash
+python3 scripts/validate_telemetry.py path/to/friction_log.json --autofill
+```
+If any mandatory field could not be deduced during execution, `--autofill` ensures it is safely stamped with explicit `UNKNOWN` values instead of omitting keys or crashing downstream parsers.
+
 6. **Always clean up expensive cloud resources (`terraform destroy`)** once the friction log and postmortem artifacts are captured, unless explicitly asked to leave them running.
