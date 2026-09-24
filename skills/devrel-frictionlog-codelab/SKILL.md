@@ -1,7 +1,7 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.3.4
-description: 🥑 [DevRel] Automates friction logging for Google Codelabs (v2.0) with virgin project baselines, kickoff triad agreement, pre-teardown UAT proof artifacts, and deterministic telemetry.
+version: 0.3.5
+description: 🥑 [DevRel] Automates friction logging for Google Codelabs (v2.0) with multi-instance collision guards, reentrant gcloud configs, pre-teardown UAT gates, and deterministic telemetry.
 ---
 
 # DevRel Friction Log Codelab
@@ -114,9 +114,35 @@ This skill automates the process of going through a Google Codelab, reproducing 
      - Only after the user confirms UAT validation and explicitly approves teardown may the agent execute `terraform destroy` and unlink the billing account.
      - If the user wishes to inspect the live app or test additional features first, the agent leaves the infrastructure running until instructed.
 
+### 15. Multi-Instance Isolation & Collision Guard (`CHAT_ID`, `INCARNATION_ID` & `gcloud config`)
+* **Dedicated Iteration Folder & Chat ID Locking**:
+  - Whenever multiple Friction Log instances might run concurrently (e.g. parallel agents or multiple sessions), each instance MUST operate in its own dedicated iteration folder (`<YYYYMMDD>-fl<NNN>`).
+  - The agent MUST stamp its unique session identifier (`CHAT_ID` or Antigravity `INCARNATION_ID` UUID) into `$FOLDER/.env.fl` immediately upon start.
+  - **Collision Guard**: If `$FOLDER/.env.fl` already exists with a different non-empty `CHAT_ID` / `INCARNATION_ID`, the agent MUST halt, warn, and ask the user rather than overwriting an active session!
+* **Reentrant & Isolated `gcloud` Configuration**:
+  - To prevent concurrent gcloud commands in different terminals or agents from mutating each other's active project or account, the agent MUST define and activate an isolated named configuration:
+    ```bash
+    export CLOUDSDK_ACTIVE_CONFIG_NAME="fl<NNN>-<SLUG>"
+    gcloud config configurations create "$CLOUDSDK_ACTIVE_CONFIG_NAME" 2>/dev/null || gcloud config configurations activate "$CLOUDSDK_ACTIVE_CONFIG_NAME"
+    ```
+* **"When in doubt, ask USER!"**:
+  - If there is any ambiguity about project state, folder ownership, or credential collisions, never guess — prompt the user interactively (`ask_question`).
+
 ## Core Workflow
 
 When the user provides a Codelab URL, follow these exact steps. Ensure each step is fully completed before moving on to the next. Do not skip steps. This skill is designed to be resumable, so if the execution is interrupted, restart the skill and pick up where you left off.
+
+### Step 0: Immediate `.env.fl` Creation & Collision Check (Atomic First Action)
+
+Before fetching any content, scaffolding subdirectories, or enabling cloud APIs:
+1. Ensure the iteration folder (`<YYYYMMDD>-fl<NNN>`) exists.
+2. Check for collision: inspect `$FOLDER/.env.fl`. If an active session with a different `CHAT_ID` / `INCARNATION_ID` exists, stop and prompt the user.
+3. Write `$FOLDER/.env.fl` immediately from `references/env.template`, recording:
+   - Verbatim User Prompt commented at the top (`# User Prompt: ...`)
+   - Unique `CHAT_ID` / `INCARNATION_ID`
+   - `FRICTIONLOG_SKILL_VERSION="0.3.5"`
+   - `CLOUDSDK_ACTIVE_CONFIG_NAME="fl<NNN>-<SLUG>"`
+4. Activate the isolated `gcloud` named configuration (`CLOUDSDK_ACTIVE_CONFIG_NAME`).
 
 ### Step 1: Preparation & Dynamic Scaffold
 
@@ -219,8 +245,8 @@ Must contain the following exact rows:
 | :--- | :--- | :--- |
 | **ITERATION_ID** | `YYYYMMDD-flNNN` (`FL-NNN`) | e.g., `20260911-fl001` (`FL-001`) |
 | **START_DATETIME** | `YYYY-MM-DD HH:MM:SS TZ` | End time: `YYYY-MM-DD HH:MM:SS TZ` |
-| **SKILL_VERSION** | `devrel-frictionlog-codelab` `vX.Y.Z` | Tracked since v0.3.1 (e.g., `v0.3.3`) |
-| **AI_RUNNER** | `Antigravity 2.0` / `Gemini CLI 0.37+` | Model: `gemini-2.5-pro` (pool: `gemini`) |
+| **SKILL_VERSION** | `devrel-frictionlog-codelab` `vX.Y.Z` | Tracked since v0.3.1 (e.g., `v0.3.5`) |
+| **AI_RUNNER** | `Antigravity 2.0` / `Gemini CLI 0.37+` | Model: `Gemini 3.8 Flash (High)` / `gemini-3.7-flash` |
 | **PROJECT_ID** | `<GCP_PROJECT_ID>` | GCP Project used for reproduction |
 | **BILLING_ACCOUNT** | `<BILLING_ACCOUNT_ID>` | Billing Account ID & name |
 | **TESTER_IDENTITY** | `<EMAIL>` | Identity / gcloud configuration used |

@@ -1,5 +1,21 @@
 # Changelog - devrel-frictionlog-codelab Skill
 
+## [0.3.5] - 2026-09-24
+
+- 🛡️ **Multi-Instance Isolation & Collision Guard (Golden Rule 15)**:
+  - **Chat/Session Locking (`CHAT_ID` / `INCARNATION_ID`)**: Each session records its unique identifier in `.env.fl`. If `.env.fl` already belongs to another active chat/incarnation, execution halts to avoid clobbering.
+  - **Reentrant `gcloud` Configuration**: Mandated `CLOUDSDK_ACTIVE_CONFIG_NAME="fl<NNN>-<SLUG>"` so parallel agent terminals never mutate each other's active project or account.
+  - **Atomic Step 0**: Immediate `.env.fl` generation with verbatim user prompt commented at the top (`# User Prompt: ...`), preserving 100% bash parseability.
+  - **Template Polish**: Updated `references/env.template` with `FRICTIONLOG_SKILL_VERSION`, empty `AI_MODEL` with UI lookup guidance, and `INCARNATION_ID` (Antigravity UUID).
+  - **"When in doubt, ask USER!"**: Explicit interactive pause when folder ownership or credentials are ambiguous.
+
+## [0.3.4] - 2026-09-24
+
+- 🛑 **Mandatory Pre-Teardown UAT Gate & Artifact Proof of Work (Golden Rule 14)**:
+  - Strict prohibition against `terraform destroy` or unlinking billing without explicit user UAT validation.
+  - Mandated generation of a Proof of Work Artifact (live URLs, database coords, screenshots) prior to asking for teardown authorization.
+  - Added automatic model autodetection in `validate_telemetry.py` by inspecting Antigravity session transcripts.
+
 ## [0.3.3] - 2026-09-24
 
 - 🤖 **Explicit AI Runner & Harness Telemetry in Synoptic Tables**:
