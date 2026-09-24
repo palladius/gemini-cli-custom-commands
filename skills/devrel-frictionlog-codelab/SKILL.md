@@ -1,7 +1,7 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.3.0
-description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL (v2.0). Systematically reproduces steps, enforces outcome-based architectural assertions, proactively captures TODO screenshots, strictly prevents codelab bloat with the Less-Is-More covenant, avoids IaC/Terraform collisions, and generates Synoptic Executive Tables, Step Scorecards, and Commit Hook progression.
+version: 0.3.1
+description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL (v2.0). Systematically reproduces steps, enforces outcome-based architectural assertions, proactively captures TODO screenshots, strictly prevents codelab bloat with the Less-Is-More covenant, avoids IaC/Terraform collisions, generates Synoptic Tables, and produces deterministic machine-readable telemetry (friction_log.json/yaml).
 # version: in the bash script.
 ---
 
@@ -206,5 +206,14 @@ Must grade every single Codelab step (`🟢 GREEN`, `🟡 YELLOW`, `🔴 RED`) w
 | **04** | **Step 4** | 🟢 **GREEN** | `~4m` | Verification passed |
 | **05** | **Step 5** | 🟢 **GREEN** | `~5m` | Teardown completed |
 | **...** | **...** *(Expand/contract to match exact N steps)* | ... | `...` | `...` |
+
+#### 3. Deterministic Machine-Readable Telemetry (`friction_log.json` / `friction_log.yaml`)
+In addition to the markdown reports, the agent **MUST** output a deterministic machine-readable manifest (`friction_log.json` or `friction_log.yaml`) adhering to `apiVersion: devrel.google.com/v2alpha1` (see `references/friction_log.yaml`).
+This manifest MUST record:
+- **`git` Hook**: Target commit SHA, commit timestamp, and dual versions (app version and codelab version).
+- **`ai_runner`**: AI Harness used (`Antigravity`, `Gemini CLI`, `Claude Code`), harness version, model string (`gemini-2.5-pro`), and model pool.
+- **`human_intervention`**: Total prompts exchanged, number of manual unblocks by the human, and a 1-line summary of human assistance.
+- **`steps`**: Granular array of steps with duration in seconds, errors/warnings count, semantic drift flag, captured screenshots, and the 160-char tweet checkpoint.
+- **`bugs_logged`**: Tracked bug IDs, severities, and GHI / Buganizer links.
 
 6. **Always clean up expensive cloud resources (`terraform destroy`)** once the friction log and postmortem artifacts are captured, unless explicitly asked to leave them running.

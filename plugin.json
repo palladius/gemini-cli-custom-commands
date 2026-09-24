@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "palladius-common-commands",
-  "version": "0.3.50",
+  "version": "0.3.51",
   "description": "Riccardo's Gemini CLI extension, packaged with GCP and SRE Custom Commands and skills.",
   "author": {
     "name": "Riccardo Carlesso"

@@ -1,19 +1,52 @@
-apiVersion: devrel.google.com/v1alpha1
-kind: FrictionLog
+# devrel.google.com/v2alpha1 FrictionLogRun Proto/Schema Reference
+apiVersion: devrel.google.com/v2alpha1
+kind: FrictionLogRun
 metadata:
-  name: {{NAME}}
-spec:
-  # The link to the codelab used (Gdoc, or public URL, ...)
-  codelabUrl: "{{CODELAB_URL}}"
-  # The version, tag, or commit hash of the codelab/source repository being friction logged (e.g. "v1.0.0", "main", or a git commit SHA)
-  codelabVersion: "{{CODELAB_VERSION}}"
-  # The TF bug (Taskflow / Buganizer ID) associated with this friction log
-  bugId: "{{BUG_ID}}"
-  # The GCP Project ID used for reproduction
-  projectId: "{{PROJECT_ID}}"
-  # The Google Identity (email) of the user performing the reproduction
-  identity: "{{IDENTITY}}"
-  # The ISO-8601 date-time when the friction log reproduction started
-  startedAt: "{{STARTED_AT}}"
-  # The link to the final Google Doc containing this friction log
-  outputGdocUrl: "{{OUTPUT_GDOC_URL}}"
+  iteration_id: "YYYYMMDD-flNNN"            # e.g., 20260924-fl101
+  name: "codelab-slug-iteration"            # e.g., rails8-on-google-cloud-fl101
+  started_at: "YYYY-MM-DDTHH:MM:SSZ"        # ISO 8601
+  ended_at: "YYYY-MM-DDTHH:MM:SSZ"          # ISO 8601
+  duration_seconds: 0                       # Total wall-clock seconds
+  overall_status: "GREEN"                   # GREEN, YELLOW, RED
+
+environment:
+  git:
+    commit_sha: "xxxxxxx"                   # Commit SHA of the target codelab/repo
+    commit_timestamp: "YYYY-MM-DD HH:MM:SS" # Commit hook timestamp
+    branch: "main"
+    app_version: "X.Y.Z"                    # Application version if present
+    codelab_version: "X.Y.Z"                # Codelab version if present
+  ai_runner:
+    harness: "Antigravity"                  # Antigravity, Gemini CLI, Claude Code
+    harness_version: "2.0"
+    model: "gemini-2.5-pro"                 # Model string used
+    model_pool: "gemini"                    # gemini, claude, etc.
+  gcp:
+    project_id: "project-id"
+    billing_account_id: "XXXXXX-XXXXXX-XXXXXX"
+    region: "europe-west1"
+    tester_identity: "user@domain.com"
+
+human_intervention:
+  prompts_exchanged: 1                      # Number of user turns/prompts
+  manual_unblocks_count: 0                  # Number of times human intervened to fix a blocker
+  summary: "Concise 1-line summary of human assistance"
+
+steps:
+  - step_number: 0
+    title: "Prerequisites"
+    status: "GREEN"                         # GREEN, YELLOW, RED
+    duration_seconds: 60
+    errors_count: 0
+    warnings_count: 0
+    semantic_drift_detected: false
+    tweet_checkpoint: "Max 160-char tweet verifying step outcome"
+    screenshots_captured: []
+
+bugs_logged:
+  - id: "BUG-01"
+    severity: "P1"                          # P0, P1, P2, P3
+    title: "Short description of bug"
+    resolved: true
+    ghi_number: 0                           # GitHub Issue number if opened
+    buganizer_id: 0                         # Buganizer ID if filed

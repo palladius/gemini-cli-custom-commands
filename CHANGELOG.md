@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.51] - 2026-09-24
+### Added & Changed
+- 🥑🤖 **Friction Log Framework v2.0 (`devrel-frictionlog-codelab` v0.3.1)**:
+  - **Deterministic Machine-Readable Telemetry**: Added mandatory generation of `friction_log.json` / `friction_log.yaml` (`apiVersion: devrel.google.com/v2alpha1`) capturing target git commit hooks, dual versions, AI runner metadata (harness, model, pool), human intervention stats (prompts, manual unblocks, summary), per-step execution metrics (duration in seconds, errors/warnings, tweet checkpoints), and tracked bug IDs.
+  - **Purged Project-Specific Overfitting**: Completely eliminated domain-specific hardcoded command examples, elevating the rules to generic, reusable conceptual invariants.
+  - **The Semantic Drift Invariant**: Mandated checking Narrative Intent vs Executed Mechanism to prevent degraded shortcuts.
+  - **The 6-Question Step Audit**: Structural audit gating each page's teleological purpose before execution.
+  - **Strict TDD & Tweet Checkpoints**: Mandated automated test-first bug fixes and max 160-char compliance checkpoints.
+
 ## [0.3.50] - 2026-08-24
 ### Changed
 - 📦 Transformed extension into official Agent Plugin (v1.0.0 schema) via `plugin.json`.
