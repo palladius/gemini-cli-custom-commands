@@ -1,8 +1,7 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.3.1
-description: 🥑 [DevRel] Automates friction logging for a given Google Codelab URL (v2.0). Systematically reproduces steps, enforces outcome-based architectural assertions, proactively captures TODO screenshots, strictly prevents codelab bloat with the Less-Is-More covenant, avoids IaC/Terraform collisions, generates Synoptic Tables, and produces deterministic machine-readable telemetry (friction_log.json/yaml).
-# version: in the bash script.
+version: 0.3.2
+description: 🥑 [DevRel] Automates friction logging for Google Codelabs (v2.0) with virgin project baselines, kickoff triad agreement, and deterministic telemetry.
 ---
 
 # DevRel Friction Log Codelab
@@ -16,8 +15,8 @@ This skill automates the process of going through a Google Codelab, reproducing 
 * Every Friction Log iteration (`FLXXX`) must record the exact **Git Commit SHA and Commit Timestamp** (`git log -1 --format="%h (%ci)"`) of the repository/codelab being tested (`REPO_COMMIT_HOOK`).
 * The mandatory iterative cycle is:
   1. Run **`FL001`** on initial commit `X` (recording Commit SHA `X` + its timestamp).
-  2. Log all defects in `BUGS.md`, open a **GitHub Issue (GHI)** tagged with `friction-log` and `FL001`.
-  3. Create a **Pull Request (PR)** attached to the GHI (`Fixes #N`), review/test it, and **merge** it into `main` to produce a new Commit SHA `Y`.
+  2. Log all defects in `BUGS.md`, open a **GitHub/GitLab Issue (GHI/GLI)** or **Buganizer bug** tagged with `friction-log` and `FL001`.
+  3. Create a **Pull Request / Merge Request (PR/MR)** attached to the issue (`Fixes #N`), review/test it, and **merge** it into `main` to produce a new Commit SHA `Y`.
   4. Run **`FL002`** on the new commit `Y` to verify fixes and iterate until the scorecard is **100% 🟢 GREEN**.
 
 ### 2. Buganizer Hotlist Mandate (`#8950858`)
@@ -27,10 +26,11 @@ This skill automates the process of going through a Google Codelab, reproducing 
   echo -e "Friction Log update summary...\n\nHOTLIST+=8950858" | env -i PATH="$PATH" HOME="$HOME" USER="$USER" bugged edit <BUG_ID>
   ```
 
-### 3. Multi-Iteration FL Plan & Dedicated GCP Project Pool
-* In the Campaign Master `README.md` (`b<BUG_ID>-<YYYYMMDD>-frictionlog-<SLUG>/README.md`), maintain a **Master Multi-Iteration FL Plan Table (`FL001`, `FL002`, `FL003`)**.
-* Assign a **different dedicated GCP Project** (e.g. from the 90-day pool `011F17-0F9CE4-E03264`) to each iteration (`FL001`, `FL002`, `FL003`) to ensure clean state isolation.
-* Include **2-3 lines of explicit justification/delta** explaining what changed between Commit `X` (`FL001`) and Commit `Y` (`FL002`) to justify running the new Friction Log.
+### 3. Virgin Local Baseline & Virgin GCP Project Mandate
+* **Always reproduce from a clean, virgin local baseline:** Run reproduction in a dedicated clean directory, worktree, or fresh clone representing the exact student baseline (`git checkout main` or release tag).
+* **Always use a brand-new, virgin GCP Project:** A Friction Log MUST start on a clean, empty GCP project with **zero pre-enabled APIs and zero pre-existing resources**. Never recycle dirty projects or previously deployed resources (e.g. leftover Cloud SQL instances or GCS buckets) from previous runs!
+* Assign a **different dedicated GCP Project** (e.g. from the 90-day pool `011F17-0F9CE4-E03264`) to each iteration (`FL001`, `FL002`, `FL003`) to guarantee clean state isolation.
+* Include **2-3 lines of explicit justification/delta** in the campaign master `README.md` explaining what changed between Commit `X` (`FL001`) and Commit `Y` (`FL002`) to justify running the new Friction Log.
 
 ### 4. Narrative Intent vs. Executed Mechanism (Semantic Drift Check)
 * **Never accept `exit 0` as proof of success:** A command returning 0 only proves valid syntax, not that the author's educational goal was achieved.
@@ -84,8 +84,19 @@ This skill automates the process of going through a Google Codelab, reproducing 
 * If the repository contains `docs/CONSTITUTION.md` or `docs/SPEC.md` (or `workshop/SKELETON.md`), the FL agent MUST verify step compliance against them.
 * At the conclusion of every Codelab page in `FRICTION_LOG/XX.md`, the agent MUST write a **160-character Tweet Checkpoint** answering:
   `🐦 Constitution/Spec Tweet: [Yes/No + brief rationale <= 160 chars]`
-* Example:
-  `🐦 Tweet: ✅ Step 6 fully adheres to Constitution Art. 10 (compose.prod.yaml sidecars active) and Spec: web, worker, and proxy containers all running.`
+
+### 12. Mandatory Kickoff Triad: Interactive Agreement Before Reproduction
+* **The agent is STRICTLY FORBIDDEN from beginning codelab reproduction without agreeing on the Kickoff Triad with the user:**
+  1. **Tester Identity**: Inspect `gcloud auth list` and present selectable active identities (e.g. `ricc@google.com`, `rubycon.italy@gmail.com`).
+  2. **Billing Account**: Confirm the active Billing Account ID (e.g. 90-day sandbox pool `011F17-0F9CE4-E03264`).
+  3. **GCP Project ID**: Agree on whether the agent should autonomously create a fresh virgin project under that billing account (`<slug>-fl<NN>-<random>`) or use an explicit virgin project ID provided by the user.
+* **No Assumption Rule**: Do NOT blindly recycle previous `.env` files or assume an expired project is valid. Lock the triad with the user first!
+* Once the Kickoff Triad is agreed, the agent records it in `.env.fl` and executes autonomously without pausing between steps.
+
+### 13. Skill Version & Machine-Readable Telemetry Tracking
+* Telemetry format (`friction_log.yaml` / `friction_log.json`, `apiVersion: devrel.google.com/v2alpha1`) was introduced in skill **`v0.3.0`**.
+* Explicit tracking of `environment.skill.name` and `environment.skill.version` is mandatory starting from **`v0.3.1`** / **`v0.3.2`**.
+* Every Friction Log artifact (`.env.fl`, `README.md`, `FRICTION_LOG.md`, `friction_log.yaml`) must explicitly record the skill version.
 
 ## Core Workflow
 
@@ -120,20 +131,25 @@ When the user provides a Codelab URL, follow these exact steps. Ensure each step
     This scans `codelab/original/*.md` and **dynamically replaces the placeholder Pagella Semaforica in `README.md` with the exact `N` steps and titles**!
 3. Copy all the original markdown files into the `codelab/proposed/` directory. You will apply fixes and patches to the copies in this directory later.
 
-### Step 3: GCP Project Setup
+### Step 3: GCP Project Setup & Mandatory Kickoff Triad Agreement
 
-1. Ask the user: "Please provide a fresh/virgin GCP Project ID (with billing enabled) to avoid resource conflicts, OR a Billing Account ID."
-    * **Virgin Project Preference**: Emphasize to the user that using a brand new, empty ("virgin") project from the 90-day pool (`011F17-0F9CE4-E03264`) is strongly recommended to prevent overlapping terraform states, GKE clusters, or IAM conflicts.
+1. **Interactive Kickoff Agreement (Mandatory Stop)**:
+   The agent MUST present the Kickoff Triad options to the user and agree on:
+   * **1. Tester Identity**: Run `gcloud auth list` and present the available active identities (e.g. `ricc@google.com`, `rubycon.italy@gmail.com`). Ask the user which identity to use.
+   * **2. Billing Account ID**: Ask the user for the active Billing Account ID (or confirm the 90-day pool default, e.g. `011F17-0F9CE4-E03264`).
+   * **3. Virgin GCP Project ID**:
+     - *Option A (Recommended)*: Autonomous Project Creation — the agent creates a brand-new virgin project (e.g. `<codelab-slug>-fl<NN>-<random>`) and links it to the billing account.
+     - *Option B*: User provides a pre-created virgin project ID with billing already enabled.
+   * **Gatekeeper Invariant**: **DO NOT PROCEED to Step 4** until the user has explicitly confirmed the Identity, Billing Account, and Project ID plan.
 2. If the user provides an existing `PROJECT_ID`:
-    * Verify that the project exists and has active billing associated (e.g., using `gcloud beta billing projects describe <PROJECT_ID>`).
-    * **DO NOT PROCEED** to Step 4 until you have verified that billing is correctly linked. If billing is missing or disabled, stop and ask the user to fix it.
-    * Save it to the `.env.fl` file and proceed to Step 4.
-3. If the user provides a Billing Account ID without a project, use `gcloud` commands to autonomously:
-    * Create a new GCP project (generate a sensible, unique project ID).
-    * Link the newly created project to the provided Billing Account ID (`gcloud beta billing projects link <PROJECT_ID> --billing-account <ACCOUNT_ID>`).
-    * Verify that the billing is correctly linked. **DO NOT PROCEED** until billing is active.
-    * Save the newly created `PROJECT_ID` to the `.env.fl` file.
-4. **Automation Mandate**: From this point forward, automate as much as you reasonably can without asking for permission between steps.
+   * Verify that the project exists, has active billing associated (`gcloud beta billing projects describe <PROJECT_ID>`), and contains no pre-existing colliding resources.
+   * Save it to `.env.fl` and `friction_log.yaml` and proceed to Step 4.
+3. If the user approves autonomous project creation:
+   * Use `gcloud` to create the project: `gcloud projects create <PROJECT_ID> --name="FL <SLUG>"`.
+   * Link billing: `gcloud beta billing projects link <PROJECT_ID> --billing-account=<BILLING_ACCOUNT_ID>`.
+   * Verify billing is active. **DO NOT PROCEED** until verified.
+   * Save configuration to `.env.fl` and `friction_log.yaml`.
+4. **Autonomous Execution Mandate**: Once the Kickoff Triad is locked in `.env.fl`, execute all codelab pages autonomously without stopping between steps.
 
 ### Step 4: Autonomous Execution, Logging, and Repo Analysis (The 6-Question Step Audit)
 
@@ -192,7 +208,7 @@ Must contain the following exact rows:
 | **TESTER_IDENTITY** | `<EMAIL>` | Identity / gcloud configuration used |
 | **CODELAB_URL** | `[Link](https://...)` | Staging / Production URL & Google3 CL |
 | **REPO_COMMIT_HOOK** | `[repo@SHA](https://...)` | **Commit Timestamp:** `YYYY-MM-DD HH:MM:SS TZ` (`git log -1 --format="%h (%ci)"`) |
-| **TRACKING_ISSUES** | `[b/ID](http://b/...)` \| `[GHI #N](https://...)` | Attached PR: `[PR #M](https://...)` \| Hotlist `#8950858` |
+| **TRACKING_ISSUES** | `[b/ID](http://b/...)` \| `[GHI/GLI #N](https://...)` | Attached PR/MR: `[PR #M](https://...)` \| Hotlist `#8950858` |
 | **OVERALL_STATUS** | `🔴 RED` / `🟡 YELLOW` / `🟢 GREEN` | Summary score & blocker count |
 
 #### 2. Step-by-Step Scorecard Table (Traffic Light Vote Per Step)
@@ -214,7 +230,7 @@ This manifest MUST record:
 - **`ai_runner`**: AI Harness used (`Antigravity`, `Gemini CLI`, `Claude Code`), harness version, model string (`gemini-2.5-pro`), and model pool.
 - **`human_intervention`**: Total prompts exchanged, number of manual unblocks by the human, and a 1-line summary of human assistance.
 - **`steps`**: Granular array of steps with duration in seconds, errors/warnings count, semantic drift flag, captured screenshots, and the 160-char tweet checkpoint.
-- **`bugs_logged`**: Tracked bug IDs, severities, and GHI / Buganizer links.
+- **`bugs_logged`**: Tracked bug IDs, severities, and GHI / GLI / Buganizer links.
 
 **Mandatory Validation & Autofill Tool**:
 The agent MUST run the included validator to ensure schema compliance before finalizing the log:

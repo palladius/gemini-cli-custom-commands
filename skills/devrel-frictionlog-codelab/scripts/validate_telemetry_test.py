@@ -34,6 +34,10 @@ def test_full_valid_yaml():
                 "harness": "Antigravity",
                 "model": "gemini-2.5-pro"
             },
+            "skill": {
+                "name": "devrel-frictionlog-codelab",
+                "version": "0.3.2"
+            },
             "gcp": {
                 "project_id": "rails8-ws-fl101"
             }

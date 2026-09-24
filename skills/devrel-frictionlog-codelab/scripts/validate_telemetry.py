@@ -34,6 +34,8 @@ MANDATORY_FIELDS = [
     ("environment.git.branch", "unknown", str),
     ("environment.ai_runner.harness", "Antigravity", str),
     ("environment.ai_runner.model", "unknown-model", str),
+    ("environment.skill.name", "devrel-frictionlog-codelab", str),
+    ("environment.skill.version", "0.3.2", str),
     ("environment.gcp.project_id", "unknown-project", str),
     ("human_intervention.prompts_exchanged", 0, int),
     ("human_intervention.manual_unblocks_count", 0, int),

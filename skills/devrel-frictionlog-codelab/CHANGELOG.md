@@ -1,5 +1,12 @@
 # Changelog - devrel-frictionlog-codelab Skill
 
+## [0.3.2] - 2026-09-24
+
+- 🤝 **Mandatory Kickoff Triad Agreement & Virgin Baselines**:
+  - **Interactive Kickoff Agreement**: The agent MUST interactively present available GCP identities (`gcloud auth list`), confirm the Billing Account ID, and agree on whether to create a fresh virgin project before executing any codelab steps.
+  - **Virgin Baseline Mandate**: Every FL reproduction MUST start from a clean local directory/worktree and a brand-new, empty virgin GCP project with zero pre-enabled APIs or leftover resources.
+  - **Skill Version Tracking in Telemetry**: Mandated `environment.skill.name` and `environment.skill.version` in `friction_log.yaml` / `.json` manifests (enforced by `scripts/validate_telemetry.py`).
+
 ## [0.3.1] - 2026-09-24
 
 - 📊 **Deterministic Machine-Readable Telemetry & Validator Suite**:
