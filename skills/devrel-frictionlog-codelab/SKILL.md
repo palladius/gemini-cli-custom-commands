@@ -33,13 +33,9 @@ This skill automates the process of going through a Google Codelab, reproducing 
 * Include **2-3 lines of explicit justification/delta** explaining what changed between Commit `X` (`FL001`) and Commit `Y` (`FL002`) to justify running the new Friction Log.
 
 ### 4. Narrative Intent vs. Executed Mechanism (Semantic Drift Check)
-* **Never accept `exit 0` as proof of success.** A command returning exit code 0 only proves valid syntax, not that the author's declared intent was actually fulfilled.
-* **The Semantic Drift Check (Thought Protocol in High Thinking Mode):**
-  When analyzing any step, the agent must contrast:
-  1. **Narrative Promise:** What does the page title, introduction, and architecture diagram promise the student? (e.g., a specific design pattern, runtime architecture, security mechanism, or persistence tier).
-  2. **Executed Mechanism:** What command or configuration does the codelab *actually* execute? Does the command deliver the promised architecture, or does it take a silent shortcut that bypasses what is being taught?
-* **If the executed mechanism fails to implement the declared architecture, flag a P1 Semantic Drift Defect.**
-* **Empirical State Verification:** Always formulate an assertion that queries the underlying platform/system state directly (inspecting live runtime specifications, configurations, or resources) rather than relying solely on the command's exit code.
+* **Never accept `exit 0` as proof of success:** A command returning 0 only proves valid syntax, not that the author's educational goal was achieved.
+* **The Semantic Drift Invariant:** Before certifying any step, contrast the **Narrative Promise** (what the title, prose, and diagrams claim to teach) with the **Executed Mechanism** (what the commands actually perform). If the commands take a degraded shortcut or bypass the promised architecture, flag a **P1 Semantic Drift Defect**.
+* **Empirical State Verification:** Always formulate an assertion that queries the live platform state directly to prove architectural compliance, rather than relying on command exit codes.
 
 ### 5. The "Less is More" Sacred Covenant: High Friction for Codelab Edits
 * **Every single line added to student-facing codelab text must be weighed with a heavy heart.**
