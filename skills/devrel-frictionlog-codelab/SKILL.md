@@ -1,7 +1,9 @@
 ---
 name: devrel-frictionlog-codelab
-version: 0.3.5
-description: 🥑 [DevRel] Automates friction logging for Google Codelabs (v2.0) with multi-instance collision guards, reentrant gcloud configs, pre-teardown UAT gates, and deterministic telemetry.
+description: >-
+  🥑 [DevRel] Automates friction logging for Google Codelabs (v2.0) with multi-instance collision guards, reentrant gcloud configs, pre-teardown UAT gates, and deterministic telemetry.
+metadata:
+  version: 0.3.5
 ---
 
 # DevRel Friction Log Codelab

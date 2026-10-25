@@ -1,10 +1,7 @@
 ---
 name: cloud-build-investigation
-description: 🏗️ |
-  Expert-level SRE skill for Google Cloud Build (GCB) and Cloud Run investigations.
-  Activate when user mentions Cloud Build failures, deployment issues to Cloud Run,
-  or needs help debugging GCB pipelines. Specializes in correlating git commits with
-  build failures, analyzing build logs, and providing systematic debugging workflows.
+description: >-
+  🏗️ | Expert-level SRE skill for Google Cloud Build (GCB) and Cloud Run investigations. Activate when user mentions Cloud Build failures, deployment issues to Cloud Run, or needs help debugging GCB pipelines. Specializes in correlating git commits with build failures, analyzing build logs, and providing systematic debugging workflows.
 metadata:
   version: 0.1.0
 compatibility: Gemini CLI

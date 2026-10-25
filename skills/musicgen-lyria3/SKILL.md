@@ -1,6 +1,7 @@
 ---
 name: musicgen-lyria3
-description: Generate 30-second music clips (default) or 2-3 minute full songs with the Lyria 3.5 model family from Google GenAI. Supports creating music with lyrics, vocals, and specific genres from text prompts. Automatically embeds rich ID3v2.3 tags (lyrics in USLT/COMM, default Drake Riccardo meme artist avatar, album, metadata) and saves matching lyrics (.txt) in the same directory.
+description: >-
+  Generate 30-second music clips (default) or 2-3 minute full songs with the Lyria 3.5 model family from Google GenAI. Supports creating music with lyrics, vocals, and specific genres from text prompts. Automatically embeds rich ID3v2.3 tags (lyrics in USLT/COMM, default Drake Riccardo meme artist avatar, album, metadata) and saves matching lyrics (.txt) in the same directory.
 metadata:
   version: 0.1.0
 compatibility: Gemini CLI

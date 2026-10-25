@@ -1,6 +1,7 @@
 ---
 name: conductor-worktree-hitl
-description: "Manage asynchronous task implementation in Git Worktrees using Conductor++ and GitHub Issues for low-friction HITL choice prompting and screenshot verification."
+description: >-
+  Manage asynchronous task implementation in Git Worktrees using Conductor++ and GitHub Issues for low-friction HITL choice prompting and screenshot verification.
 meta:
   version: 2.1.1
 ---
