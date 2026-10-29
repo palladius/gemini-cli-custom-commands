@@ -94,7 +94,10 @@ Injects GitHub Issue subtasks directly into a track's `"tasks"` metadata.
 *   **Run**: `./conductor/bin/inject-ghi --issue <issue_number>`
 
 ### 4. `poll_ghi_questions.py`
-Monitors GitHub Issues for comments starting with `[ANSWER]`. When found, it parses the payload and marks the corresponding question in `metadata.json` as answered, allowing the subagent to wake up and resume.
+Monitors GitHub Issues for comments starting with `[ANSWER]`. When found, it parses the payload, marks the corresponding question in `metadata.json` as answered, and automatically removes the `agy-request-info` label from the GitHub Issue, allowing the subagent to wake up and resume. While a question is open (`awaiting_human`), it ensures the `agy-request-info` label (`#FBCA04`) is applied on the issue.
+
+### 5. `/conductor-converge` Gate (v2.3.0)
+Before committing locally and marking a track complete, subagents execute the `conductor-converge` audit against `spec.md`, `plan.md`, and `conductor/code_styleguides/*.md`. Any `missing`, `partial`, or `contradicts` gap is appended as a new `## Phase N: Convergence` section at the bottom of `plan.md` until `metadata.json["convergence"]["status"] == "CONVERGED"`.
 
 ---
 

@@ -6,6 +6,14 @@ This changelog is contextually bound to the Condutree skill itself. Version numb
 
 ---
 
+## [2.3.0] - 2026-10-29
+### Added
+- 🎯 **Spec Kit Hybridization & `/conductor-converge` Gate**: Added 3-way pre-code Assessment Verdict (`go` / `needs-clarification` / `non-automateable`), `[P]` parallel task marker support, and mandatory `/conductor-converge` pre-commit audit in `SKILL.md` and `docs/USER_MANUAL.md`.
+- 🏷️ **Unified `agy-request-info` GHI Label Sync**: Updated `poll_ghi_questions.py` and `SKILL.md` to automatically apply the `agy-request-info` (`#FBCA04`) label on GitHub Issues when a subagent is `awaiting_human` (`needs-clarification`) and remove it automatically when `[ANSWER]` arrives.
+- 📊 **Convergence Badges in Inspector & Status**: Updated `conductor-inspector` (`v2.3.0`) and `git_status_patched.py` to display `✅ CONV`, `🔄 GAPS`, and `🟡 ?INFO` indicators, with unit test coverage in `git_status_patched_test.py`.
+
+---
+
 ## [2.2.0] - 2026-07-27
 ### Fixed
 - 🔧 **Conductor v1/v2 Metadata Compatibility**: Fixed `conductor-inspector` crashing with `METADATA_ERROR ('str' object has no attribute 'get')` and `METADATA_ERROR ('NoneType' object has no attribute 'get')` on Conductor v2 tracks. The `worktree` field is now handled as `dict` (with `path` or `directory` key), `str` (bare path), `None`, or `{}`. The `github_issue` field is now handled as `dict` (with `number`), `str` (URL — issue number extracted via regex), `int`, or `null`. Fix applied in 3 locations: main metadata parsing, worktree detection, and agent extraction.

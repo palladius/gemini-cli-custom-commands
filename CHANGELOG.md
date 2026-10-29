@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.55] - 2026-10-29
+### Added & Changed
+- 🎯 **New Skill `conductor-converge` (`v1.1.0`)**: Added `/conductor-converge` skill implementing GitHub Spec Kit's append-only Convergence Loop (`spec.md` + `plan.md` + `code_styleguides/` gap audit appending `## Phase N: Convergence` to `plan.md`) plus **Step 4B: Workload-Adaptive Live Runtime UAT** across 5 archetypes (Web App, Game/Canvas, CLI, Backend API/MCP, Library/Skill) to defeat "Mock Theater".
+- 🌳 **Upgraded `conductor-worktree-hitl` (`condutree` `v2.3.0`)**: Added 3-way Assessment Verdict (`go` / `needs-clarification` / `non-automateable`), `[P]` parallel task markers, automatic `agy-request-info` GitHub Issue label synchronization in `poll_ghi_questions.py`, and convergence badges (`✅ CONV`, `🔄 GAPS`, `🟡 ?INFO`) in `conductor-inspector` and `git_status_patched.py`.
+
 ## [0.3.54] - 2026-10-27
 ### Changed
 - 🧹 Migrated obsolete `.agent/` directory to canonical `.agents/` (`git mv .agent .agents`).

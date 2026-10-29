@@ -3,7 +3,7 @@ name: conductor-worktree-hitl
 description: >-
   Manage asynchronous task implementation in Git Worktrees using Conductor++ and GitHub Issues for low-friction HITL choice prompting and screenshot verification.
 meta:
-  version: 2.1.1
+  version: 2.3.0
 ---
 
 # Conductor++ Asynchronous Git Worktree & GHI HITL Skill
@@ -41,7 +41,7 @@ Before performing any task modifications, create an isolated Git Worktree:
     ```
     At startup, run a diff to make sure you use the latest version.
 
-### 2. Conductor Quality Gates & Plan Roast
+### 2. Conductor Quality Gates, Assessment Verdict & Plan Roast
 1.  Verify the track's `metadata.json` configuration. Populate the `"worktree"`, `"github_issue"`, and `"agent"` blocks. You MUST explicitly set `"agent": "<AgentName>"` at the root level of `metadata.json` so that the conductor inspector knows exactly which agent is assigned to the track, avoiding incorrect inference from reused or generic worktree directory paths.
 2.  **Injecting GitHub Issues as Tasks**: If specific tasks inside the track are tracked in separate GitHub Issues, use the `inject-ghi` utility to import them into the track's `"tasks"` database:
     ```bash
@@ -50,17 +50,27 @@ Before performing any task modifications, create an isolated Git Worktree:
 3.  **Handling Task-Specific Issues**:
     - If a task has a `github_issue_url` specified, fetch the issue's contents and comments for context or human input before starting.
     - When the task is complete, post a confirmation comment on the issue page.
-4.  Before coding, execute the Conductor `/roastme` command to analyze the `plan.md` against product guidelines and code style rules.
-5.  If `/roastme` identifies unresolved design constraints, proceed to the communication protocol.
+4.  **Cross-Artifact Consistency & `/roastme` Gate**: Before coding, execute the Conductor `/roastme` command to analyze `plan.md` against `spec.md`, product guidelines, and code style rules:
+    - Verify that every Functional Requirement and Acceptance Criterion in `spec.md` maps to at least one actionable task in `plan.md`.
+    - Mark independent tasks that touch disjoint files with `[P]` (`- [ ] Task: [P] ...`) so Agostina can parallelize work across subagent worktrees when beneficial.
+5.  **3-Way Assessment Verdict (`go` | `needs-clarification` | `non-automateable`)**:
+    - 🟢 **`go` (`agy-actionable`)**: Spec and plan are clear and aligned. Proceed to implementation.
+    - 🟡 **`needs-clarification` (`agy-request-info`)**: Unresolved design constraints or ambiguities exist. Proceed immediately to Section 3 (`ask_me` + `agy-request-info` GHI label).
+    - 🔴 **`non-automateable` (`agy-non-automateable`)**: Task strictly requires physical human presence or private hardware; tag the GHI with `agy-non-automateable` and halt cleanly.
 
-### 3. Asynchronous Multiple-Choice Choice (`ask_me`)
-If you require clarification on a design choice, UI asset, or logic condition:
-1.  **Format the Question**: Create a numbered multiple-choice list with clear context and a write-in option (option 4/other).
+### 3. Asynchronous Multiple-Choice Choice (`ask_me` & `agy-request-info` Sync)
+If you require clarification on a design choice, UI asset, or logic condition (`needs-clarification`):
+1.  **Format the Question**: Create a numbered multiple-choice list with clear context, recommended option first (`(Recommended)`), and a write-in option (option 4/other).
 2.  **Attach Screenshots (UI Tasks)**:
     -   If the query is visual, capture a screenshot of the local preview or simulator.
     -   Save the screenshot to the track's assets folder (e.g. `subtasks/TODAY/assets/`).
     -   Reference the raw GitHub URL or path of the screenshot in the comment.
-3.  **Publish to GitHub**: Post the comment to the assigned GitHub Issue with the prefix `[QUESTION][<your-agent-role>]`.
+3.  **Publish to GitHub & Tag `agy-request-info`**:
+    -   Post the comment to the assigned GitHub Issue with the prefix `[QUESTION][<your-agent-role>]`.
+    -   Tag the GitHub Issue with the unified clarification label **`agy-request-info`** so cross-repo triage (`gh todo-here agy-request-info` / `giringiro`) surfaces it immediately:
+        ```bash
+        gh issue edit <issue_number> --add-label "agy-request-info"
+        ```
 4.  **Local Memory Registry**: Append the question structure to the `"active_questions"` array in `metadata.json`:
     ```json
     "active_questions": [
@@ -73,19 +83,22 @@ If you require clarification on a design choice, UI asset, or logic condition:
     ]
     ```
     *(For complete schema structure, see [references/question-awaiting.json](./references/question-awaiting.json) for the open question format, and [references/question-answered.json](./references/question-answered.json) for the answered question format).*
-5.  **Enter Polling Sleep**: Periodically read `metadata.json` (every 15 seconds). Once the local polling script updates the question status to `"answered"`, extract the `"answer"` value, clear the question from the local queue, and resume.
+5.  **Enter Polling Sleep**: Periodically read `metadata.json` (every 15 seconds). Once `poll_ghi_questions.py` parses `[ANSWER]` from the GHI, it updates the question status to `"answered"` and automatically removes the `agy-request-info` label from the GitHub Issue. Extract the `"answer"` value, clear the question from the local queue, and resume.
 
-### 4. Verification & Local Commit (No Remote Pushing)
+### 4. Convergence Gate (`/conductor-converge`) & Local Commit (No Remote Pushing)
 1.  **The Real-Code Mandate (No Doc-Only PRs)**: When implementing a feature or bugfix track, you MUST produce tangible, meaningful changes to the actual executable codebase (e.g., application scripts, Python algorithms, React UI code). Under no circumstances should a feature track finish with only markdown docs or Conductor metadata changes—no "Jerry-work" allowed!
 2.  **Mandatory Test Expansion**: Every feature or bugfix track MUST introduce new automated unit tests or expand existing test suites (e.g., `tests/test_*.py`) proving that the new code is fully functional and regression-proof.
 3.  Implement the feature and verify all unit tests pass cleanly.
 4.  Run the linting suite and verify test coverage meets style requirements (>80%).
-5.  **Commit Locally (Do NOT Push)**: Stage and commit all code changes locally to your feature branch. Under no circumstances should you run `git push`.
-6.  Attach a detailed summary using Git Notes:
+5.  **Mandatory Convergence Audit (`/conductor-converge`)**:
+    -   *Checkbox completion (`[x]`) is not evidence.* Before marking the track complete, invoke or execute the **`conductor-converge`** skill protocol against `spec.md`, `plan.md`, and `conductor/code_styleguides/*.md`.
+    -   If any `missing`, `partial`, or `contradicts` gaps are detected, append them under `## Phase N: Convergence` at the bottom of `plan.md` (append-only, never rewriting prior phases) and implement them until `/conductor-converge` reports **`✅ Converged`** (`metadata.json["convergence"]["status"] == "CONVERGED"`).
+6.  **Commit Locally (Do NOT Push)**: Stage and commit all code changes locally to your feature branch. Under no circumstances should you run `git push`.
+7.  Attach a detailed summary using Git Notes:
     ```bash
     git notes add -m "Task completed: <summary>" <commit-hash>
     ```
-7.  Mark the task status as `completed` in `metadata.json`. The coordinator (Agostina) will handle checking out the branch, validation, merging, and final pushing.
+8.  Mark the task status as `completed` in `metadata.json`. The coordinator (Agostina) will handle checking out the branch, validation, merging, and final pushing.
 
 ---
 

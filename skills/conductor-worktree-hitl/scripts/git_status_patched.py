@@ -176,14 +176,48 @@ def find_matching_track(wt_path, wt_branch, tracks_meta):
         if track_id and track_id in wt_dir_name:
             return meta
             
-    # 4. Match by github issue number in worktree directory name
+        # 4. Match by github issue number in worktree directory name
     for meta in tracks_meta:
         issue_cfg = meta.get("github_issue", {})
-        issue_num = issue_cfg.get("number")
+        issue_num = None
+        if isinstance(issue_cfg, dict):
+            issue_num = issue_cfg.get("number")
+        elif isinstance(issue_cfg, int):
+            issue_num = issue_cfg
+        elif isinstance(issue_cfg, str):
+            if issue_cfg.isdigit():
+                issue_num = int(issue_cfg)
+            else:
+                m = re.search(r"/issues/(\d+)", issue_cfg)
+                if m:
+                    issue_num = int(m.group(1))
         if issue_num and f"issue-{issue_num}" in wt_dir_name:
             return meta
             
     return None
+
+
+def format_convergence_badge(meta):
+    """Return a concise convergence/clarification status string from track metadata."""
+    if not isinstance(meta, dict):
+        return "-"
+    active_qs = meta.get("active_questions", [])
+    if any(isinstance(q, dict) and q.get("status") == "awaiting_human" for q in active_qs):
+        return "🟡 ?INFO"
+    verdict = str(meta.get("assessment_verdict") or "").lower()
+    if verdict == "needs-clarification":
+        return "🟡 ?INFO"
+    conv = meta.get("convergence")
+    conv_status = ""
+    if isinstance(conv, dict):
+        conv_status = str(conv.get("status") or "").upper()
+    elif isinstance(conv, str):
+        conv_status = conv.upper()
+    if conv_status == "CONVERGED":
+        return "✅ CONV"
+    if conv_status in ("GAPS_FOUND", "GAPS_APPENDED"):
+        return "🔄 GAPS"
+    return "-"
 
 def main():
     repo_root = find_repo_root()
@@ -281,6 +315,10 @@ def main():
                 
         if current_task:
             print(f"{indent}📌 Current Task: {current_task}")
+            
+        conv_badge = format_convergence_badge(meta)
+        if conv_badge != "-":
+            print(f"{indent}🎯 Gate / Convergence: {conv_badge}")
             
         if is_dirty and git_details:
             print(f"{indent}📂 Uncommitted Changes:")

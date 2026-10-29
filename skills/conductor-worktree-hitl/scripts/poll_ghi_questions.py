@@ -4,7 +4,60 @@ import sys
 import json
 import subprocess
 import re
-from datetime import datetime
+from datetime import datetime, timezone
+
+CLARIFICATION_LABEL = "agy-request-info"
+CLARIFICATION_COLOR = "FBCA04"
+CLARIFICATION_DESC = "Requires owner clarification or missing hints"
+
+
+def extract_issue_number(gh_issue_raw):
+    """Extract integer issue number from dict, int, or URL string."""
+    if isinstance(gh_issue_raw, int):
+        return gh_issue_raw
+    if isinstance(gh_issue_raw, dict):
+        num = gh_issue_raw.get("number")
+        if isinstance(num, int):
+            return num
+        if isinstance(num, str) and num.isdigit():
+            return int(num)
+    if isinstance(gh_issue_raw, str):
+        if gh_issue_raw.isdigit():
+            return int(gh_issue_raw)
+        m = re.search(r"/issues/(\d+)", gh_issue_raw)
+        if m:
+            return int(m.group(1))
+    return None
+
+
+def sync_issue_clarification_label(issue_number, needs_clarification):
+    """Add or remove the unified 'agy-request-info' label on a GitHub Issue."""
+    if not issue_number:
+        return
+    try:
+        if needs_clarification:
+            subprocess.run(
+                [
+                    "gh", "label", "create", CLARIFICATION_LABEL,
+                    "--color", CLARIFICATION_COLOR,
+                    "--description", CLARIFICATION_DESC,
+                    "--force"
+                ],
+                capture_output=True, text=True
+            )
+            subprocess.run(
+                ["gh", "issue", "edit", str(issue_number), "--add-label", CLARIFICATION_LABEL],
+                capture_output=True, text=True
+            )
+            print(f"   🏷️  Applied label '{CLARIFICATION_LABEL}' to Issue #{issue_number}")
+        else:
+            subprocess.run(
+                ["gh", "issue", "edit", str(issue_number), "--remove-label", CLARIFICATION_LABEL],
+                capture_output=True, text=True
+            )
+            print(f"   🏷️  Removed label '{CLARIFICATION_LABEL}' from Issue #{issue_number} (answered)")
+    except Exception as e:
+        print(f"   ⚠️ Could not sync label '{CLARIFICATION_LABEL}' on Issue #{issue_number}: {e}", file=sys.stderr)
 
 def find_conductor_dir():
     # Look for the nearest 'conductor' folder going up the directory tree
@@ -67,8 +120,8 @@ def update_conductor_tracks(issue_number, agent_name, answer_text):
                     meta = json.load(f)
                 
                 # Check if this track is associated with the target GitHub issue
-                gh_issue = meta.get("github_issue", {})
-                if gh_issue.get("number") == issue_number:
+                issue_num = extract_issue_number(meta.get("github_issue"))
+                if issue_num == issue_number:
                     updated = False
                     for q in meta.get("active_questions", []):
                         if q.get("agent") == agent_name and q.get("status") == "awaiting_human":
@@ -77,10 +130,15 @@ def update_conductor_tracks(issue_number, agent_name, answer_text):
                             updated = True
                     
                     if updated:
-                        meta["updated_at"] = datetime.utcnow().isoformat() + "Z"
+                        meta["updated_at"] = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
                         with open(metadata_path, "w") as f:
                             json.dump(meta, f, indent=2)
                         print(f"   💾 Updated local track metadata: {track_id}/metadata.json")
+                        still_awaiting = any(
+                            q.get("status") == "awaiting_human" for q in meta.get("active_questions", [])
+                        )
+                        if not still_awaiting:
+                            sync_issue_clarification_label(issue_number, False)
             except Exception as e:
                 print(f"   ⚠️ Error updating track metadata for {track_id}: {e}", file=sys.stderr)
 def get_issues_awaiting_human():
@@ -105,8 +163,7 @@ def get_issues_awaiting_human():
                 active_qs = meta.get("active_questions", [])
                 has_awaiting = any(q.get("status") == "awaiting_human" for q in active_qs)
                 
-                gh_issue = meta.get("github_issue", {})
-                issue_num = gh_issue.get("number")
+                issue_num = extract_issue_number(meta.get("github_issue"))
                 
                 if has_awaiting and issue_num:
                     issues_to_poll[issue_num] = {
@@ -176,6 +233,8 @@ def process_questions():
                     update_conductor_tracks(num, agent_name, a_text)
 
         for q in questions_by_agent.values():
+            if "answer" not in q:
+                sync_issue_clarification_label(num, True)
             active_questions.append(q)
 
     # Ensure output dir exists

@@ -49,7 +49,7 @@ PINK = "\033[35m"
 DIM = "\033[2m"
 RESET = "\033[0m"
 
-VERSION = "2.2.0"
+VERSION = "2.3.0"
 
 def print_bold(text, color=""):
     print(f"{BOLD}{color}{text}{RESET}")
@@ -420,6 +420,20 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             except Exception:
                 pass
 
+        # Extract Convergence & Clarification status
+        convergence_status = None
+        if os.path.exists(metadata_path):
+            try:
+                with open(metadata_path, "r") as f:
+                    meta = json.load(f)
+                    conv = meta.get("convergence")
+                    if isinstance(conv, dict):
+                        convergence_status = conv.get("status")
+                    elif isinstance(conv, str):
+                        convergence_status = conv
+            except Exception:
+                pass
+
         track_details.append({
             "track_id": track_id,
             "status": status,
@@ -432,7 +446,8 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             "display_time": display_time,
             "effective_time": effective_time,
             "agent": agent,
-            "has_worktree": has_worktree
+            "has_worktree": has_worktree,
+            "convergence_status": convergence_status
         })
 
     # Filter completed if we only want open tracks
@@ -486,10 +501,23 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             agent_colored = f"{PINK}{agent_padded}{RESET}" if agent_str else agent_padded
             display_time_str = track.get("display_time") or "-"
             tree_str = "🌳" if track.get("has_worktree") else ""
+            conv_status = (track.get("convergence_status") or "").upper()
+            has_awaiting = any(q.get("status", "awaiting_human") == "awaiting_human" for q in (active_questions or []))
+            if has_awaiting:
+                tree_str = f"{ tree_str }🟡".strip()
+            elif conv_status == "CONVERGED":
+                tree_str = f"{ tree_str }✅".strip()
+            elif conv_status in ("GAPS_FOUND", "GAPS_APPENDED"):
+                tree_str = f"{ tree_str }🔄".strip()
             print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {agent_colored} | {display_time_str:<11} | {track_id:<50} | {tree_str:^3}")
             continue
             
         wt_suffix = " [🌳]" if track.get("has_worktree") else ""
+        conv_status = (track.get("convergence_status") or "").upper()
+        if conv_status == "CONVERGED":
+            wt_suffix += f" [{GREEN}✅ CONVERGED{RESET}]"
+        elif conv_status in ("GAPS_FOUND", "GAPS_APPENDED"):
+            wt_suffix += f" [{YELLOW}🔄 {conv_status}{RESET}]"
         print(f"🔸 Track: {BOLD}{track_id}{RESET}{wt_suffix}")
         print(f"   Status: {BOLD}{status_color}{status}{RESET}")
         if track.get("agent"):

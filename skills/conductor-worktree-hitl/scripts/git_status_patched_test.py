@@ -97,5 +97,32 @@ class TestGitStatusPatched(unittest.TestCase):
         self.assertIsNotNone(meta)
         self.assertEqual(meta["_track_id"], "bugfix_track")
 
+    def test_format_convergence_badge(self):
+        self.assertEqual(
+            git_status_patched.format_convergence_badge(
+                {"active_questions": [{"status": "awaiting_human"}]}
+            ),
+            "🟡 ?INFO"
+        )
+        self.assertEqual(
+            git_status_patched.format_convergence_badge(
+                {"assessment_verdict": "needs-clarification"}
+            ),
+            "🟡 ?INFO"
+        )
+        self.assertEqual(
+            git_status_patched.format_convergence_badge(
+                {"convergence": {"status": "CONVERGED"}}
+            ),
+            "✅ CONV"
+        )
+        self.assertEqual(
+            git_status_patched.format_convergence_badge(
+                {"convergence": {"status": "GAPS_FOUND"}}
+            ),
+            "🔄 GAPS"
+        )
+        self.assertEqual(git_status_patched.format_convergence_badge({}), "-")
+
 if __name__ == "__main__":
     unittest.main()
