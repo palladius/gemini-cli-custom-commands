@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.56] - 2026-10-30
+### Changed
+- 🧹♻️ De-bloated `GEMINI.md` (`68 -> 17` lines, `-75%`, `0.05` bloat prob), added `AGENTS.md -> GEMINI.md` symlink and `.agents/rules/prompt-anti-bloat.md`.
+
 ## [0.3.55] - 2026-10-29
 ### Added & Changed
 - 🎯 **New Skill `conductor-converge` (`v1.1.0`)**: Added `/conductor-converge` skill implementing GitHub Spec Kit's append-only Convergence Loop (`spec.md` + `plan.md` + `code_styleguides/` gap audit appending `## Phase N: Convergence` to `plan.md`) plus **Step 4B: Workload-Adaptive Live Runtime UAT** across 5 archetypes (Web App, Game/Canvas, CLI, Backend API/MCP, Library/Skill) to defeat "Mock Theater".
