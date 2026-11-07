@@ -92,13 +92,31 @@ If you require clarification on a design choice, UI asset, or logic condition (`
 4.  Run the linting suite and verify test coverage meets style requirements (>80%).
 5.  **Mandatory Convergence Audit (`/conductor-converge`)**:
     -   *Checkbox completion (`[x]`) is not evidence.* Before marking the track complete, invoke or execute the **`conductor-converge`** skill protocol against `spec.md`, `plan.md`, and `conductor/code_styleguides/*.md`.
-    -   If any `missing`, `partial`, or `contradicts` gaps are detected, append them under `## Phase N: Convergence` at the bottom of `plan.md` (append-only, never rewriting prior phases) and implement them until `/conductor-converge` reports **`✅ Converged`** (`metadata.json["convergence"]["status"] == "CONVERGED"`).
+    -   If any `missing`, `partial`, or `contradicts` gaps are detected:
+        -   Append them under `## Phase N: Convergence` at the bottom of `plan.md` (append-only, never rewriting prior phases).
+        -   Implement them until `/conductor-converge` reports **`💎 Converged`** (`metadata.json["convergence"]["status"] in ("CONVERGED", "CNVERGED")`).
 6.  **Commit Locally (Do NOT Push)**: Stage and commit all code changes locally to your feature branch. Under no circumstances should you run `git push`.
 7.  Attach a detailed summary using Git Notes:
     ```bash
     git notes add -m "Task completed: <summary>" <commit-hash>
     ```
 8.  Mark the task status as `completed` in `metadata.json`. The coordinator (Agostina) will handle checking out the branch, validation, merging, and final pushing.
+
+### 5. Worktree Teardown & Remote Handoff (Fast-Cleanup Protocol)
+When a worktree needs to be archived or handed off cleanly without immediate local merging (or to free up local `.worktrees/` disk/clutter):
+1.  **Push Remote Branch**: Push the worktree's feature branch to `origin` so no commits are ever lost locally:
+    ```bash
+    git -C .worktrees/issue-<number>-<role> push -u origin feature/issue-<number>
+    ```
+2.  **Create GHI ("Clean this up")**: Open a GitHub Issue (or comment on the existing `#<number>`) titled `"🧹 Clean this up: <short description>"` documenting:
+    - The remote branch name (`origin/feature/issue-<number>`) and latest commit SHA.
+    - Summary of completed phases/commits inside the branch and any untracked artifacts noted before removal.
+    - What remains to be merged, tested, or cleaned up.
+3.  **Remove the Worktree (`rm -rf`)**: Once the remote branch and GHI are safely recorded, delete the worktree directory and prune git worktree metadata:
+    ```bash
+    rm -rf .worktrees/issue-<number>-<role>
+    git worktree prune
+    ```
 
 ---
 
