@@ -6,6 +6,12 @@ This changelog is contextually bound to the Condutree skill itself. Version numb
 
 ---
 
+## [2.3.1] - 2026-11-07
+### Added
+- 💎 **Prismatic Convergence Badge & Typo Tolerance**: Updated `conductor-inspector` (v2.3.1) and `git_status_patched.py` to display the faceted prism emoji `💎` (`💎 CONVERGED` / `💎 CONV`) and support both `"CONVERGED"` and `"CNVERGED"` status strings, with full unit test coverage.
+
+---
+
 ## [2.3.0] - 2026-10-29
 ### Added
 - 🎯 **Spec Kit Hybridization & `/conductor-converge` Gate**: Added 3-way pre-code Assessment Verdict (`go` / `needs-clarification` / `non-automateable`), `[P]` parallel task marker support, and mandatory `/conductor-converge` pre-commit audit in `SKILL.md` and `docs/USER_MANUAL.md`.

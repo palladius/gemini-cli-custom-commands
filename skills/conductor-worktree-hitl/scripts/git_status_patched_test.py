@@ -114,7 +114,19 @@ class TestGitStatusPatched(unittest.TestCase):
             git_status_patched.format_convergence_badge(
                 {"convergence": {"status": "CONVERGED"}}
             ),
-            "✅ CONV"
+            "💎 CONV"
+        )
+        self.assertEqual(
+            git_status_patched.format_convergence_badge(
+                {"convergence": {"status": "CNVERGED"}}
+            ),
+            "💎 CONV"
+        )
+        self.assertEqual(
+            git_status_patched.format_convergence_badge(
+                {"convergence": "CONVERGED"}
+            ),
+            "💎 CONV"
         )
         self.assertEqual(
             git_status_patched.format_convergence_badge(

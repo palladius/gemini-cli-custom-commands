@@ -213,8 +213,8 @@ def format_convergence_badge(meta):
         conv_status = str(conv.get("status") or "").upper()
     elif isinstance(conv, str):
         conv_status = conv.upper()
-    if conv_status == "CONVERGED":
-        return "✅ CONV"
+    if conv_status in ("CONVERGED", "CNVERGED"):
+        return "💎 CONV"
     if conv_status in ("GAPS_FOUND", "GAPS_APPENDED"):
         return "🔄 GAPS"
     return "-"

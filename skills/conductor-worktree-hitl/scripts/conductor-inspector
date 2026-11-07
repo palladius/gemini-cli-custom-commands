@@ -49,7 +49,7 @@ PINK = "\033[35m"
 DIM = "\033[2m"
 RESET = "\033[0m"
 
-VERSION = "2.3.0"
+VERSION = "2.3.1"
 
 def print_bold(text, color=""):
     print(f"{BOLD}{color}{text}{RESET}")
@@ -505,8 +505,8 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             has_awaiting = any(q.get("status", "awaiting_human") == "awaiting_human" for q in (active_questions or []))
             if has_awaiting:
                 tree_str = f"{ tree_str }🟡".strip()
-            elif conv_status == "CONVERGED":
-                tree_str = f"{ tree_str }✅".strip()
+            elif conv_status in ("CONVERGED", "CNVERGED"):
+                tree_str = f"{ tree_str }💎".strip()
             elif conv_status in ("GAPS_FOUND", "GAPS_APPENDED"):
                 tree_str = f"{ tree_str }🔄".strip()
             print(f"{status_colored} | {bar} | {ratio_str:>5} | {ghi_str:^5} | {agent_colored} | {display_time_str:<11} | {track_id:<50} | {tree_str:^3}")
@@ -514,8 +514,8 @@ def inspect_repository(repo_path, show_all=True, short_mode=False):
             
         wt_suffix = " [🌳]" if track.get("has_worktree") else ""
         conv_status = (track.get("convergence_status") or "").upper()
-        if conv_status == "CONVERGED":
-            wt_suffix += f" [{GREEN}✅ CONVERGED{RESET}]"
+        if conv_status in ("CONVERGED", "CNVERGED"):
+            wt_suffix += f" [{GREEN}💎 CONVERGED{RESET}]"
         elif conv_status in ("GAPS_FOUND", "GAPS_APPENDED"):
             wt_suffix += f" [{YELLOW}🔄 {conv_status}{RESET}]"
         print(f"🔸 Track: {BOLD}{track_id}{RESET}{wt_suffix}")
