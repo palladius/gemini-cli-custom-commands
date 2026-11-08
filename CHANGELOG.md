@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.57] - 2026-11-08
+### Added
+- 🧹 **Worktree Teardown & Remote Handoff (`conductor-worktree-hitl` v2.3.2)**: Documented the 3-step worktree fast-cleanup protocol in `SKILL.md` (push branch to `origin`, file `"🧹 Clean this up: ..."` GHI, and remove/prune local worktree).
+
 ## [0.3.56] - 2026-10-30
 ### Changed
 - 🧹♻️ De-bloated `GEMINI.md` (`68 -> 17` lines, `-75%`, `0.05` bloat prob), added `AGENTS.md -> GEMINI.md` symlink and `.agents/rules/prompt-anti-bloat.md`.

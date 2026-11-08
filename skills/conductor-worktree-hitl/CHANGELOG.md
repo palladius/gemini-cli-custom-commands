@@ -6,6 +6,12 @@ This changelog is contextually bound to the Condutree skill itself. Version numb
 
 ---
 
+## [2.3.2] - 2026-11-08
+### Added
+- 🧹 **Worktree Teardown & Remote Handoff Protocol**: Added Section 5 (`Worktree Teardown & Remote Handoff`) in `SKILL.md` formalizing the 3-step fast-cleanup workflow: (1) push worktree branch to `origin/feature/issue-<number>`, (2) open a `"🧹 Clean this up: ..."` GHI documenting the remote branch and state, and (3) remove the worktree directory (`rm -rf` / `git worktree remove --force` + `git worktree prune`).
+
+---
+
 ## [2.3.1] - 2026-11-07
 ### Added
 - 💎 **Prismatic Convergence Badge & Typo Tolerance**: Updated `conductor-inspector` (v2.3.1) and `git_status_patched.py` to display the faceted prism emoji `💎` (`💎 CONVERGED` / `💎 CONV`) and support both `"CONVERGED"` and `"CNVERGED"` status strings, with full unit test coverage.
