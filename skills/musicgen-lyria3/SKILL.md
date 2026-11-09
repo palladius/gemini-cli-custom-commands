@@ -1,9 +1,12 @@
 ---
 name: musicgen-lyria3
 description: >-
-  Generate 30-second music clips (default) or 2-3 minute full songs with the Lyria 3.5 model family from Google GenAI. Supports creating music with lyrics, vocals, and specific genres from text prompts. Automatically embeds rich ID3v2.3 tags (lyrics in USLT/COMM, default Drake Riccardo meme artist avatar, album, metadata) and saves matching lyrics (.txt) in the same directory.
+  Generate 30-second music clips (default) or 2-3 minute full songs with the Lyria 3.5 model family
+  from Google GenAI. Supports creating music with lyrics, vocals, and specific genres from text
+  prompts. Automatically embeds rich ID3v2.3 tags (lyrics in USLT/COMM, default Drake Riccardo meme
+  artist avatar, album, metadata) and saves matching lyrics (.txt) in the same directory.
 metadata:
-  version: 0.1.0
+  version: 0.2.0
 compatibility: Gemini CLI
 ---
 
@@ -27,6 +30,7 @@ All generated MP3s automatically receive:
 | **Lyria 3.5** | `lyria-3.5` | Full songs (verses, choruses, bridges) | 🎵 2–3 min | `scripts/musicgen-lyria3-2min.py` |
 
 - `scripts/musicgen-lyria3-list.py`: List available audio/music models.
+- `scripts/analyze_meter_timeline.py`: DSP Musical Meter & Time-Signature Autocorrelation Analyzer (`4/4` vs `3/4-6/8` vs `5/8` vs `7/8`) + Interactive Multitrack HTML DAW Generator.
 
 ## Storage & Tagging Rules
 
@@ -47,7 +51,19 @@ uv run scripts/musicgen-lyria3-30sec.py -o "assets/music/clip" -p "A synth-pop s
 
 # Full song with Lyria 3.5 and custom album/cover
 uv run scripts/musicgen-lyria3-2min.py -o "assets/music/song" --cover "assets/images/cover.png" -p "An energetic pop-rock anthem: 'Full lyrics here...'"
+
+# Tokenize musical time signatures (4/4, 3/4, 5/8, 7/8) & build an Interactive Multitrack HTML DAW
+python3 scripts/analyze_meter_timeline.py --mp3 "assets/music/song.mp3" --title "My Prog Song"
 ```
+
+## Musical Meter & Interactive Multitrack HTML DAW (`analyze_meter_timeline.py`)
+
+When the user asks whether an AI-generated track actually obeys odd time signatures (`5/8`, `7/8`, `13/8`) vs. binary/ternary (`4/4`, `3/4`, `6/8`), or wants a clickable multitrack timeline visualization of meter transitions:
+
+1. Run `python3 scripts/analyze_meter_timeline.py --mp3 <path/to/song.mp3>` (or run `--help` / inspect the top-of-file docstring `head -n 75 scripts/analyze_meter_timeline.py` for full DSP architecture details).
+2. The script automatically extracts a 50 Hz Onset Flux envelope, separates 3 IIR frequency stems (`🥁 Bass & Drums < 260 Hz`, `🎹🎤 Mellotron/Organ/Vocals 260–2800 Hz`, `🎸 12-String/Hi-Hats > 2.8 kHz`), computes sliding-window harmonic autocorrelation across `4/4`, `3/4 (6/8)`, `5/8`, and `7/8`, aligns `.srt` subtitles, and outputs:
+   - `<basename>_meter.json`: Tokenized per-second meter probabilities and transition blocks.
+   - `<basename>_meter_player.html`: Self-contained interactive HTML DAW with embedded audio, click-to-jump transition pills (`Pre-Roll -2s`), real-time WebAudio BiquadFilter `Solo/Mute` per stem, and a synthesized live smart metronome (`1046 Hz` downbeat + `523 Hz` subdivisions).
 
 ## Italian Phonetic Guidelines
 

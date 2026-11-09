@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.0] - 2026-09-23
+- 🎛️📐 **DSP Musical Meter Analyzer & Interactive Multitrack HTML DAW (`scripts/analyze_meter_timeline.py`)**:
+  - Added zero-dependency Python DSP tool using 50 Hz Onset Flux Autocorrelation to verify and segment musical time signatures (`4/4` vs `3/4-6/8` vs odd meters `5/8` and `7/8`) across an entire song.
+  - Extracts 3 IIR frequency stems (`🥁 Bass & Drums < 260 Hz`, `🎹🎤 Mellotron/Vocals 260–2800 Hz`, `🎸 12-String/Hi-Hats > 2.8 kHz`), aligns `.srt` lyrics, and builds a self-contained `<basename>_meter_player.html` with click-to-jump transition pills (`Pre-Roll -2s`), real-time WebAudio `Solo/Mute` filters, and a synthesized live smart metronome.
+  - Added top-of-file HOWTO & DSP architecture guide plus AI-oriented `--help` epilog (`head -n 75`).
+
 ## [0.1.1] - 2026-09-19
 - 🎤⏱️ **Karaoke & Subtitle Timeline Alignment (.srt / .lrc)**:
   - Documented automatic audio-lyrics alignment using Whisper ASR via `uv`.
